@@ -1,0 +1,44 @@
+[user]
+	name = Lisa Ugray
+	email = lisa.ugray@shopify.com
+[merge]
+	tool = vimdiff
+[alias]
+	st = status
+	co = commit
+	ch = checkout
+	alias = config --get-regexp ^alias\\.
+	unstage = reset HEAD --
+	remove = reset HEAD --
+	gl = log --oneline --decorate --graph --all
+	permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
+	graphical = !(gitk --all &> /dev/null &)
+	k = !(gitk --all &> /dev/null &)
+	fpt = force-push-this
+	m = checkout master
+	amco = commit -a --amend --no-edit
+	prune-all = !git fetch --prune && git branch -vv --no-color | grep \"\\[origin/.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -d
+	prune-all-hard = !git fetch --prune && git branch -vv --no-color | grep \"\\[origin/.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D
+	checkoutr = checkout
+	br = branch
+[push]
+	default = simple
+[color "diff"]
+	whitespace = red reverse
+	commit = green
+	meta = yellow
+	frag = cyan
+	old = red
+	new = green
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color]
+	ui = auto
+[core]
+	pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+	excludesfile = /Users/lisaugray/.gitignore
+[pull]
+	ff = only
