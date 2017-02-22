@@ -17,7 +17,6 @@
 	fpt = force-push-this
 	m = checkout master
 	amco = commit -a --amend --no-edit
-	prune-all = !git fetch --prune && git branch -vv --no-color | grep \"\\[origin/.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -d
 	prune-all-hard = !git fetch --prune && git branch -vv --no-color | grep \"\\[origin/.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D
 	checkoutr = checkout
 	br = branch
@@ -26,10 +25,11 @@
 [color "diff"]
 	whitespace = red reverse
 	commit = green
-	meta = yellow
 	frag = cyan
 	old = red
 	new = green
+	meta = yellow
+	func = bold magenta
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52

@@ -65,3 +65,5 @@ GIT_PROMPT_THEME=Custom
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 #if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+export PATH="$PATH:$HOME/.pyenv/shims/"
