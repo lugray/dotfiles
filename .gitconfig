@@ -42,3 +42,5 @@
 	excludesfile = /Users/lisaugray/.gitignore
 [pull]
 	ff = only
+[track-push]
+	default = lugray

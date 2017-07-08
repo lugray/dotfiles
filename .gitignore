@@ -1,2 +1,5 @@
 test/debug.rb
 .tox
+.pryrc
+scratch.rb
+.DS_Store
