@@ -15,14 +15,15 @@ _git_checkout ()
 	*)
 		# check if --track, --no-track, or --no-guess was specified
 		# if so, disable DWIM mode
-		local flags="--track --no-track --no-guess" track=1
-		if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
-			track=''
+		local flags="--track --no-track --no-guess" track_opt="--track"
+		if [ "$GIT_COMPLETION_CHECKOUT_NO_GUESS" = "1" ] ||
+		   [ -n "$(__git_find_on_cmdline "$flags")" ]; then
+			track_opt=''
 		fi
 		if [ "$command" = "checkoutr" ]; then
-		    __gitcomp_nl "$(__git_refs '' $track)"
+		    __git_complete_refs $track_opt
 		else
-		    __gitcomp_nl "$(__git_heads '' $track)"
+		    __gitcomp_direct "$(__git_heads "" "$cur" " ")"
 		fi
 		;;
 	esac
