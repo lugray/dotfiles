@@ -17,7 +17,7 @@
 	fpt = force-push-this
 	m = checkout master
 	amco = commit -a --amend --no-edit
-	prune-all-hard = !git fetch --prune && git branch -vv --no-color | grep \"\\[origin/.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D
+	prune-all-hard = !git fetch --all --prune && git branch -vv --no-color | grep \"\\[.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D
 	checkoutr = checkout
 	br = branch
 [push]
