@@ -62,7 +62,7 @@ GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_THEME=Custom
 
 
-export PATH="$HOME/.rbenv/bin:$PATH"
+#export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/bin:$PATH"
 #if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
