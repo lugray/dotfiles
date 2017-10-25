@@ -10,7 +10,7 @@
 	alias = config --get-regexp ^alias\\.
 	unstage = reset HEAD --
 	remove = reset HEAD --
-	gl = log --oneline --decorate --graph --all
+	gl = log --oneline --graph --all
 	permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
 	graphical = !(gitk --all &> /dev/null &)
 	k = !(gitk --all &> /dev/null &)
@@ -44,3 +44,5 @@
 	ff = only
 [track-push]
 	default = lugray
+[fetch]
+	prune = true
