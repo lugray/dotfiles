@@ -4,10 +4,6 @@ if [ -d ~/.shellfuncs ]; then
   done
 fi
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._- ]=** r:|=**' 'l:|=* r:|=*'
 zstyle :compinstall filename '/Users/lisaugray/.zshrc'
@@ -44,3 +40,7 @@ ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[white]%}%{↑%G%}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}%{🆕 %G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✔%G%}"
 PROMPT='%{%K{white}%F{blue}%}%3~%b%{%K{blue}%F{white}%}$(git_super_status)%k%b%{%F{blue}%}%f '
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi

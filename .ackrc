@@ -4,3 +4,4 @@
 --type-add=rails:is:Rakefile
 --type-set=rb:ext:rb
 --type-set=test:match:/_test.[^.]*$/
+--type-set=devyml:is:dev.yml

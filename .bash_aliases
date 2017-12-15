@@ -20,9 +20,6 @@ alias q='exit'
 alias gitk='(gitk --argscmd="git rev-list --no-walk --branches" --since="2 weeks ago" &> /dev/null &)'
 alias g='git'
 
-alias dev-up='pkill -9 spring; dev up'
-alias dev-down='dev down; pkill -9 spring'
-alias dev-reup='dev down; pkill -9 spring; dev up'
-alias dev-api-client-recreate='bundle exec rake dev:api_client:create TYPE=private BETA=draft_orders_api'
-
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+
+alias d='dev'
