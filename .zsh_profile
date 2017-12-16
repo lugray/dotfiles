@@ -20,7 +20,7 @@ source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 ##################
 # zsh git prompt #
 ##################
-source "/usr/local/opt/zsh-git-prompt/zshrc.sh"
+source ~/src/github.com/olivierverdier/zsh-git-prompt/zshrc.sh
 ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg_bold[white]%}["
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[white]%}]"
 ZSH_THEME_GIT_PROMPT_SEPARATOR="%{$fg_bold[white]%}|"
@@ -32,7 +32,7 @@ ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_bold[white]%}%{↓%G%}"
 ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[white]%}%{↑%G%}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}%{🆕 %G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✔%G%}"
-PROMPT='%{%K{white}%F{blue}%}%3~%b%{%K{blue}%F{white}%}$(git_super_status)%k%b%{%F{blue}%}%f '
+PROMPT='%3~$(git_super_status) $ '
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
