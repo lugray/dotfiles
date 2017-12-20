@@ -4,6 +4,10 @@ if [ -d ~/.shellfuncs ]; then
   done
 fi
 
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._- ]=** r:|=**' 'l:|=* r:|=*'
 zstyle :compinstall filename '/Users/lisaugray/.zshrc'
@@ -16,6 +20,40 @@ setopt appendhistory autocd
 HIST_STAMPS="yyyy-mm-dd"
 
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+###############
+# Keybindings #
+###############
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+  function zle-line-init() {
+    echoti smkx
+  }
+  function zle-line-finish() {
+    echoti rmkx
+  }
+  zle -N zle-line-init
+  zle -N zle-line-finish
+fi
+if [[ "${terminfo[khome]}" != "" ]]; then
+  bindkey "${terminfo[khome]}" beginning-of-line      # [Home] - Go to beginning of line
+fi
+if [[ "${terminfo[kend]}" != "" ]]; then
+  bindkey "${terminfo[kend]}"  end-of-line            # [End] - Go to end of line
+fi
+bindkey '^[[1;5C' forward-word                        # [Ctrl-RightArrow] - move forward one word
+bindkey '^[[1;5D' backward-word                       # [Ctrl-LeftArrow] - move backward one word
+if [[ "${terminfo[kcbt]}" != "" ]]; then
+  bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
+fi
+bindkey '^?' backward-delete-char                     # [Backspace] - delete backward
+if [[ "${terminfo[kdch1]}" != "" ]]; then
+  bindkey "${terminfo[kdch1]}" delete-char            # [Delete] - delete forward
+else
+  bindkey "^[[3~" delete-char
+  bindkey "^[3;5~" delete-char
+  bindkey "\e[3~" delete-char
+fi
+bindkey "^[m" copy-prev-shell-word                    # file rename magick
 
 ##################
 # zsh git prompt #
@@ -34,7 +72,3 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}%{🆕 %G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✔%G%}"
 ZSH_THEME_GIT_PROMPT_STASHED="%{${reset_color}%}%{$fg[yellow]%}%{📦 %G%}"
 PROMPT='%3~$(git_super_status) $ '
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
