@@ -61,7 +61,7 @@ bindkey "^[m" copy-prev-shell-word                    # file rename magick
 ##################
 source ~/src/github.com/lugray/zsh-git-prompt/zshrc.sh
 ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg_bold[white]%}["
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[white]%}]"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg_bold[white]%}]%{${reset_color}%}"
 ZSH_THEME_GIT_PROMPT_SEPARATOR="%{$fg_bold[white]%}|"
 ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
 ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{🎭 %G%}"
@@ -73,3 +73,6 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}%{🆕 %G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✅ %G%}"
 ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[yellow]%}%{📦 %G%}"
 PROMPT='%{$fg_bold[cyan]%}%3~%{${reset_color}%}$(git_super_status) 🐙  '
+
+
+source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
