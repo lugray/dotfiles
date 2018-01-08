@@ -72,7 +72,7 @@ ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[white]%}%{↑%G%}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}%{🆕 %G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✅ %G%}"
 ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[yellow]%}%{📦 %G%}"
-PROMPT='%{$fg_bold[cyan]%}%3~%{${reset_color}%}$(git_super_status) 🐙  '
+PROMPT='%{$fg_bold[cyan]%}$(print -P "%3~" | sed "s|^/dex/|dex://|")%{${reset_color}%}$(git_super_status) 🐙  '
 
 
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
