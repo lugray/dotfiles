@@ -23,3 +23,4 @@ alias g='git'
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
 alias d='dev'
+alias x='dex'
