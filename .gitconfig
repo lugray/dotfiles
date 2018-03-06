@@ -3,6 +3,7 @@
 	email = lisa.ugray@shopify.com
 [merge]
 	tool = vimdiff
+	conflictstyle = diff3
 [alias]
 	st = status
 	co = commit

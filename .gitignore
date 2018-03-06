@@ -3,4 +3,5 @@ test/debug.rb
 .pryrc
 scratch.rb
 .DS_Store
+.byebug_history
 ugray.rb
