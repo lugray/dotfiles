@@ -25,7 +25,24 @@ augroup gitrebase
   autocmd FileType gitrebase map rd :RebaseDrop<CR>
 augroup END
 
+augroup golang
+  autocmd Filetype go setlocal tabstop=2
+augroup END
+
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
+
+" Navigate panes with C-motion
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Force myself to learn
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
 
 :colorscheme cobalt
