@@ -1,0 +1,12 @@
+# Syntax / Language Support ##########################
+fatih/vim-go # go
+
+# UI
+gkjgh/cobalt
+airblade/vim-gitgutter
+
+# Navigation
+ctrlpvim/ctrlp.vim
+
+# Editing
+tpope/vim-surround # cs"'

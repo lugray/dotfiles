@@ -1,0 +1,7 @@
+test/debug.rb
+.tox
+.pryrc
+scratch.rb
+.DS_Store
+.byebug_history
+ugray.rb
