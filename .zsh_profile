@@ -24,6 +24,7 @@ SAVEHIST=1000000
 setopt appendhistory autocd
 HIST_STAMPS="yyyy-mm-dd"
 export LC_ALL="en_US.UTF-8"
+export EDITOR=nvim
 
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 
