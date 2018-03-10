@@ -39,7 +39,6 @@
 [color]
 	ui = auto
 [core]
-	pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less -RX --quit-if-one-screen
 	excludesfile = /Users/lisaugray/.global_gitignore
 [pull]
 	ff = only
