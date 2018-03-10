@@ -21,6 +21,7 @@
 	prune-all-hard = !git fetch --all --prune && git branch -vv --no-color | grep \"\\[.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D
 	checkoutr = checkout
 	br = branch
+	rtt = reset-to-tracking
 [push]
 	default = simple
 [color "diff"]
