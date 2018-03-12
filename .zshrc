@@ -7,3 +7,6 @@ if [[ $- == *i* ]] && [[ -f ~/.zsh_profile ]]; then source ~/.zsh_profile; fi
 
 # Load dev for interactive shells if it exists
 if [[ $- == *i* ]] && [[ -f /opt/dev/dev.sh ]]; then source /opt/dev/dev.sh; fi
+
+# Load chruby if not present
+if ! which chruby > /dev/null && [[ -f /usr/local/share/chruby/chruby.sh ]]; then source /usr/local/share/chruby/chruby.sh; fi
