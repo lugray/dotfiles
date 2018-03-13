@@ -7,6 +7,8 @@ set ruler
 set number
 set termguicolors
 
+:let mapleader = "-"
+
 augroup gitrebase
   autocmd FileType gitrebase command -range RebasePick <line1>,<line2>s/^\w\+ /pick /
   autocmd FileType gitrebase command -range RebaseReword <line1>,<line2>s/^\w\+ /reword /
@@ -25,12 +27,19 @@ augroup gitrebase
   autocmd FileType gitrebase map rd :RebaseDrop<CR>
 augroup END
 
-augroup golang
-  autocmd Filetype go setlocal tabstop=2
-augroup END
+set nowrap
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+" Use share yank/paste with MacOS clipboard
+set clipboard=unnamed
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
+
+nnoremap <Leader>a :Ack!<Space>
 
 " Navigate panes with C-motion
 nnoremap <C-J> <C-W><C-J>

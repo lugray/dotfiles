@@ -7,6 +7,7 @@ airblade/vim-gitgutter
 
 # Navigation
 ctrlpvim/ctrlp.vim
+mileszs/ack.vim
 
 # Editing
 tpope/vim-surround # cs"'
