@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+list_file = ARGV.shift || abort("usage: #{$PROGRAM_NAME} path/to/all_failed_tests.json")
+tests = JSON.parse(File.read(list_file), symbolize_names: true)[:tests]
+file_names = tests.map{ |test| test[:file_name] }.uniq()
+test_names = tests.map{ |test| test[:test_name] }
+puts 'dev test ' + file_names.join(' ') + ' -n \'/^(' + test_names.join('|') + ')$/\''

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+DEFAULT_UPSTREAM="`git config track-push.default`"
+
+REMOTE="`git remote`"
+
+if [ `echo "$REMOTE" | grep "^$DEFAULT_UPSTREAM$" | wc -l` -eq 1 ]; then
+  REMOTE="$DEFAULT_UPSTREAM"
+fi
+if [ `echo "$REMOTE" | wc -l` -ne 1 ]; then
+	>&2 echo "This command can only be used when there is exactly one remote or a default is set."
+	exit 1
+fi
+
+BRANCH="`git symbolic-ref --short HEAD`"
+
+git push -u "$REMOTE" "$BRANCH"

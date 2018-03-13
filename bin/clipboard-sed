@@ -1,0 +1,2 @@
+#!/bin/sh
+xclip -selection c -o | sed "`zenity --entry --title "Modify the clipboard" --text "xclip -o | sed" --entry-text "s/ / /g" 2> /dev/null;`" | xclip -selection c -i

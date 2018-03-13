@@ -1,0 +1,10 @@
+file="$1"
+pattern="$2"
+n=$3
+for commit in $(git log "--pretty=format:%H" -$n); do
+  diff=`git show $commit $file | grep "^[+-].*$pattern"`
+  if [ "$diff" != "" ]; then
+    #echo $commit
+    git show $commit $file
+  fi
+done

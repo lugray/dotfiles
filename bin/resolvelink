@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ -h "$1" ]; then
+	echo -n "`ls --color=always "$1"` -> "
+	"$0" "`ls -l "$1" | awk '{print $NF}'`"
+else
+	ls --color=always "$1"
+fi
+

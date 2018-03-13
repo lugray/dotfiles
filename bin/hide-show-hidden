@@ -1,0 +1,7 @@
+#!/bin/bash
+NEW_STATE="YES"
+if [ `defaults read com.apple.finder AppleShowAllFiles` == "YES" ]; then
+	NEW_STATE="NO"
+fi
+defaults write com.apple.finder AppleShowAllFiles "$NEW_STATE"
+killall Finder

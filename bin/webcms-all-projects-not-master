@@ -1,0 +1,9 @@
+#!/bin/bash
+
+find . -name .git | grep -v '^./[^/]*/contrib/' | sed 's~/.git$~~' | while read DIR; do
+	cd $DIR
+	if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
+		pwd
+	fi
+	cd - > /dev/null
+done

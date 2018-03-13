@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+USAGE = "USAGE: git fetch-github-fork-branch user:branch"
+
+abort USAGE unless ARGV.size == 1
+abort USAGE unless ARGV.first[":"]
+user, branch = ARGV.first.split(":")
+
+repo = `basename $(git config --get remote.origin.url)`.strip.split(".").first
+`git fetch git@github.com:#{user}/#{repo} #{branch}:#{user}/#{branch}`

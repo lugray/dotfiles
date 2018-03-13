@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require 'shellwords'
+
+ancestor = `git merge-base master HEAD`.strip
+files = `git ls-files --others --exclude-standard`.split("\n").map do |file|
+  Shellwords.escape(file)
+end
+
+`git diff -U0 #{ancestor}`.split("\n").each_cons(2) do |line1, line2|
+  matches = %r{^\+\+\+ b/(.*)}.match(line1)
+  next unless matches
+
+  line_number = /^@@ -(\d+)/.match(line2)[1]
+  file = Shellwords.escape(matches[1])
+  files << "#{file}:#{line_number}"
+end
+
+`subl --command close_all`
+# Twice so that the files scroll properly
+`subl #{files.join(' ')}`
+`subl #{files.join(' ')}`

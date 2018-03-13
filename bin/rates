@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "$#" -eq "0" ]; then
+	find . -name *.avi -o -name *.mp4 -o -name *.mkv -o -name *.3gp -o -name *.m4v | sort | while read f; do "$0" "$f"; done	
+elif [ -d "$1" ]; then
+	find "$1" -name *.avi -o -name *.mp4 -o -name *.mkv -o -name *.3gp -o -name *.m4v | sort | while read f; do "$0" "$f"; done	
+elif [ -f "$1" ]; then
+	echo $((`ls -l "$1" | awk -F ' ' '{ print $5 }'` / `avprobe "$1" 2> /dev/stdout | grep "Duration: " | sed 's/.*Duration: \([0-9:]*\).*/\1/' | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }'`))
+fi
+
+

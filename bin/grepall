@@ -1,0 +1,52 @@
+#!/bin/bash
+#find . -type f -print0 | xargs -0 grep -Hn --colour "$@"
+
+cleanexit(){
+	if [ $tailpid ]; then
+		kill -s 9 $tailpid > /dev/null 2>&1
+	fi
+	if [ $greppid ]; then
+		kill -s 9 $greppid > /dev/null 2>&1
+	fi
+	rm $tmpfile
+	exit 0
+}
+
+if [ "$1" == "--cols=no" ]; then
+	shift
+	grep -TIHnr --colour=always "$@"
+elif [ "$1" == "--cols=yes" ]; then
+	shift
+	grep -IHnr --colour=always "$@" | sed 's/\x1B\[36m\x1B\[K:/\xE2\x98\xA0\x1B\[36m\x1B\[K:/g' | column -ts `echo -e '\xE2\x98\xA0'`
+else
+	if [ "$1" == "--cols=auto" ]; then
+		shift
+	fi
+	start=`date "+%s"`
+	tmpfile="/tmp/grepall$start"
+	trap "cleanexit" EXIT
+	grep -IHnr --colour=always "$@" > $tmpfile &
+	greppid=$!
+	while kill -s 0 $greppid 2> /dev/null; do
+		if [ $((`date "+%s"`-start)) -gt 5 ]; then
+			break
+		fi
+		sleep 0.1
+	done
+	if kill -s 0 $greppid 2> /dev/null; then
+		tail -fn +0 $tmpfile &
+		tailpid=$!
+		while kill -s 0 $greppid 2> /dev/null; do
+			sleep 0.1
+		done
+		sleep 0.1
+	else
+		#outpartwidth=$(cat $tmpfile | sed 's/\x1B\[36m\x1B\[K:/\xE2\x98\xA0\x1B\[36m\x1B\[K:/g' | column -ts `echo -e '\xE2\x98\xA0'` 2> /dev/null | sed 's/:[^:]*$/:\x1B\[m\x1B\[K/' | wc -L)
+		#termwidth=`tput cols`
+		#if [ $outpartwidth -lt $((termwidth*80/100)) ]; then
+			cat $tmpfile | sed 's/\x1B\[36m\x1B\[K:/\xE2\x98\xA0\x1B\[36m\x1B\[K:/g' | column -ts `echo -e '\xE2\x98\xA0'`
+		#else
+		#	cat $tmpfile
+		#fi
+	fi
+fi

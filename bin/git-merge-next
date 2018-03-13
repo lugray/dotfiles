@@ -1,0 +1,4 @@
+#!/bin/sh
+
+BRANCH="`git symbolic-ref --short HEAD`"
+git merge --no-edit `echo $BRANCH | sed -r 's/(.*[^0-9])([0-9]+)$/echo "\1$((\2+1))"/e'`
