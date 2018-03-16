@@ -9,8 +9,10 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-alias vim="nvim"
-alias vi="nvim"
+if which nvim; then
+  alias vim="nvim"
+  alias vi="nvim"
+fi
 
 # some more ls aliases
 alias ll='ls -alF'
