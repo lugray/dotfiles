@@ -4,6 +4,10 @@ if [ -d ~/.shellfuncs ]; then
   done
 fi
 
+if [ -f ~/nerdfont/i_all.sh ]; then
+  source ~/nerdfont/i_all.sh
+fi
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -76,7 +80,7 @@ ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[yellow]%}🚧"
 ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_bold[white]%}↓"
 ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[white]%}↑"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}🆕"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}${i_dev_git_pull_request}"
 ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[yellow]%}📦"
 local italic=$'\e[3m'
 PROMPT='%{$fg_bold[blue]${italic}%}%m%{${reset_color}%} %{$fg_bold[cyan]%}%3~%{${reset_color}%}$(git_super_status) 🐙 '
