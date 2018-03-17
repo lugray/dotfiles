@@ -9,7 +9,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-if which nvim; then
+if which nvim > /dev/null; then
   alias vim="nvim"
   alias vi="nvim"
 fi
