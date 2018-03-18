@@ -14,6 +14,10 @@ if which nvim > /dev/null; then
   alias vi="nvim"
 fi
 
+if [[ "$(python --version 2>&1)" == *"available"* ]] && which python3 > /dev/null; then
+  alias python=python3
+fi
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
