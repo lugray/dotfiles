@@ -11,3 +11,5 @@ mileszs/ack.vim
 
 # Editing
 tpope/vim-surround # cs"'
+tpope/vim-commentary
+tpope/vim-repeat # . support for some plugins

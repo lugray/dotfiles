@@ -53,5 +53,9 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
+" Commenting
+" Apparently <C-_> maps <C-/>
+nmap <C-_> <Plug>CommentaryLine
+vmap <C-_> <Plug>Commentary
 
 :colorscheme cobalt
