@@ -3,6 +3,16 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+" Themeing
+:colorscheme cobalt
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+function! SetMaxWidth(width)
+ execute "match OverLength /\\%" . (a:width + 1) . "v.\\+/"
+endfunction
+command! -nargs=1 Smw call SetMaxWidth(<f-args>)
+call SetMaxWidth(120)
+
 set ruler
 set number
 set termguicolors
@@ -57,5 +67,3 @@ noremap <Right> <NOP>
 " Apparently <C-_> maps <C-/>
 nmap <C-_> <Plug>CommentaryLine
 vmap <C-_> <Plug>Commentary
-
-:colorscheme cobalt
