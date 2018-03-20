@@ -67,3 +67,12 @@ noremap <Right> <NOP>
 " Apparently <C-_> maps <C-/>
 nmap <C-_> <Plug>CommentaryLine
 vmap <C-_> <Plug>Commentary
+
+function! PickFromGitChangedSinceMaster()
+  let a:realackprg = g:ackprg
+  let g:ackprg = 'git-changed-since-master'
+  call ack#Ack('grep', '.')
+  let g:ackprg = a:realackprg
+endfunction
+command! Pfgcsm call PickFromGitChangedSinceMaster()
+nnoremap <Leader>g :Pfgcsm<CR>

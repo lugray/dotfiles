@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'shellwords'
+
+ancestor = `git merge-base master HEAD`.strip
+`git ls-files --others --exclude-standard`.split("\n").each do |file|
+  puts "#{Shellwords.escape(file)}:0:0"
+end
+
+`git diff -U0 #{ancestor}`.split("\n").each_cons(2) do |line1, line2|
+  matches = %r{^\+\+\+ b/(.*)}.match(line1)
+  next unless matches
+
+  line_number = /^@@ -(\d+)/.match(line2)[1]
+  file = Shellwords.escape(matches[1])
+  puts "#{file}:#{line_number}:0"
+end
