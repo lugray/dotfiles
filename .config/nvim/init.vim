@@ -69,3 +69,7 @@ nmap <C-_> <Plug>CommentaryLine
 vmap <C-_> <Plug>Commentary
 
 nnoremap <Leader>g :CtrlPBranchModified<CR>
+let g:gitgutter_diff_base = "origin/HEAD"
+let g:gitgutter_diff_args = '-w'
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk<Paste>
