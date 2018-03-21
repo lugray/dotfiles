@@ -7,6 +7,7 @@ airblade/vim-gitgutter
 
 # Navigation
 ctrlpvim/ctrlp.vim
+jasoncodes/ctrlp-modified.vim
 mileszs/ack.vim
 
 # Editing
