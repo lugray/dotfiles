@@ -75,3 +75,23 @@ nmap ]h <Plug>GitGutterNextHunk
 nmap [h <Plug>GitGutterPrevHunk<Paste>
 
 nnoremap <Leader>m :wa <bar> make<CR>
+
+function! QuickFixToggle()
+  let curr = winnr()
+  for i in range(1, winnr('$'))
+    let bnum = winbufnr(i)
+    if getbufvar(bnum, '&buftype') == 'quickfix'
+      if curr != i
+        copen
+        return
+      endif
+      cclose
+      return
+    endif
+  endfor
+  copen
+endfunction 
+nnoremap <c-i> :call QuickFixToggle()<cr>
+
+:set fillchars+=vert:⎸
+:hi VertSplit guibg=bg guifg=#555555
