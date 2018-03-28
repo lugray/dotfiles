@@ -12,11 +12,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '^xe' edit-command-line
-bindkey '^x^e' edit-command-line
-
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._- ]=** r:|=**' 'l:|=* r:|=*'
 zstyle :compinstall filename '/Users/lisaugray/.zshrc'
@@ -35,15 +30,45 @@ source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 ###############
 # Keybindings #
 ###############
+function use-block-cursor {
+  print -n -- "\E]50;CursorShape=0\C-G"
+}
+
+function use-line-cursor {
+  print -n -- "\E]50;CursorShape=1\C-G"
+}
+
+function use-mode-cursor {
+  case $KEYMAP in
+    vicmd)
+      use-block-cursor
+      ;;
+    *)
+      use-line-cursor
+      ;;
+  esac
+
+  zle reset-prompt
+  zle -R
+}
+
+bindkey -v
+
+zle -N zle-line-init
+zle -N zle-line-finish
+
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init() {
     echoti smkx
+    use-mode-cursor
   }
   function zle-line-finish() {
     echoti rmkx
+    use-block-cursor
   }
   zle -N zle-line-init
   zle -N zle-line-finish
+  zle -N zle-keymap-select use-mode-cursor
 fi
 if [[ "${terminfo[khome]}" != "" ]]; then
   bindkey "${terminfo[khome]}" beginning-of-line      # [Home] - Go to beginning of line
