@@ -95,3 +95,9 @@ nnoremap <c-i> :call QuickFixToggle()<cr>
 
 :set fillchars+=vert:⎸
 :hi VertSplit guibg=bg guifg=#555555
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)

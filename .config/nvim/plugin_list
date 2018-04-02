@@ -14,3 +14,4 @@ mileszs/ack.vim
 tpope/vim-surround # cs"'
 tpope/vim-commentary
 tpope/vim-repeat # . support for some plugins
+junegunn/vim-easy-align
