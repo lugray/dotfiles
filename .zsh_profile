@@ -76,6 +76,8 @@ fi
 if [[ "${terminfo[kend]}" != "" ]]; then
   bindkey "${terminfo[kend]}"  end-of-line            # [End] - Go to end of line
 fi
+bindkey '^A' beginning-of-line                        # [Cmd-LeftArrow] - requires iterm mapping to hex code 0x01
+bindkey '^E' end-of-line                              # [Cmd-RightArrow] - requires iterm mapping to hex code 0x05
 bindkey '^[[1;5C' forward-word                        # [Ctrl-RightArrow] - move forward one word
 bindkey '^[[1;5D' backward-word                       # [Ctrl-LeftArrow] - move backward one word
 if [[ "${terminfo[kcbt]}" != "" ]]; then
