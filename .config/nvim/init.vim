@@ -103,3 +103,20 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 set mouse=a
+
+
+function! s:stripTrailingWhitespaces()
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+
+  %s/\s\+$//e
+
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+augroup stripTrailingWhitespacesPluginDetect
+  autocmd FileType ruby,python,javascript,go autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
+augroup END
