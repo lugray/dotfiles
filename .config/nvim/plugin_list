@@ -1,6 +1,7 @@
 # Syntax / Language Support ##########################
 Valloric/YouCompleteMe
 fatih/vim-go # go
+nelstrom/vim-textobj-rubyblock
 
 # UI
 gkjgh/cobalt
@@ -16,3 +17,4 @@ tpope/vim-surround # cs"'
 tpope/vim-commentary
 tpope/vim-repeat # . support for some plugins
 junegunn/vim-easy-align
+kana/vim-textobj-user

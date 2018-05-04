@@ -93,6 +93,23 @@ else
 fi
 bindkey "^[m" copy-prev-shell-word                    # file rename magick
 
+zle-dev-open-pr() /opt/dev/bin/dev open pr
+zle -N zle-dev-open-pr
+bindkey 'ø' zle-dev-open-pr # Alt-O ABC Extended
+bindkey 'ʼ' zle-dev-open-pr # Alt-O Canadian English
+
+zle-dev-open-github() /opt/dev/bin/dev open github
+zle -N zle-dev-open-github
+bindkey '©' zle-dev-open-github # Alt-G ABC Extended & Canadian English
+
+zle-dev-open-shipit() /opt/dev/bin/dev open shipit
+zle -N zle-dev-open-shipit
+bindkey 'ß' zle-dev-open-shipit # Alt-S ABC Extended & Canadian English
+
+zle-dev-open-app() /opt/dev/bin/dev open app
+zle -N zle-dev-open-app
+bindkey '®' zle-dev-open-app # Alt-R ABC Extended & Canadian English
+
 ##################
 # zsh git prompt #
 ##################

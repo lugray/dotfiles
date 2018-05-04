@@ -16,6 +16,7 @@ call SetMaxWidth(120)
 set ruler
 set number
 set termguicolors
+set number relativenumber
 
 :let mapleader = "-"
 
