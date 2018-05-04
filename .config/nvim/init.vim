@@ -119,5 +119,5 @@ function! s:stripTrailingWhitespaces()
   call cursor(l, c)
 endfunction
 augroup stripTrailingWhitespacesPluginDetect
-  autocmd FileType ruby,python,javascript,go autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
+  autocmd FileType ruby,python,javascript autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
 augroup END
