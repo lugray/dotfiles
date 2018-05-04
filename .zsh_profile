@@ -54,9 +54,6 @@ function use-mode-cursor {
 
 bindkey -v
 
-zle -N zle-line-init
-zle -N zle-line-finish
-
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init() {
     echoti smkx
