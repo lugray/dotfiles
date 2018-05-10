@@ -121,3 +121,6 @@ endfunction
 augroup stripTrailingWhitespacesPluginDetect
   autocmd FileType ruby,python,javascript autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
 augroup END
+
+:highlight Unapproachable ctermbg=red guibg=#db3d3d
+:match Unapproachable /\<\(obviously\|basically\|simply\|of course\|clearly\|just\|everyone knows\|however\|so\|easy\)\>/
