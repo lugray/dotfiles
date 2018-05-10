@@ -1,6 +1,7 @@
 # Syntax / Language Support ##########################
 Valloric/YouCompleteMe
 fatih/vim-go # go
+godoctor/godoctor.vim
 nelstrom/vim-textobj-rubyblock
 
 # UI
