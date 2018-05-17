@@ -69,6 +69,8 @@ noremap <Right> <NOP>
 nmap <C-_> <Plug>CommentaryLine
 vmap <C-_> <Plug>Commentary
 
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
 nnoremap <Leader>g :CtrlPBranchModified<CR>
 let g:gitgutter_diff_base = "origin/HEAD"
 let g:gitgutter_diff_args = '-w'
