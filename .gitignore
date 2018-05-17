@@ -15,6 +15,19 @@
 !/.shellfuncs
 !/.zsh_profile
 !/.zshrc
+!/Library/
+/Library/*
+!/Library/Application Support/
+/Library/Application Support/*
+!/Library/Application Support/Firefox/
+/Library/Application Support/Firefox/*
+!/Library/Application Support/Firefox/Profiles/
+/Library/Application Support/Firefox/Profiles/*
+!/Library/Application Support/Firefox/Profiles/dobq4989.default/
+/Library/Application Support/Firefox/Profiles/dobq4989.default/*
+!/Library/Application Support/Firefox/Profiles/dobq4989.default/chrome/
+/Library/Application Support/Firefox/Profiles/dobq4989.default/chrome/*
+!/Library/Application Support/Firefox/Profiles/dobq4989.default/chrome/userContent.css
 
 !/bin
 !/nerdfont
