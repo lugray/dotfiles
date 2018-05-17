@@ -1,5 +1,5 @@
 # Syntax / Language Support ##########################
-Valloric/YouCompleteMe
+Valloric/YouCompleteMe # ./install.py --go-completer in ~/.config/nvim/bundle/YouCompleteMe
 fatih/vim-go # go
 godoctor/godoctor.vim
 nelstrom/vim-textobj-rubyblock
