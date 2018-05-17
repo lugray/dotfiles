@@ -123,4 +123,4 @@ augroup stripTrailingWhitespacesPluginDetect
 augroup END
 
 :highlight Unapproachable ctermbg=red guibg=#db3d3d
-:match Unapproachable /\<\(obviously\|basically\|simply\|of course\|clearly\|just\|everyone knows\|however\|so\|easy\)\>/
+:match Unapproachable /\c\<\(obviously\|basically\|simply\|of course\|clearly\|just\|everyone knows\|however\|easy\)\>/
