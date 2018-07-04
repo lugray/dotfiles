@@ -3,6 +3,6 @@
     font-family: "FuraCode Nerd Font Mono" !important;
   }
   .hide-file-notes-toggle {
-    display: none;
+    /* display: none; */
   }
 }
