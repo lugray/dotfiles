@@ -8,7 +8,7 @@ filetype plugin indent on
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 function! SetMaxWidth(width)
- execute "match OverLength /\\%" . (a:width + 1) . "v.\\+/"
+ execute "2match OverLength /\\%" . (a:width + 1) . "v.\\+/"
 endfunction
 command! -nargs=1 Smw call SetMaxWidth(<f-args>)
 call SetMaxWidth(120)
@@ -124,5 +124,8 @@ augroup stripTrailingWhitespacesPluginDetect
   autocmd FileType ruby,python,javascript autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
 augroup END
 
+highlight FuckingTabs ctermbg=red guibg=#db3d3d
+call matchadd('FuckingTabs', '\t')
+
 :highlight Unapproachable ctermbg=red guibg=#db3d3d
-:match Unapproachable /\c\<\(obviously\|basically\|simply\|of course\|clearly\|just\|everyone knows\|however\|easy\)\>/
+call matchadd('Unapproachable', '\c\<\(obviously\|bas2ically\|simply\|of course\|clearly\|just\|everyone knows\|however\|easy\)\>')
