@@ -128,4 +128,4 @@ highlight FuckingTabs ctermbg=red guibg=#db3d3d
 call matchadd('FuckingTabs', '\t')
 
 :highlight Unapproachable ctermbg=red guibg=#db3d3d
-call matchadd('Unapproachable', '\c\<\(obviously\|bas2ically\|simply\|of course\|clearly\|just\|everyone knows\|however\|easy\)\>')
+call matchadd('Unapproachable', '\c\<\(obviously\|basically\|simply\|of course\|clearly\|just\|everyone knows\|however\|easy\)\>')
