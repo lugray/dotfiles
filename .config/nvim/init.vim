@@ -17,6 +17,7 @@ set ruler
 set number
 set termguicolors
 set number relativenumber
+set nohlsearch
 
 :let mapleader = "-"
 
