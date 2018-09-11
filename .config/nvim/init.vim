@@ -8,7 +8,7 @@ filetype plugin indent on
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 function! SetMaxWidth(width)
- execute "2match OverLength /\\%" . (a:width + 1) . "v.\\+/"
+execute "2match OverLength /\\%" . (a:width + 1) . "v.\\+/"
 endfunction
 command! -nargs=1 Smw call SetMaxWidth(<f-args>)
 call SetMaxWidth(120)
@@ -126,8 +126,37 @@ augroup stripTrailingWhitespacesPluginDetect
   autocmd FileType ruby,python,javascript autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
 augroup END
 
-highlight FuckingTabs ctermbg=red guibg=#db3d3d
-call matchadd('FuckingTabs', '\t')
+function! Count(pattern)
+  redir => cnt
+    try
+      silent exe '%s/' . a:pattern . '//gn'
+    catch /E486:/
+      0
+    endtry
+  redir END
+  let res = strpart(cnt, 0, stridx(cnt, " "))
+  return res
+endfunction
+highlight BadIndent ctermbg=red guibg=#db3d3d
+function! SetBadIndent(char)
+  try
+    call matchdelete(3942)
+  catch /E803:/
+  endtry
+  call matchadd('BadIndent', '^' . a:char . '\+', 10, 3942)
+endfunction
+function! DetectBadIndent()
+  let l:tabs =  Count('^\t')
+  let l:spaces =  Count('^ ')
+  if l:tabs > l:spaces
+    call SetBadIndent(' ')
+  else
+    call SetBadIndent('\t')
+  endif
+endfunction
+augroup badIndentDetect
+  autocmd BufRead * :call DetectBadIndent()
+augroup END
 
 :highlight Unapproachable ctermbg=red guibg=#db3d3d
 call matchadd('Unapproachable', '\c\<\(obviously\|basically\|simply\|of course\|clearly\|just\|everyone knows\|however\|easy\)\>')
