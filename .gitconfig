@@ -37,11 +37,13 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+[diff "plist"]
+	textconv = plutil -convert xml1 -o -
 [color]
 	ui = auto
 [core]
 	excludesfile = /Users/lisaugray/.global_gitignore
-  pager = /usr/local/bin/diff-highlight | less
+	pager = /usr/local/bin/diff-highlight | less
 [pull]
 	ff = only
 [track-push]

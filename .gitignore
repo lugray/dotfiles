@@ -6,6 +6,7 @@
 !/.config
 /.config/*
 !/.config/nvim
+!/.config/git
 /.config/nvim/bundle
 !/.git
 !/.git-prompt-colors.sh
