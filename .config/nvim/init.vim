@@ -59,11 +59,17 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Force myself to learn
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
+" Arrow keys
+nnoremap <Up> :m .-2<cr>
+nnoremap <Down> :m .+1<cr>
+nnoremap <Left> <<
+nnoremap <Right> >>
+
+" Visual Arrow keys
+vnoremap <Left> <gv
+vnoremap <Right> >gv
+vnoremap <Up> :m '<-2<CR>gv
+vnoremap <Down> :m '>+1<CR>gv
 
 " Commenting
 " Apparently <C-_> maps <C-/>
