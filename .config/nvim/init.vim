@@ -5,6 +5,7 @@ filetype plugin indent on
 
 " Themeing
 :colorscheme cobalt
+hi Normal ctermbg=none guibg=none
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 function! SetMaxWidth(width)
