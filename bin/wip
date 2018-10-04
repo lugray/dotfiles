@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for dir in ~/src/github.com/*/*; do
+  branches="$(git -C $dir branch --format '  %(refname:short)' | grep -v '^  master$')"
+  if [[ -n "$branches" ]]; then
+    echo "$dir\n$branches"
+  fi
+done
