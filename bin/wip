@@ -1,8 +1,8 @@
 #!/bin/sh
 
 for dir in ~/src/github.com/*/*; do
-  branches="$(git -C $dir branch --format '  %(refname:short)' | grep -v '^  master$')"
-  if [[ -n "$branches" ]]; then
-    echo "$dir\n$branches"
+  branches="$(git -c color.branch=always -C "${dir}" branch -vv | grep -v '^[*| ] \(\x1B.*m\)*master\(\x1B.*m\)* ' | sed 's/^/  /')"
+  if [[ -n "${branches}" ]]; then
+    echo "${dir}\n${branches}"
   fi
 done
