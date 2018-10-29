@@ -50,3 +50,5 @@
 	default = lugray
 [fetch]
 	prune = true
+[diff]
+	algorithm = patience
