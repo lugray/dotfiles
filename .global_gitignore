@@ -1,3 +1,4 @@
+.projectile
 test/debug.rb
 .tox
 .pryrc
