@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+require 'fileutils'
+
+git_dir = `git rev-parse --git-dir`.chomp
+packed_refs_file = "#{git_dir}/packed-refs"
+File.readlines(packed_refs_file).reject do |l|
+  /^\s*#/ =~ l
+end.map do |l|
+  l.chomp.split(' ')
+end.each do |sha, f|
+  f = "#{git_dir}/#{f}"
+  FileUtils.mkdir_p(File.dirname(f))
+  File.write(f, "#{sha}\n")
+end
+File.unlink(packed_refs_file)
