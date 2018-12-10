@@ -61,3 +61,5 @@
 	pushInsteadOf = git@github.com:Shopify/
 [protocol]
 	version = 2
+[protocol "galaxy"]
+	allow = always
