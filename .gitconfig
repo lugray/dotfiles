@@ -63,3 +63,5 @@
 	version = 2
 [protocol "galaxy"]
 	allow = always
+[credential]
+	helper = osxkeychain
