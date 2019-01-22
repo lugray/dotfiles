@@ -128,3 +128,7 @@ PROMPT='%{$fg_bold[blue]${italic}%}%m%{${reset_color}%} %{$fg_bold[cyan]%}%3~%{$
 
 
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+if [ -e /Users/lisaugray/.nix-profile/etc/profile.d/nix.sh ]; then
+  . /Users/lisaugray/.nix-profile/etc/profile.d/nix.sh
+fi
