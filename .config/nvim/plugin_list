@@ -21,6 +21,7 @@ tpope/vim-repeat # . support for some plugins
 junegunn/vim-easy-align
 kana/vim-textobj-user
 vim-scripts/ReplaceWithRegister
+icatalina/vim-case-change # ~ for visual select
 
 tpope/vim-dispatch
 janko-m/vim-test
