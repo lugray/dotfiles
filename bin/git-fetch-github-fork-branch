@@ -6,4 +6,7 @@ abort USAGE unless ARGV.first[":"]
 user, branch = ARGV.first.split(":")
 
 repo = `basename $(git config --get remote.origin.url)`.strip.split(".").first
-`git fetch git@github.com:#{user}/#{repo} #{branch}:#{user}/#{branch}`
+`git fetch https://github.com/#{user}/#{repo}.git/ #{branch}:#{user}/#{branch}`
+`git config branch.#{user}/#{branch}.remote https://github.com/#{user}/#{repo}.git/`
+`git config branch.#{user}/#{branch}.merge #{branch}`
+`git checkout #{user}/#{branch}`
