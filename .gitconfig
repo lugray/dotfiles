@@ -52,7 +52,10 @@
 	prune = true
 [diff]
 	algorithm = patience
-[url "galaxy::Shopify/"]
+[http "https://git-mirror.shopifycloud.com"]
+	cookieFile = /tmp/galaxy.cookies
+	saveCookies = true
+[url "https://git-mirror.shopifycloud.com/Shopify/"]
 	insteadOf = https://github.com/Shopify/
 	insteadOf = git@github.com:Shopify/
 [url "https://github.com/Shopify/"]
@@ -61,7 +64,5 @@
 	pushInsteadOf = git@github.com:Shopify/
 [protocol]
 	version = 2
-[protocol "galaxy"]
-	allow = always
 [credential]
 	helper = osxkeychain
