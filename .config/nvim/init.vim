@@ -20,7 +20,7 @@ set termguicolors
 set number relativenumber
 set nohlsearch
 
-:let mapleader = "-"
+:let mapleader = " "
 
 augroup gitrebase
   autocmd FileType gitrebase command -range RebasePick <line1>,<line2>s/^\w\+ /pick /
