@@ -7,6 +7,8 @@ filetype plugin indent on
 :colorscheme cobalt
 hi Normal ctermbg=none guibg=none
 
+set cursorline
+
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 function! SetMaxWidth(width)
 execute "2match OverLength /\\%" . (a:width + 1) . "v.\\+/"
