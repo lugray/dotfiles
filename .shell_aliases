@@ -37,3 +37,5 @@ alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
 alias d='dev'
 alias x='dex'
+
+alias pbformat='pbpaste | dev eval "STDIN.each_line {|l| puts CLI::UI.fmt(l, enable_color: true).inspect }" | pbcopy'
