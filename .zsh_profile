@@ -8,8 +8,8 @@ if [ -f ~/nerdfont/i_all.sh ]; then
   source ~/nerdfont/i_all.sh
 fi
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f ~/.shell_aliases ]; then
+    . ~/.shell_aliases
 fi
 
 zstyle ':completion:*' completer _complete _ignored
