@@ -23,6 +23,22 @@ set number relativenumber
 set nohlsearch
 
 :let mapleader = " "
+set undofile " Persistent Undo
+set ignorecase 
+set smartcase " don't ignore capitals in searches
+
+set completeopt+=menuone,noinsert,noselect
+set shortmess+=c " Shut off completion messages
+let g:mucomplete#enable_auto_at_startup = 1
+
+:set shell=/bin/bash
+
+set spell
+set spelllang=en_ca
+inoremap <C-f> <c-g>u<Esc>[s1z=`]a<c-g>u
+nnoremap <C-f> [s1z=``
+
+nnoremap Q @q
 
 augroup gitrebase
   autocmd FileType gitrebase command -range RebasePick <line1>,<line2>s/^\w\+ /pick /
@@ -74,10 +90,6 @@ vnoremap <Right> >gv
 vnoremap <Up> :m '<-2<CR>gv
 vnoremap <Down> :m '>+1<CR>gv
 
-" Shiftless command mode
-nnoremap ; :
-vnoremap ; :
-
 " Commenting
 " Apparently <C-_> maps <C-/>
 nmap <C-_> <Plug>CommentaryLine
@@ -121,56 +133,12 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+nnoremap <Leader>l<Space> vip:EasyAlign *\ <CR>
+nnoremap <Leader>l, vip:EasyAlign *,<CR>
+nnoremap <Leader>l= vip:EasyAlign =<CR>
+
+vnoremap <Leader>l<Space> :EasyAlign *\ <CR>
+vnoremap <Leader>l, :EasyAlign *,<CR>
+vnoremap <Leader>l= :EasyAlign =<CR>
+
 set mouse=a
-
-
-function! s:stripTrailingWhitespaces()
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-
-  %s/\s\+$//e
-
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-augroup stripTrailingWhitespacesPluginDetect
-  autocmd FileType ruby,python,javascript autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
-augroup END
-
-function! Count(pattern)
-  redir => cnt
-    try
-      silent exe '%s/' . a:pattern . '//gn'
-    catch /E486:/
-      0
-    endtry
-  redir END
-  let res = strpart(cnt, 0, stridx(cnt, " "))
-  return res
-endfunction
-highlight BadIndent ctermbg=red guibg=#db3d3d
-function! SetBadIndent(char)
-  try
-    call matchdelete(3942)
-  catch /E803:/
-  endtry
-  call matchadd('BadIndent', '^' . a:char . '\+', 10, 3942)
-endfunction
-function! DetectBadIndent()
-  let l:tabs =  Count('^\t')
-  let l:spaces =  Count('^ ')
-  if l:tabs > l:spaces
-    call SetBadIndent(' ')
-  else
-    call SetBadIndent('\t')
-  endif
-endfunction
-augroup badIndentDetect
-  autocmd BufRead * :call DetectBadIndent()
-augroup END
-
-:highlight Unapproachable ctermbg=red guibg=#db3d3d
-call matchadd('Unapproachable', '\c\<\(obviously\|basically\|simply\|of course\|clearly\|just\|everyone knows\|however\|easy\)\>')

@@ -1,6 +1,4 @@
 # Syntax / Language Support ##########################
-# Valloric/YouCompleteMe # ./install.py --go-completer in ~/.config/nvim/bundle/YouCompleteMe
-# Alternative to above: roxma/nvim-completion-manager
 fatih/vim-go # go
 godoctor/godoctor.vim
 nelstrom/vim-textobj-rubyblock
@@ -15,6 +13,7 @@ jasoncodes/ctrlp-modified.vim
 mileszs/ack.vim
 
 # Editing
+lifepillar/vim-mucomplete
 tpope/vim-surround # cs"'
 tpope/vim-commentary
 tpope/vim-repeat # . support for some plugins
@@ -25,3 +24,4 @@ icatalina/vim-case-change # ~ for visual select
 
 tpope/vim-dispatch
 janko-m/vim-test
+tpope/vim-sensible
