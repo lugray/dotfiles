@@ -12,7 +12,7 @@ if [ "$LOCAL_BRANCH" = "master" ]; then
   exit 2
 fi
 
-REMOTE_BRANCH="`echo $REMOTE_REF | cut -d/ -f2`"
+REMOTE_BRANCH="`echo $REMOTE_REF | cut -d/ -f2-`"
 if [ "$REMOTE_BRANCH" = "master" ]; then
   (>&2 echo "For safety, you cannot use this to force push to master.")
   exit 3
