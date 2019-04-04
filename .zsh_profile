@@ -88,7 +88,7 @@ else
   bindkey "^[3;5~" delete-char
   bindkey "\e[3~" delete-char
 fi
-bindkey "^[m" copy-prev-shell-word                    # file rename magick
+bindkey "µ" copy-prev-shell-word                    # Alt-m file rename magick
 
 zle-dev-open-pr() /opt/dev/bin/dev open pr
 zle -N zle-dev-open-pr
