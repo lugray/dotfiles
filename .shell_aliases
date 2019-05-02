@@ -15,7 +15,7 @@ if which nvim > /dev/null; then
 fi
 
 if which bat > /dev/null; then
-  alias cat='bat'
+  alias cat='bat --style=plain'
 fi
 
 if [[ "$(python --version 2>&1)" == *"available"* ]] && which python3 > /dev/null; then
