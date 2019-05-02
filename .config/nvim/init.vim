@@ -95,6 +95,21 @@ vnoremap <Down> :m '>+1<CR>gv
 nmap <C-_> <Plug>CommentaryLine
 vmap <C-_> <Plug>Commentary
 
+" Skip the buffer with alt (mac)
+nnoremap ∂ "_d
+vnoremap ∂ "_d
+nnoremap Î "_D
+vnoremap Î "_D
+nnoremap ç "_c
+vnoremap ç "_c
+nnoremap Ç "_C
+vnoremap Ç "_C
+nnoremap ≈ "_x
+vnoremap ≈ "_x
+nnoremap ˛ "_X
+vnoremap ˛ "_X
+vnoremap π "_dP
+
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 nnoremap <Leader>g :CtrlPBranchModified<CR>
