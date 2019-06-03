@@ -40,29 +40,31 @@ class Invest
     @stocks = main.map { |h| [h['Symbol'], h] }.to_h
   end
 
-  def distrbute
-    want = DISTRIBUTION.transform_values do |v|
-      total_value * v / 100
+  def distrbute(distribution = DISTRIBUTION)
+    want = distribution.transform_values do |v|
+      total_value(distribution) * v / distribution.values.inject(&:+)
     end
-    have = DISTRIBUTION.map do |k, v|
+    have = distribution.map do |k, v|
       [k, value(k)]
     end.to_h
-    buy = DISTRIBUTION.map do |k, v|
+    buy = distribution.map do |k, v|
       [k, (want[k] - have[k]).round(2)]
     end.to_h
     buy['Total'] = buy.values.inject(&:+)
     puts "Buy:"
     puts buy.map { |k, v| "#{k}: $#{v}" }
+    if buy.values.any?(&:negative?)
+      puts "Without sales:"
+      distrbute(distribution.reject { |stock, percentage| buy[stock].negative? })
+    end
   end
 
-  def total_value
-    raise unless investments + cash == @info.fetch('Total Value')
-    @info.fetch('Total Value')
+  def total_value(distribution = DISTRIBUTION)
+    investments(distribution) + cash
   end
 
-  def investments
-    raise unless DISTRIBUTION.keys.inject(0) { |memo, symbol| memo + value(symbol) } == @info.fetch('Investments')
-    @info.fetch('Investments')
+  def investments(distribution = DISTRIBUTION)
+    distribution.keys.inject(0) { |memo, symbol| memo + value(symbol) }
   end
 
   def value(symbol)
