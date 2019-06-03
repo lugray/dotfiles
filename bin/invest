@@ -1,0 +1,104 @@
+#!/usr/bin/ruby --disable-gems
+
+class Array
+  def float_what_can
+    map do |el|
+      case el
+      when Array
+        el.float_what_can
+      when /\A-?[\d\.]+\Z/
+        el.to_f
+      else
+        el
+      end
+    end
+  end
+end
+
+class Hash
+  def transform_values # ruby 2.4
+    Hash[map { |key, val| [key, yield(val)] }]
+  end unless method_defined?(:transform_values)
+end
+
+class Invest
+  DISTRIBUTION = {
+    'TDB900' => 30,
+    'TDB902' => 30,
+    'TDB909' => 10,
+    'TDB911' => 30,
+  }
+
+  def initialize(file)
+    csv = File.readlines(file).map { |l| l.chomp.split(',') }.float_what_can
+    info, main = csv.slice_after { |row| row.all?(&:nil?) }.to_a
+    @info = info.select { |h| h.length == 2 }.to_h
+    headers = main.shift
+    main = main.map do |row|
+      row.zip(headers).map(&:reverse).to_h
+    end
+    @stocks = main.map { |h| [h['Symbol'], h] }.to_h
+  end
+
+  def distrbute
+    want = DISTRIBUTION.transform_values do |v|
+      total_value * v / 100
+    end
+    have = DISTRIBUTION.map do |k, v|
+      [k, value(k)]
+    end.to_h
+    buy = DISTRIBUTION.map do |k, v|
+      [k, (want[k] - have[k]).round(2)]
+    end.to_h
+    buy['Total'] = buy.values.inject(&:+)
+    puts "Buy:"
+    puts buy.map { |k, v| "#{k}: $#{v}" }
+  end
+
+  def total_value
+    raise unless investments + cash == @info.fetch('Total Value')
+    @info.fetch('Total Value')
+  end
+
+  def investments
+    raise unless DISTRIBUTION.keys.inject(0) { |memo, symbol| memo + value(symbol) } == @info.fetch('Investments')
+    @info.fetch('Investments')
+  end
+
+  def value(symbol)
+    @stocks.fetch(symbol).fetch('Market Value')
+  end
+
+  def cash
+    @info.fetch('Cash')
+  end
+end
+
+Invest.new(ARGV[0]).distrbute
+
+
+# require 'csv'
+
+# target = {
+#   TDB900: 0.3,
+#   TDB902: 0.3,
+#   TDB909: 0.1,
+#   TDB911: 0.3,
+# }
+
+# lines = File.read(ARGV[0]).lines.map(&:chomp)
+# divide_index = lines.index{ |l| l.each_char.all? { |c| c == ',' } }
+# header = CSV.parse(lines[0...divide_index].join("\n")).select{|r| r.size==2}.to_h
+
+# body = CSV.parse(lines[divide_index+1..-1].join("\n"), headers: true).map(&:to_h)
+
+# total_value = header['Total Value'].to_f
+
+# want = target.map {|sym, frac| [sym, (frac * total_value)] }.to_h
+
+# current = body.map { |r| [r["Symbol"].to_sym, r["Market Value"].to_f] }.to_h
+
+# to_buy = want.map { |sym, val| [sym, (val - current[sym]).round(2)] }.to_h
+
+# to_buy[:Total] = to_buy.values.inject(&:+)
+# puts to_buy.map {|sym, val| "#{sym}: $#{val}" }
