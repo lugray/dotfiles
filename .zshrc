@@ -6,7 +6,10 @@ export PATH=$HOME/.yarn/bin:$HOME/bin:$GOBIN:/usr/local/bin:$PATH
 if [[ $- == *i* ]] && [[ -f ~/.zsh_profile ]]; then source ~/.zsh_profile; fi
 
 # Load dev if it exists
-if [[ -f /opt/dev/dev.sh ]]; then source /opt/dev/dev.sh; fi
+if [[ -f /opt/dev/dev.sh ]]; then
+  source /opt/dev/dev.sh
+  export __dev_source_dir=/opt/dev
+fi
 
 # Load chruby if not present
 if ! which chruby > /dev/null && [[ -f /usr/local/share/chruby/chruby.sh ]]; then
