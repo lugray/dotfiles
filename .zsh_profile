@@ -125,7 +125,7 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}${i_dev_git_pull_request}"
 ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[yellow]%}📦"
 local italic=$'\e[3m'
 PROMPTL1='╭─%{$fg_bold[blue]${italic}%}%m%{${reset_color}%} %{$fg_bold[cyan]%}%~%{${reset_color}%}$(git_super_status)'
-PROMPTL2='╰─%(?..%{$fg[red]%}[%?]%{$reset_color%} )🐙 '
+PROMPTL2='╰─%(?.🐙.%{$fg[red]%}[%?]%{$reset_color%} 🤬 ) '
 PROMPT=${PROMPTL1}$'\n'${PROMPTL2}
 
 
