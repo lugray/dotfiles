@@ -59,3 +59,5 @@
 [url "https://github.com/Shopify/"]
 	insteadOf = git@github.com:Shopify/
 	insteadOf = git@github.com:shopify/
+	insteadOf = ssh://git@github.com/Shopify/
+	insteadOf = ssh://git@github.com/shopify/
