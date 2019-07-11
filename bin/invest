@@ -52,7 +52,7 @@ class Invest
     end.to_h
     buy['Total'] = buy.values.inject(&:+)
     puts "Buy:"
-    puts buy.map { |k, v| "#{k}: $#{v}" }
+    puts DISTRIBUTION.transform_values { 0 }.merge(buy).map { |k, v| "#{k}: $#{v}" }
     if buy.values.any?(&:negative?)
       puts "Without sales:"
       distrbute(distribution.reject { |stock, percentage| buy[stock].negative? })
