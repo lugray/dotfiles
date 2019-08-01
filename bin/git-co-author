@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+USAGE = "USAGE: git co-author name\n\nname can be a substring.  It will use the author from the most recent matching commit"
+
+abort USAGE unless ARGV.size == 1
+
+formatted_author = `git log -i --author=#{ARGV.first} --pretty=format:'%aN <%aE>' -1`
+`GIT_EDITOR="echo 'Co-authored-by: #{formatted_author}' >> $1" git commit --amend`
