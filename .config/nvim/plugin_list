@@ -14,7 +14,8 @@ mileszs/ack.vim
 
 # Editing
 lifepillar/vim-mucomplete
-tpope/vim-surround # cs"'
+# tpope/vim-surround # cs"'
+machakann/vim-sandwich # sr"'
 tpope/vim-commentary
 tpope/vim-repeat # . support for some plugins
 junegunn/vim-easy-align
