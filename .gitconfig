@@ -53,6 +53,7 @@
 	prune = true
 [diff]
 	algorithm = patience
+	noprefix = true
 [protocol]
 	version = 2
 [credential]
