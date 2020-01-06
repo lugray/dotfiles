@@ -6,6 +6,7 @@
 !/.config
 /.config/*
 !/.config/nvim
+/.config/nvim/.netrwhist
 !/.config/git
 /.config/nvim/bundle
 !/.git

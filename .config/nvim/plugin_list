@@ -6,6 +6,7 @@ nelstrom/vim-textobj-rubyblock
 # UI
 gkjgh/cobalt
 airblade/vim-gitgutter
+lilydjwg/colorizer # Show #xxxxxx in its colour
 
 # Navigation
 ctrlpvim/ctrlp.vim
@@ -14,8 +15,8 @@ mileszs/ack.vim
 
 # Editing
 lifepillar/vim-mucomplete
-# tpope/vim-surround # cs"'
-machakann/vim-sandwich # sr"'
+tpope/vim-surround # cs"'
+# machakann/vim-sandwich # sr"'
 tpope/vim-commentary
 tpope/vim-repeat # . support for some plugins
 junegunn/vim-easy-align
