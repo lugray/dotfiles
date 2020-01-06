@@ -58,6 +58,11 @@ augroup gitrebase
   autocmd FileType gitrebase map rd :RebaseDrop<CR>
 augroup END
 
+augroup format_ruby
+  autocmd Syntax ruby syn region sorbetSig start='sig {' end='}'
+  autocmd Syntax ruby hi def link sorbetSig Comment
+augroup END
+
 set nowrap
 set tabstop=2
 set shiftwidth=2
