@@ -124,8 +124,8 @@ nnoremap <Leader>d :CtrlPModified<CR>
 " let g:ctrlp#modified#excludes = "^vendor"
 let g:gitgutter_diff_base = "origin/HEAD"
 let g:gitgutter_diff_args = '-w'
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk<Paste>
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 
 nnoremap <Leader>m :wa <bar> make<CR>
 
