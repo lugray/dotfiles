@@ -27,3 +27,4 @@ icatalina/vim-case-change # ~ for visual select
 tpope/vim-dispatch
 janko-m/vim-test
 tpope/vim-sensible
+tpope/vim-fugitive
