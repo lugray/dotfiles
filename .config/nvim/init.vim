@@ -9,12 +9,13 @@ hi Normal ctermbg=none guibg=none
 
 set cursorline
 
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-function! SetMaxWidth(width)
-execute "2match OverLength /\\%" . (a:width + 1) . "v.\\+/"
-endfunction
-command! -nargs=1 Smw call SetMaxWidth(<f-args>)
-call SetMaxWidth(120)
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" function! SetMaxWidth(width)
+" execute "2match OverLength /\\%" . (a:width + 1) . "v.\\+/"
+" endfunction
+" command! -nargs=1 Smw call SetMaxWidth(<f-args>)
+" call SetMaxWidth(120)
+call matchadd('ColorColumn', '\%121v', -1)
 
 set ruler
 set number
