@@ -43,7 +43,7 @@
 	ui = auto
 [core]
 	excludesfile = /Users/lisaugray/.global_gitignore
-	pager = /usr/local/bin/diff-highlight | less
+	pager = diff-so-fancy | less
 	commitGraph = true
 [pull]
 	ff = only
