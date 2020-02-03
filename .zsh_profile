@@ -25,12 +25,48 @@ HIST_STAMPS="yyyy-mm-dd"
 export LC_ALL="en_US.UTF-8"
 export EDITOR=nvim
 
+source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 ###############
 # Keybindings #
 ###############
+function use-block-cursor {
+  print -n -- "\E]50;CursorShape=0\C-G"
+}
+
+function use-line-cursor {
+  print -n -- "\E]50;CursorShape=1\C-G"
+}
+
+function use-mode-cursor {
+  case $KEYMAP in
+    vicmd)
+      use-block-cursor
+      ;;
+    *)
+      use-line-cursor
+      ;;
+  esac
+
+  zle reset-prompt
+  zle -R
+}
 
 bindkey -v
 
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+  function zle-line-init() {
+    echoti smkx
+    use-mode-cursor
+  }
+  function zle-line-finish() {
+    echoti rmkx
+    use-block-cursor
+  }
+  zle -N zle-line-init
+  zle -N zle-line-finish
+  zle -N zle-keymap-select use-mode-cursor
+fi
 if [[ "${terminfo[khome]}" != "" ]]; then
   bindkey "${terminfo[khome]}" beginning-of-line      # [Home] - Go to beginning of line
 fi
@@ -93,15 +129,7 @@ PROMPTL2='╰─%(?.🐙.%{$fg[red]%}[%?]%{$reset_color%} 🤬 ) '
 PROMPT=${PROMPTL1}$'\n'${PROMPTL2}
 
 
-###########
-# Plugins #
-###########
-source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/src/github.com/softmoth/zsh-vim-mode/zsh-vim-mode.plugin.zsh
-
-MODE_CURSOR_VICMD="block"
-MODE_CURSOR_VIINS="bar"
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
   . $HOME/.nix-profile/etc/profile.d/nix.sh
