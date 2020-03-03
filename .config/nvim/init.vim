@@ -92,6 +92,11 @@ vnoremap <Right> >gv
 vnoremap <Up> :m '<-2<CR>gv
 vnoremap <Down> :m '>+1<CR>gv
 
+" kj = <esc>
+inoremap kj <esc>
+cnoremap kj <esc>
+vnoremap kj <esc>
+
 " Commenting
 " Apparently <C-_> maps <C-/>
 nmap <C-_> <Plug>CommentaryLine
