@@ -163,3 +163,15 @@ let g:splitjoin_ruby_hanging_args = 0
 
 set mouse=a
 
+"jump to first non-whitespace on line, jump to beginning of line if already at first non-whitespace
+nnoremap <Home> :call LineHome()<CR>:echo<CR>
+vnoremap <Home> :call LineHome()<CR>:echo<CR>
+imap <Home> <C-R>=LineHome()<CR>
+function! LineHome()
+let x = col('.')
+  execute "normal ^"
+  if x == col('.')
+    execute "normal 0"
+  endif
+  return ""
+endfunction
