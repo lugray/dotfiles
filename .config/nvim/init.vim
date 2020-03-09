@@ -97,6 +97,11 @@ inoremap kj <esc>
 cnoremap kj <esc>
 vnoremap kj <esc>
 
+" kj reminder
+inoremap <esc> <nop>
+cnoremap <esc> <nop>
+vnoremap <esc> <nop>
+
 " Commenting
 " Apparently <C-_> maps <C-/>
 nmap <C-_> <Plug>CommentaryLine
