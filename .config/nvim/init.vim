@@ -81,6 +81,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Resize panes with Alt- hjkl on Mac
+nnoremap ˙ <C-W><
+nnoremap ∆ <C-W>-
+nnoremap ˚ <C-W>+
+nnoremap ¬ <C-W>>
+
 " Arrow keys
 nnoremap <Up> :m .-2<cr>
 nnoremap <Down> :m .+1<cr>
