@@ -1,3 +1,7 @@
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  . $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
 if [ -d ~/.shellfuncs ]; then
   for FILE in ~/.shellfuncs/*.sh; do
     source $FILE
@@ -131,7 +135,3 @@ PROMPT=${PROMPTL1}$'\n'${PROMPTL2}
 
 
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-  . $HOME/.nix-profile/etc/profile.d/nix.sh
-fi
