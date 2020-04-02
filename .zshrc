@@ -20,4 +20,4 @@ if ! which chruby > /dev/null && [[ -f /usr/local/share/chruby/chruby.sh ]]; the
 fi
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
-export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}$HOME/.kube/config:$HOME/.kube/config.shopify.cloudplatform
+export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}$HOME/.kube/config
