@@ -21,6 +21,8 @@ set undofile " Persistent Undo
 set ignorecase 
 set smartcase " don't ignore capitals in searches
 
+nnoremap <Leader>vv :source ~/.config/nvim/init.vim<CR>
+
 set completeopt+=menuone,noinsert,noselect
 set shortmess+=c " Shut off completion messages
 let g:mucomplete#enable_auto_at_startup = 1
