@@ -1,8 +1,9 @@
 let
   pkgs = import <nixpkgs> {};
-  lsColors = builtins.fetchGit {
+  lsColors = pkgs.fetchgit {
     url = "https://github.com/trapd00r/LS_COLORS";
     rev = "da2f061feb4977bc5e3dfdb16ab65d93b3eca1ca";
+    sha256 = "1yw4qz152r9jsg4v4n592gngfvwkcrkj68hrhm6n6d0qj6f6qf68";
   };
 in
   pkgs.runCommand "ls-colors" {} ''
