@@ -8,8 +8,10 @@ let
 in
   pkgs.runCommand "ls-colors" {} ''
     mkdir -p $out/bin
-    echo "#! ${pkgs.bash}/bin/bash -e" > $out/bin/ls
-    ${pkgs.coreutils}/bin/dircolors ${lsColors}/LS_COLORS >> $out/bin/ls
-    echo "${pkgs.coreutils}/bin/ls --color=auto -F \"\$@\"" >> $out/bin/ls
+    cat << EOF >> $out/bin/ls
+    #! ${pkgs.stdenv.shell} -e
+    $(${pkgs.coreutils}/bin/dircolors ${lsColors}/LS_COLORS)
+    ${pkgs.coreutils}/bin/ls --color=auto -F "\$@"
+    EOF
     ${pkgs.coreutils}/bin/chmod +x $out/bin/ls
   ''
