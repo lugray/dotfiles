@@ -11,5 +11,5 @@ in
     echo "#! ${pkgs.bash}/bin/bash -e" > $out/bin/ls
     ${pkgs.coreutils}/bin/dircolors ${lsColors}/LS_COLORS >> $out/bin/ls
     echo "${pkgs.coreutils}/bin/ls --color=auto -F \"\$@\"" >> $out/bin/ls
-    chmod +x $out/bin/ls
+    ${pkgs.coreutils}/bin/chmod +x $out/bin/ls
   ''
