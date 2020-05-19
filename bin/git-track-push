@@ -1,5 +1,12 @@
 #!/bin/sh
 
+BRANCH="`git symbolic-ref --short HEAD`"
+
+if git config "branch.$BRANCH.remote" > /dev/null 2>&1; then
+	>&2 echo "The current branch already has an upstream set."
+	exit 2
+fi
+
 DEFAULT_UPSTREAM="`git config track-push.default`"
 
 REMOTE="`git remote`"
@@ -11,7 +18,5 @@ if [ `echo "$REMOTE" | wc -l` -ne 1 ]; then
 	>&2 echo "This command can only be used when there is exactly one remote or a default is set."
 	exit 1
 fi
-
-BRANCH="`git symbolic-ref --short HEAD`"
 
 git push -u "$REMOTE" "$BRANCH"
