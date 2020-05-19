@@ -1,10 +1,9 @@
-execute pathogen#infect()
-
 syntax on
 filetype plugin indent on
 
 " Themeing
-:colorscheme cobalt
+:packadd dracula-vim
+:colorscheme dracula
 hi Normal ctermbg=none guibg=none
 
 set cursorline
@@ -192,3 +191,19 @@ let x = col('.')
   endif
   return ""
 endfunction
+
+function! s:stripTrailingWhitespaces()
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+
+  %s/\s\+$//e
+
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+augroup stripTrailingWhitespacesPluginDetect
+  autocmd FileType ruby,python,javascript,nix autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
+augroup END

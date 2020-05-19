@@ -5,9 +5,10 @@
 !/.bashrc
 !/.config
 /.config/*
+!/.config/nixpkgs/
+/.config/nixpkgs/overlays
 !/.config/nvim
 /.config/nvim/.netrwhist
-!/.config/git
 /.config/nvim/bundle
 !/.git
 !/.git-prompt-colors.sh

@@ -8,7 +8,6 @@ if [[ $- == *i* ]] && [[ -f ~/.zsh_profile ]]; then source ~/.zsh_profile; fi
 # Load dev if it exists
 if [[ -f /opt/dev/dev.sh ]]; then
   source /opt/dev/dev.sh
-  export __dev_source_dir=/opt/dev
 elif [ -f ~/src/github.com/burke/minidev/dev.sh ]; then
   source ~/src/github.com/burke/minidev/dev.sh
 fi

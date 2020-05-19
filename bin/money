@@ -1,0 +1,29 @@
+#!/usr/bin/ruby --disable-gems
+
+WANT = {
+  "TDB900" => 0.30,
+  "TDB902" => 0.30,
+  "TDB909" => 0.10,
+  "TDB911" => 0.30,
+}
+
+table = File.read(ARGV[0]).split("\n").map { |l| l.split(",") }
+cash = (table.detect { |l| l[0] == "Cash" })[1].to_f
+
+raise unless table[7][7] == "Market Value"
+
+have = WANT.keys.map do |stock|
+  val = (table.detect { |l| l[0] == stock })[7].to_f
+  [stock, val]
+end.to_h
+
+total = have.values.inject(&:+) + cash
+
+buy = WANT.map do |stock, frac|
+  [stock, (total * frac - have[stock]).round(2)]
+end.to_h
+
+buy.each do |stock, val|
+  puts "#{stock}: #{val.round(2)}"
+end
+puts "Total: #{buy.values.inject(&:+)}"
