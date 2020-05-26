@@ -6,8 +6,6 @@ filetype plugin indent on
 :colorscheme dracula
 hi Normal ctermbg=none guibg=none
 
-set cursorline
-
 call matchadd('ColorColumn', '\%121v', -1)
 
 set ruler
