@@ -157,6 +157,7 @@ in {
       ReplaceWithRegister
       vim-case-change # ~ for visual select
       splitjoin-vim
+      vim-multiple-cursors
 
       vim-dispatch
       vim-test
