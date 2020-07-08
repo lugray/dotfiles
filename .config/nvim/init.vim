@@ -148,7 +148,11 @@ function! QuickFixToggle()
   endfor
   copen
 endfunction 
-nnoremap <c-i> :call QuickFixToggle()<cr>
+nnoremap <tab> :call QuickFixToggle()<cr>
+
+" Preserve c-i behaviour separate from tab with CSI u in iTerm2 and c-i
+" remapped to Esc sequence i, to then be remapped back here
+noremap <a-i> <c-i>
 
 :set fillchars+=vert:⎸
 :hi VertSplit guibg=bg guifg=#555555
