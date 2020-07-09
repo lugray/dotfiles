@@ -154,8 +154,8 @@ nnoremap <tab> :call QuickFixToggle()<cr>
 " remapped to Esc sequence i, to then be remapped back here
 noremap <a-i> <c-i>
 
-:set fillchars+=vert:⎸
 :hi VertSplit guibg=bg guifg=#555555
+let &fcs='eob: ,vert:⎸'
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
