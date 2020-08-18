@@ -2,6 +2,10 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
   . $HOME/.nix-profile/etc/profile.d/nix.sh
 fi
 
+if glibcLocales=$(nix-build --no-out-link "<nixpkgs>" -A glibcLocales 2> /dev/null); then
+  export LOCALE_ARCHIVE_2_27="${glibcLocales}/lib/locale/locale-archive"
+fi
+
 if [ -d ~/.shellfuncs ]; then
   for FILE in ~/.shellfuncs/*.sh; do
     source $FILE
