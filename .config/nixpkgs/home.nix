@@ -20,6 +20,7 @@ in {
   home.stateVersion = "19.09";
 
   home.packages = with pkgs; [
+    gawk
     wget
     (import ./ls-colors.nix)
     (import ./poll.nix)
