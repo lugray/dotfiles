@@ -24,6 +24,7 @@ in {
     wget
     (import ./ls-colors.nix)
     (import ./poll.nix)
+    secret-sender
   ];
 
   programs.git = {
