@@ -5,3 +5,4 @@ icatalina/vim-case-change
 jasoncodes/ctrlp-modified.vim
 nelstrom/vim-textobj-rubyblock
 vim-scripts/ReplaceWithRegister
+wellle/context.vim

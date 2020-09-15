@@ -148,6 +148,7 @@ in {
       ctrlp-vim
       ctrlp-modified-vim
       ack-vim
+      context-vim
 
       # Editing
       vim-mucomplete

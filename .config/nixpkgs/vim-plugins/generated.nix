@@ -3,6 +3,18 @@
 let
   packages = ( self:
 {
+  context-vim = buildVimPluginFrom2Nix {
+    pname = "context-vim";
+    version = "2020-09-07";
+    src = fetchFromGitHub {
+      owner = "wellle";
+      repo = "context.vim";
+      rev = "1940667adbbfa0395f015c980677f9c0e3537ae2";
+      sha256 = "06mi2mn33iffkp3k15mk9apmcvv2qsqkaqblclh4jfb99qxx14pi";
+    };
+    meta.homepage = "https://github.com/wellle/context.vim/";
+  };
+
   ctrlp-modified-vim = buildVimPluginFrom2Nix {
     pname = "ctrlp-modified-vim";
     version = "2019-02-03";
@@ -17,12 +29,12 @@ let
 
   dracula-vim = buildVimPluginFrom2Nix {
     pname = "dracula-vim";
-    version = "2020-05-06";
+    version = "2020-07-19";
     src = fetchFromGitHub {
       owner = "dracula";
       repo = "vim";
-      rev = "bb34458c42a06f1a65df22de2ea6432e17a3944a";
-      sha256 = "1jj5f89a36mag0k6anj3pbyzka8gk2ysf5syqiz95f2m2lq07h3b";
+      rev = "b64b22affafca7d3831a20949115b91031d596ec";
+      sha256 = "1f5hwfcrsfq3yk53kkn4syaxmri8wh8h6rpq867468b8rdcnhq01";
     };
     meta.homepage = "https://github.com/dracula/vim/";
   };
@@ -53,12 +65,13 @@ let
 
   splitjoin-vim = buildVimPluginFrom2Nix {
     pname = "splitjoin-vim";
-    version = "2020-04-20";
+    version = "2020-07-21";
     src = fetchFromGitHub {
       owner = "AndrewRadev";
       repo = "splitjoin.vim";
-      rev = "62d42e1ac5dcf8f3c70bd344d31300ee39d0e580";
-      sha256 = "1d0ik668lhkrd972brh99lizrfl249srj6y8i1ag4ykr99nmydqg";
+      rev = "46efa9796716fe645d43f6018de3e06296978c7b";
+      sha256 = "126a9v4j217g1kflfabqx0bz02k0xkwqfagzhk51n7drh2r2m7k6";
+      fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/AndrewRadev/splitjoin.vim/";
   };
