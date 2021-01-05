@@ -130,12 +130,11 @@ in {
   programs.neovim = {
     enable = true;
     vimAlias = true;
-    extraConfig = builtins.readFile ../nvim/init.vim;
+    extraConfig = builtins.readFile ./init.vim;
     plugins = with vimPlugins; [
       vim-nix
       vim-ruby
 
-      vim-go # go
       godoctor-vim
       vim-textobj-rubyblock
 

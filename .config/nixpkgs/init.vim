@@ -102,9 +102,8 @@ cnoremap kj <esc>
 vnoremap kj <esc>
 
 " Commenting
-" Apparently <C-_> maps <C-/>
-nmap <C-_> <Plug>CommentaryLine
-vmap <C-_> <Plug>Commentary
+nmap <C-/> <Plug>CommentaryLine
+vmap <C-/> <Plug>Commentary
 
 " Skip the buffer with alt (mac)
 nnoremap ∂ "_d
