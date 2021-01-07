@@ -29,3 +29,8 @@ alias d='dev'
 alias x='dex'
 
 alias pbformat='pbpaste | dev eval "STDIN.each_line {|l| puts CLI::UI.fmt(l, enable_color: true).inspect }" | pbcopy'
+
+# Nix
+alias nb='nix-build'
+alias nsd='nix show-derivation'
+alias ngc='nix-collect-garbage'
