@@ -2,9 +2,7 @@
 
 let
   vimPlugins = pkgs.vimPlugins // pkgs.callPackage ./vim-plugins/default.nix {};
-  devOverlay = import ./overlays/shopify-dev.nix;
 in {
-  nixpkgs.overlays = [ devOverlay ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   # programs.home-manager.path = "/Users/lisaugray/src/github.com/rycee/home-manager";
@@ -27,7 +25,6 @@ in {
   ];
 
   programs.git = {
-    package = pkgs.git-with-store-auth;
     enable = true;
     userName = "Lisa Ugray";
     userEmail = "lisa.ugray@shopify.com";
