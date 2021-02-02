@@ -128,6 +128,7 @@ in {
     vimAlias = true;
     extraConfig = builtins.readFile ./init.vim;
     plugins = with vimPlugins; [
+      firenvim
       vim-nix
       vim-ruby
 
