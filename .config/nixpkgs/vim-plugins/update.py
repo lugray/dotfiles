@@ -104,21 +104,25 @@ class Repo:
     @retry(urllib.error.URLError)
     def latest_commit(self) -> Tuple[str, datetime]:
         commit_url = self.url(f"commits/{self.branch}.atom")
-        with urllib.request.urlopen(commit_url, timeout=10) as req:
-            self.check_for_redirect(commit_url, req)
-            xml = req.read()
-            root = ET.fromstring(xml)
-            latest_entry = root.find(ATOM_ENTRY)
-            assert latest_entry is not None, f"No commits found in repository {self}"
-            commit_link = latest_entry.find(ATOM_LINK)
-            assert commit_link is not None, f"No link tag found feed entry {xml}"
-            url = urlparse(commit_link.get("href"))
-            updated_tag = latest_entry.find(ATOM_UPDATED)
-            assert (
-                updated_tag is not None and updated_tag.text is not None
-            ), f"No updated tag found feed entry {xml}"
-            updated = datetime.strptime(updated_tag.text, "%Y-%m-%dT%H:%M:%SZ")
-            return Path(str(url.path)).name, updated
+        try:
+            with urllib.request.urlopen(commit_url, timeout=10) as req:
+                self.check_for_redirect(commit_url, req)
+                xml = req.read()
+                root = ET.fromstring(xml)
+                latest_entry = root.find(ATOM_ENTRY)
+                assert latest_entry is not None, f"No commits found in repository {self}"
+                commit_link = latest_entry.find(ATOM_LINK)
+                assert commit_link is not None, f"No link tag found feed entry {xml}"
+                url = urlparse(commit_link.get("href"))
+                updated_tag = latest_entry.find(ATOM_UPDATED)
+                assert (
+                    updated_tag is not None and updated_tag.text is not None
+                ), f"No updated tag found feed entry {xml}"
+                updated = datetime.strptime(updated_tag.text, "%Y-%m-%dT%H:%M:%SZ")
+                return Path(str(url.path)).name, updated
+        except urllib.error.HTTPError as e:
+            print(f"{str(e)}, {commit_url}")
+            raise
 
     def check_for_redirect(self, url: str, req: http.client.HTTPResponse):
         response_url = req.geturl()
