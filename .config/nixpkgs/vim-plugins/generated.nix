@@ -5,12 +5,12 @@ let
 {
   context-vim = buildVimPluginFrom2Nix {
     pname = "context-vim";
-    version = "2020-09-07";
+    version = "2020-10-20";
     src = fetchFromGitHub {
       owner = "wellle";
       repo = "context.vim";
-      rev = "1940667adbbfa0395f015c980677f9c0e3537ae2";
-      sha256 = "06mi2mn33iffkp3k15mk9apmcvv2qsqkaqblclh4jfb99qxx14pi";
+      rev = "e38496f1eb5bb52b1022e5c1f694e9be61c3714c";
+      sha256 = "1iy614py9qz4rwk9p4pr1ci0m1lvxil0xiv3ymqzhqrw5l55n346";
     };
     meta.homepage = "https://github.com/wellle/context.vim/";
   };
@@ -29,14 +29,26 @@ let
 
   dracula-vim = buildVimPluginFrom2Nix {
     pname = "dracula-vim";
-    version = "2020-07-19";
+    version = "2020-12-23";
     src = fetchFromGitHub {
       owner = "dracula";
       repo = "vim";
-      rev = "b64b22affafca7d3831a20949115b91031d596ec";
-      sha256 = "1f5hwfcrsfq3yk53kkn4syaxmri8wh8h6rpq867468b8rdcnhq01";
+      rev = "e7154372adc95d637ccd911c2f8601d9ff2eac1f";
+      sha256 = "1li5q3151kjh8c6a7cdnmbydxhkjgqsa5nlv49dy6dnqc3b50m7s";
     };
     meta.homepage = "https://github.com/dracula/vim/";
+  };
+
+  firenvim = buildVimPluginFrom2Nix {
+    pname = "firenvim";
+    version = "2021-02-02";
+    src = fetchFromGitHub {
+      owner = "glacambre";
+      repo = "firenvim";
+      rev = "26a85db2cc44842a637d723d69f64dc628fbcaf3";
+      sha256 = "1i8s1d035mamnaknd6idpfcah6jq9nxlawgizs2icf2f43m6zllj";
+    };
+    meta.homepage = "https://github.com/glacambre/firenvim/";
   };
 
   godoctor-vim = buildVimPluginFrom2Nix {
@@ -65,12 +77,12 @@ let
 
   splitjoin-vim = buildVimPluginFrom2Nix {
     pname = "splitjoin-vim";
-    version = "2020-07-21";
+    version = "2020-12-15";
     src = fetchFromGitHub {
       owner = "AndrewRadev";
       repo = "splitjoin.vim";
-      rev = "46efa9796716fe645d43f6018de3e06296978c7b";
-      sha256 = "126a9v4j217g1kflfabqx0bz02k0xkwqfagzhk51n7drh2r2m7k6";
+      rev = "91ba14b41f6e767414d7bf2a8e82947c6bfdb978";
+      sha256 = "0q01xfnjqk3vnmknb01zlkzn1jj03lqsygk863vwrdazq86g5aci";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/AndrewRadev/splitjoin.vim/";
