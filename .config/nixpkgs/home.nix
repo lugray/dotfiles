@@ -95,7 +95,7 @@ in {
       };
       protocol.version = "2";
       gc.writeCommitGraph = true;
-      credential.helper = "store --file /opt/dev/var/private/git_credential_store";
+      credential.helper = [ "" "store --file /opt/dev/var/private/git_credential_store" ];
       url."https://github.com/Shopify/".insteadOf = [
         "git@github.com:Shopify/"
         "git@github.com:shopify/"
