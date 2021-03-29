@@ -21,7 +21,7 @@ in {
     gawk
     wget
     (import ./ls-colors.nix)
-    (import ./poll.nix)
+    (callPackage ./poll { })
   ];
 
   programs.git = {
@@ -88,6 +88,7 @@ in {
       pull.ff = "only";
       track-push.default = "lugray";
       fetch.prune = true;
+      rebase.autosquash = true;
       diff = {
         algorithm = "patience";
         noprefix = true;

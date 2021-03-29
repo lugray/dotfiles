@@ -1,0 +1,23 @@
+#!/bin/bash
+
+T=1
+
+if [[ "$1" == -t ]]; then
+  shift
+  T=$1
+  shift
+elif [[ "$1" == -t* ]]; then
+  T=${1:2}
+  shift
+elif [[ "$1" == -- ]]; then
+  shift
+fi
+
+trap "echo -en '\e[?1049l'" EXIT
+echo -en '\e[?1049h'
+until [ "$input" = "q" ]; do
+  output_text="$("$@")"
+  echo -en '\e[H\e[J'
+  echo "$output_text"
+  read -rs -n1 -t${T} input
+done
