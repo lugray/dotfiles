@@ -12,7 +12,7 @@ set ruler
 set number
 set termguicolors
 set nohlsearch
-set guifont=FuraCode NerdFont:h21
+set guifont=FuraCode\ NerdFont:h21
 
 :let mapleader = " "
 set undofile " Persistent Undo
@@ -103,6 +103,9 @@ cnoremap kj <esc>
 vnoremap kj <esc>
 
 " Commenting
+" Apparently <C-_> maps <C-/>
+nmap <C-_> <Plug>CommentaryLine
+vmap <C-_> <Plug>Commentary
 nmap <C-/> <Plug>CommentaryLine
 vmap <C-/> <Plug>Commentary
 
