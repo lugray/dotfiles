@@ -224,3 +224,6 @@ function! OpenCurrentFileInGithub()
   if last_line != first_line | let url .= '-L' . last_line | endif
   call system('open ' . url)
 endfunction
+
+nnoremap <leader>cp :let @* = expand('%')<cr>
+nnoremap <leader>cap :let @* = expand('%:p')<cr>
