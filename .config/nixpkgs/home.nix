@@ -102,6 +102,7 @@ in {
         "ssh://git@github.com/Shopify/"
         "ssh://git@github.com/shopify/"
       ];
+      branch.sort = "committerdate";
     };
   };
 
