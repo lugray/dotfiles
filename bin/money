@@ -1,29 +1,64 @@
 #!/usr/bin/ruby --disable-gems
 
-WANT = {
-  "TDB900" => 0.30,
-  "TDB902" => 0.30,
-  "TDB909" => 0.10,
-  "TDB911" => 0.30,
-}
+class Fund
+  WANT = {
+    "TDB900" => 30,
+    "TDB902" => 30,
+    "TDB909" => 10,
+    "TDB911" => 30,
+  }
 
-table = File.read(ARGV[0]).split("\n").map { |l| l.split(",") }
-cash = (table.detect { |l| l[0] == "Cash" })[1].to_f
+  def initialize(file, no_sell)
+    @file = file
+    @no_sell = no_sell
+    @table = File.read(file).split("\n").map { |l| l.split(",") }
+    raise unless @table[7][7] == "Market Value"
+    @cash = (@table.detect { |l| l[0] == "Cash" })[1].to_f
+  end
 
-raise unless table[7][7] == "Market Value"
+  def to_s
+    buy = to_buy
+    buy_table = buy.map do |stock, val|
+      "#{stock}: #{format('%<val>0.2f', val: val)}"
+    end
+    total = buy.values.inject(&:+)
+    [@file, *buy_table, "Total: #{format('%<total>0.2f', total: total)}"].join("\n")
+  end
 
-have = WANT.keys.map do |stock|
-  val = (table.detect { |l| l[0] == stock })[7].to_f
-  [stock, val]
-end.to_h
+  private
 
-total = have.values.inject(&:+) + cash
+  def to_buy(want: WANT)
+    want = normalize(want)
 
-buy = WANT.map do |stock, frac|
-  [stock, (total * frac - have[stock]).round(2)]
-end.to_h
+    have = want.keys.map do |stock|
+      val = (@table.detect { |l| l[0] == stock })[7].to_f
+      [stock, val]
+    end.to_h
 
-buy.each do |stock, val|
-  puts "#{stock}: #{val.round(2)}"
+    total = have.values.inject(&:+) + @cash
+
+    buy = want.map do |stock, frac|
+      [stock, (total * frac - have[stock]).round(2)]
+    end.to_h
+
+    if @no_sell && buy.values.any?(&:negative?)
+      to_buy(want: want.reject { |k, _| buy[k].negative? })
+    else
+      buy
+    end
+  end
+
+  def normalize(want)
+    total_frac = want.values.sum
+    want.transform_values do |frac|
+      frac.to_f / total_frac
+    end
+  end
 end
-puts "Total: #{buy.values.inject(&:+)}"
+
+args = ARGV.dup
+no_sell = !!args.delete('--no-sell')
+
+puts(args.map do |file|
+  Fund.new(file, no_sell).to_s
+end.join("\n\n"))
