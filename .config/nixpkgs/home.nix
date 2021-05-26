@@ -18,8 +18,11 @@ in {
   home.stateVersion = "19.09";
 
   home.packages = with pkgs; [
+    ack
+    tree
     gawk
     wget
+    sshpass
     (import ./ls-colors.nix)
     (callPackage ./poll { })
   ];
