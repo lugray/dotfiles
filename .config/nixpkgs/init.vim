@@ -227,3 +227,11 @@ endfunction
 
 nnoremap <leader>cp :let @* = expand('%')<cr>
 nnoremap <leader>cap :let @* = expand('%:p')<cr>
+
+let g:LanguageClient_serverCommands = { 'ruby': ['bundle', 'exec', 'srb', 'tc', '--lsp'] }
+nmap <silent> K <Plug>(lcn-hover)
+nmap <silent> gd <Plug>(lcn-definition)
+nmap <leader>s <Plug>(lcn-menu)
+
+:let g:ruby_indent_assignment_style = 'variable'
+:let g:ruby_indent_hanging_elements = 0

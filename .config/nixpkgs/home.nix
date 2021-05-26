@@ -149,6 +149,7 @@ in {
 
       # Editing
       vim-mucomplete
+      LanguageClient-neovim
       vim-surround # cs"'
       vim-commentary
       vim-repeat # . support for some plugins
