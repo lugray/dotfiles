@@ -48,6 +48,7 @@ in {
         checkoutr = "checkout";
         br = "branch";
         rtt = "reset-to-tracking";
+        lb = "!git show --format='%C(auto)%D %s' -s $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/heads/)";
       };
       push.default = "simple";
       color = {
