@@ -168,6 +168,7 @@ in {
       vim-test
       vim-sensible
       vim-fugitive
+      vim-rhubarb
     ];
   };
 }
