@@ -62,7 +62,7 @@ in {
           old = "red";
           new = "green";
           meta = "yellow";
-          func = "bold magenta";
+          func = "magenta bold";
         };
         diff-highlight = {
           oldNormal = "red bold";
