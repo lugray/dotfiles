@@ -32,6 +32,9 @@ in {
     userName = "Lisa Ugray";
     userEmail = "lisa.ugray@shopify.com";
     extraConfig = {
+      user.signingkey = "A9215DE6C39BC6B8EDD2D8832462CA4FAF81C1AF";
+      gpg.program = "/nix/var/nix/gcroots/dev-profiles/dev-support-dev-profile/bin/gpg-auto-pin";
+      commit.gpgSign = true;
       merge = {
         tool = "vimdiff";
         conflictstyle = "diff3";
