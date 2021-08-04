@@ -23,7 +23,7 @@ in {
     gawk
     wget
     sshpass
-    (import ./ls-colors.nix)
+    # (import ./ls-colors.nix)
     (callPackage ./poll { })
   ];
 
