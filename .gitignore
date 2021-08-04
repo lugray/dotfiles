@@ -11,6 +11,7 @@
 /.config/nvim/init.vim
 /.config/nvim/.netrwhist
 /.config/nvim/bundle
+/.config/nvim/spell
 !/.git
 !/.git-prompt-colors.sh
 !/.gitconfig
