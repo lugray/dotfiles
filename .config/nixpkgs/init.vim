@@ -59,6 +59,10 @@ augroup format_ruby
   autocmd Syntax ruby hi def link sorbetSigDo Comment
 augroup END
 
+augroup format_markdown
+  autocmd FileType markdown setlocal wrap linebreak nolist
+augroup END
+
 set nowrap
 set tabstop=2
 set shiftwidth=2
