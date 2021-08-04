@@ -15,7 +15,9 @@ fi
 if [[ $- == *i* ]] && [[ -f ~/.zsh_profile ]]; then source ~/.zsh_profile; fi
 
 # Load dev if it exists
-if [[ -f /opt/dev/dev.sh ]]; then
+if [[ -f "$HOME/src/github.com/Shopify/dev/dev.sh" ]]; then
+  source "$HOME/src/github.com/Shopify/dev/dev.sh"
+elif [[ -f /opt/dev/dev.sh ]]; then
   source /opt/dev/dev.sh
 elif [ -f ~/src/github.com/burke/minidev/dev.sh ]; then
   source ~/src/github.com/burke/minidev/dev.sh
