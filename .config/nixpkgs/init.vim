@@ -12,7 +12,7 @@ set ruler
 set number
 set termguicolors
 set nohlsearch
-set guifont=FuraCode\ NerdFont:h21
+set guifont=Fira\ Code\ Nerd\ Font:h21
 
 :let mapleader = " "
 set undofile " Persistent Undo
