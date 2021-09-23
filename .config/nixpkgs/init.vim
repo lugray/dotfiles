@@ -130,6 +130,13 @@ nnoremap ˛ "_X
 vnoremap ˛ "_X
 vnoremap π "_dP
 
+" Undo breakpoints
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+inoremap <CR> <CR><c-g>u
+
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 nnoremap <Leader>g :CtrlPBranchModified<CR>
