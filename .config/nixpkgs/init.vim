@@ -92,16 +92,16 @@ nnoremap ˚ <C-W>+
 nnoremap ¬ <C-W>>
 
 " Arrow keys
-nnoremap <Up> :m .-2<cr>
-nnoremap <Down> :m .+1<cr>
+nnoremap <Up> :m .-2<cr>==
+nnoremap <Down> :m .+1<cr>==
 nnoremap <Left> <<
 nnoremap <Right> >>
 
 " Visual Arrow keys
 vnoremap <Left> <gv
 vnoremap <Right> >gv
-vnoremap <Up> :m '<-2<CR>gv
-vnoremap <Down> :m '>+1<CR>gv
+vnoremap <Up> :m '<-2<CR>gv=gv
+vnoremap <Down> :m '>+1<CR>gv=gv
 
 " kj = <esc>
 inoremap kj <esc>
