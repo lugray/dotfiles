@@ -173,10 +173,12 @@ nmap ga <Plug>(EasyAlign)
 nnoremap <Leader>l<Space> vip:EasyAlign *\ <CR>
 nnoremap <Leader>l, vip:EasyAlign *,<CR>
 nnoremap <Leader>l= vip:EasyAlign =<CR>
+nnoremap <Leader>l\| vip:EasyAlign *\|<CR>
 
 vnoremap <Leader>l<Space> :EasyAlign *\ <CR>
 vnoremap <Leader>l, :EasyAlign *,<CR>
 vnoremap <Leader>l= :EasyAlign =<CR>
+vnoremap <Leader>l\| :EasyAlign *\|<CR>
 
 let g:splitjoin_ruby_curly_braces = 0
 let g:splitjoin_ruby_hanging_args = 0
