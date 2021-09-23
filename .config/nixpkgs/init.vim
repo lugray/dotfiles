@@ -61,6 +61,8 @@ augroup END
 
 augroup format_markdown
   autocmd FileType markdown setlocal wrap linebreak nolist
+  autocmd FileType markdown vnoremap <expr> * (join(getline(getpos("'<")[1], getpos("'>")[1]), "\n") =~ "^\s*- " ? ":s/^\s*- //" : ":s/^/- /")."<CR>"
+  autocmd FileType markdown nnoremap <expr> * (getline(getpos("'<")[1]) =~ "^\s*- " ? ":s/^\s*- //" : ":s/^/- /")."<CR>"
 augroup END
 
 set nowrap
