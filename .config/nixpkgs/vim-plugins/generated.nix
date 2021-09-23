@@ -29,24 +29,24 @@ let
 
   dracula-vim = buildVimPluginFrom2Nix {
     pname = "dracula-vim";
-    version = "2020-12-23";
+    version = "2021-09-22";
     src = fetchFromGitHub {
       owner = "dracula";
       repo = "vim";
-      rev = "e7154372adc95d637ccd911c2f8601d9ff2eac1f";
-      sha256 = "1li5q3151kjh8c6a7cdnmbydxhkjgqsa5nlv49dy6dnqc3b50m7s";
+      rev = "86eb25b3dc8aa228373723c92f102f9d5fffdf11";
+      sha256 = "178wmg12bl30nq3plxa43j7597lzq7dm9hi7zi07p2xxg4ipnzh6";
     };
     meta.homepage = "https://github.com/dracula/vim/";
   };
 
   firenvim = buildVimPluginFrom2Nix {
     pname = "firenvim";
-    version = "2021-02-02";
+    version = "2021-09-20";
     src = fetchFromGitHub {
       owner = "glacambre";
       repo = "firenvim";
-      rev = "26a85db2cc44842a637d723d69f64dc628fbcaf3";
-      sha256 = "1i8s1d035mamnaknd6idpfcah6jq9nxlawgizs2icf2f43m6zllj";
+      rev = "f62386a9edd8b24fe1155d998be0fa56e8d8ff85";
+      sha256 = "1k4cljj0z10dqcprrkqf8f0jbz9mzmqjccxj14xm46425kb0rs8n";
     };
     meta.homepage = "https://github.com/glacambre/firenvim/";
   };
@@ -77,12 +77,12 @@ let
 
   splitjoin-vim = buildVimPluginFrom2Nix {
     pname = "splitjoin-vim";
-    version = "2020-12-15";
+    version = "2021-09-19";
     src = fetchFromGitHub {
       owner = "AndrewRadev";
       repo = "splitjoin.vim";
-      rev = "91ba14b41f6e767414d7bf2a8e82947c6bfdb978";
-      sha256 = "0q01xfnjqk3vnmknb01zlkzn1jj03lqsygk863vwrdazq86g5aci";
+      rev = "fd0723bde223c8431746ecfc5cf2608c3bae828f";
+      sha256 = "01s4kqv5jn15cdxwvbn7raikslqwrbmpf7gg2qwc51v1ynzi4iqk";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/AndrewRadev/splitjoin.vim/";
