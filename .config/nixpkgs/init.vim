@@ -224,6 +224,18 @@ augroup stripTrailingWhitespacesPluginDetect
   autocmd FileType ruby,python,javascript,nix autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
 augroup END
 
+function! s:reIndentFile()
+  " Preparation: save cursor position.
+  let l = line(".")
+  let c = col(".")
+
+  normal! gg=G
+
+  " Clean up: restore previous cursor position
+  call cursor(l, c)
+endfunction
+nnoremap <Leader>= :call <SID>reIndentFile()<CR>
+
 nnoremap <silent> <leader>og V:<c-u>call OpenCurrentFileInGithub()<cr>
 xnoremap <silent> <leader>og :<c-u>call OpenCurrentFileInGithub()<cr>
 function! OpenCurrentFileInGithub()
