@@ -36,6 +36,7 @@ setopt appendhistory autocd
 HIST_STAMPS="yyyy-mm-dd"
 export LC_ALL="en_US.UTF-8"
 export EDITOR=nvim
+export KALEIDOSCOPE_DIR=${HOME}/src/github.com/keyboardio/Kaleidoscope
 
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 
