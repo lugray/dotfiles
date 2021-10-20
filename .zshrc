@@ -1,6 +1,6 @@
 export GOPATH=$HOME
 export GOBIN=$HOME/gobin
-export PATH=$HOME/.yarn/bin:$HOME/bin:$GOBIN:/usr/local/bin:$PATH
+export PATH=$HOME/.yarn/bin:$HOME/bin:$GOBIN:$PATH
 
 if [[ -d /opt/homebrew ]]; then
   export HOMEBREW_PREFIX="/opt/homebrew";
@@ -9,6 +9,8 @@ if [[ -d /opt/homebrew ]]; then
   export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
   export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
   export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+elif [[ -d /usr/local/Homebrew ]]; then
+  export PATH="/usr/local/bin${PATH+:$PATH}";
 fi
 
 # Load ~/.zsh_profile for interactive shells if it exists
