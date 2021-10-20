@@ -41,12 +41,12 @@ let
 
   firenvim = buildVimPluginFrom2Nix {
     pname = "firenvim";
-    version = "2021-09-20";
+    version = "2021-10-03";
     src = fetchFromGitHub {
       owner = "glacambre";
       repo = "firenvim";
-      rev = "f62386a9edd8b24fe1155d998be0fa56e8d8ff85";
-      sha256 = "1k4cljj0z10dqcprrkqf8f0jbz9mzmqjccxj14xm46425kb0rs8n";
+      rev = "eb3abef4520d17dbd9957f5d23ada74b853133e4";
+      sha256 = "0sjldh3hpxr2iql7rcalk64ilkrwmj7kjwlks2092ansblmmcxf5";
     };
     meta.homepage = "https://github.com/glacambre/firenvim/";
   };
@@ -63,6 +63,18 @@ let
     meta.homepage = "https://github.com/godoctor/godoctor.vim/";
   };
 
+  rainbow_parentheses-vim = buildVimPluginFrom2Nix {
+    pname = "rainbow_parentheses-vim";
+    version = "2013-03-05";
+    src = fetchFromGitHub {
+      owner = "kien";
+      repo = "rainbow_parentheses.vim";
+      rev = "eb8baa5428bde10ecc1cb14eed1d6e16f5f24695";
+      sha256 = "1qw84imlhq4654mxazj7j3sp5g1j3yjxi496i08iix06dm15m5s7";
+    };
+    meta.homepage = "https://github.com/kien/rainbow_parentheses.vim/";
+  };
+
   ReplaceWithRegister = buildVimPluginFrom2Nix {
     pname = "ReplaceWithRegister";
     version = "2014-10-31";
@@ -77,12 +89,12 @@ let
 
   splitjoin-vim = buildVimPluginFrom2Nix {
     pname = "splitjoin-vim";
-    version = "2021-09-19";
+    version = "2021-10-03";
     src = fetchFromGitHub {
       owner = "AndrewRadev";
       repo = "splitjoin.vim";
-      rev = "fd0723bde223c8431746ecfc5cf2608c3bae828f";
-      sha256 = "01s4kqv5jn15cdxwvbn7raikslqwrbmpf7gg2qwc51v1ynzi4iqk";
+      rev = "48af03733f4e7a7d0449fdbb15aa70539faef7ad";
+      sha256 = "0z5vcjfnrs18plcqy311qwrl1l4h9xi4r3fbijc8ald38hw6p7dk";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/AndrewRadev/splitjoin.vim/";

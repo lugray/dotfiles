@@ -4,6 +4,7 @@ glacambre/firenvim
 godoctor/godoctor.vim
 icatalina/vim-case-change
 jasoncodes/ctrlp-modified.vim
+kien/rainbow_parentheses.vim
 nelstrom/vim-textobj-rubyblock
 vim-scripts/ReplaceWithRegister
 wellle/context.vim
