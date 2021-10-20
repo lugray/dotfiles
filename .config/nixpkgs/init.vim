@@ -200,7 +200,7 @@ nnoremap <Home> :call LineHome()<CR>:echo<CR>
 vnoremap <Home> :call LineHome()<CR>:echo<CR>
 imap <Home> <C-R>=LineHome()<CR>
 function! LineHome()
-let x = col('.')
+  let x = col('.')
   execute "normal ^"
   if x == col('.')
     execute "normal 0"
@@ -224,17 +224,19 @@ augroup stripTrailingWhitespacesPluginDetect
   autocmd FileType ruby,python,javascript,nix autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
 augroup END
 
-function! s:reIndentFile()
+function! s:inNormalReplacingCursor(command)
   " Preparation: save cursor position.
   let l = line(".")
   let c = col(".")
 
-  normal! gg=G
+  :execute "normal!" . a:command
 
   " Clean up: restore previous cursor position
   call cursor(l, c)
 endfunction
-nnoremap <Leader>= :call <SID>reIndentFile()<CR>
+nnoremap <Leader>== :call <SID>inNormalReplacingCursor("gg=G")<CR>
+nnoremap <Leader>=p :call <SID>inNormalReplacingCursor("=ip")<CR>
+nnoremap <Leader>=r :call <SID>inNormalReplacingCursor("=ar")<CR>
 
 nnoremap <silent> <leader>og V:<c-u>call OpenCurrentFileInGithub()<cr>
 xnoremap <silent> <leader>og :<c-u>call OpenCurrentFileInGithub()<cr>
