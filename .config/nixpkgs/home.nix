@@ -148,6 +148,7 @@ in {
       vim-gitgutter
       colorizer # Show #xxxxxx in its colour
       dracula-vim
+      rainbow_parentheses-vim
 
       # Navigation
       ctrlp-vim

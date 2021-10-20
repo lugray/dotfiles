@@ -65,6 +65,12 @@ augroup format_markdown
   autocmd FileType markdown nnoremap <expr> * (getline(getpos("'<")[1]) =~ "^\s*- " ? ":s/^\s*- //" : ":s/^/- /")."<CR>"
 augroup END
 
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+au Syntax * RainbowParenthesesLoadChevrons
+
 set nowrap
 set tabstop=2
 set shiftwidth=2
