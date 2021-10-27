@@ -21,6 +21,7 @@
 !/.spacemacs.d
 !/.zsh_profile
 !/.zshrc
+!/dev.yml
 !/Library/
 /Library/*
 !/Library/Application Support/
