@@ -104,6 +104,9 @@ else
 fi
 bindkey "µ" copy-prev-shell-word                    # Alt-m file rename magick
 
+bindkey "$key[Up]" history-beginning-search-backward
+bindkey "$key[Down]" history-beginning-search-forward
+
 zle-dev-open-pr() /opt/dev/bin/dev open pr
 zle -N zle-dev-open-pr
 bindkey 'ø' zle-dev-open-pr # Alt-O ABC Extended
