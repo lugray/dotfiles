@@ -29,24 +29,24 @@ let
 
   dracula-vim = buildVimPluginFrom2Nix {
     pname = "dracula-vim";
-    version = "2021-09-22";
+    version = "2021-10-23";
     src = fetchFromGitHub {
       owner = "dracula";
       repo = "vim";
-      rev = "86eb25b3dc8aa228373723c92f102f9d5fffdf11";
-      sha256 = "178wmg12bl30nq3plxa43j7597lzq7dm9hi7zi07p2xxg4ipnzh6";
+      rev = "e5f09746562ef0226d3484a01609ceca41700a3d";
+      sha256 = "1k5bwif20srhzwj8fwigrih1npjnjcvivl7sr7idspp7rig7lldk";
     };
     meta.homepage = "https://github.com/dracula/vim/";
   };
 
   firenvim = buildVimPluginFrom2Nix {
     pname = "firenvim";
-    version = "2021-10-03";
+    version = "2021-10-30";
     src = fetchFromGitHub {
       owner = "glacambre";
       repo = "firenvim";
-      rev = "eb3abef4520d17dbd9957f5d23ada74b853133e4";
-      sha256 = "0sjldh3hpxr2iql7rcalk64ilkrwmj7kjwlks2092ansblmmcxf5";
+      rev = "553c913db02952f305e71e76aa0a8f6c71eb83ff";
+      sha256 = "0cv95ph3flm01r8nwckvbf77nr6mw1fg6p1rxmg024gkqhmxbp26";
     };
     meta.homepage = "https://github.com/glacambre/firenvim/";
   };
@@ -61,18 +61,6 @@ let
       sha256 = "0si65xlgfq5rdshk0y2v7wq72zyxp7c9ckr0xljx65raa9l5dgil";
     };
     meta.homepage = "https://github.com/godoctor/godoctor.vim/";
-  };
-
-  rainbow_parentheses-vim = buildVimPluginFrom2Nix {
-    pname = "rainbow_parentheses-vim";
-    version = "2013-03-05";
-    src = fetchFromGitHub {
-      owner = "kien";
-      repo = "rainbow_parentheses.vim";
-      rev = "eb8baa5428bde10ecc1cb14eed1d6e16f5f24695";
-      sha256 = "1qw84imlhq4654mxazj7j3sp5g1j3yjxi496i08iix06dm15m5s7";
-    };
-    meta.homepage = "https://github.com/kien/rainbow_parentheses.vim/";
   };
 
   ReplaceWithRegister = buildVimPluginFrom2Nix {
