@@ -1,6 +1,7 @@
 function back {
-	if [[ $1 =~ ^[1-9][0-9]*$ ]]; then
-		path=`yes ".." | head -n $1 | tr '\n' '/'`
-		cd $path
-	fi
+  COUNT="$1"
+  if ! [[ $COUNT =~ ^[1-9][0-9]*$ ]]; then
+    COUNT=1
+  fi
+  cd $(yes ".." | head -n $COUNT | tr '\n' '/')
 }

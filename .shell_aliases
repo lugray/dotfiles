@@ -23,10 +23,19 @@ alias q='exit'
 alias gitk='(gitk --argscmd="git rev-list --no-walk --branches" --since="2 weeks ago" &> /dev/null &)'
 alias g='git'
 
+alias b='back'
+alias b2='back 2'
+alias b3='back 3'
+alias b4='back 4'
+alias b5='back 5'
+alias b6='back 6'
+alias b7='back 7'
+alias b8='back 8'
+alias b9='back 9'
+
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
 alias d='dev'
-alias x='dex'
 
 alias pbformat='pbpaste | dev eval "STDIN.each_line {|l| puts CLI::UI.fmt(l, enable_color: true).inspect }" | pbcopy'
 
