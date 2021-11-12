@@ -172,6 +172,7 @@ in {
       vim-sensible
       vim-fugitive
       vim-rhubarb
+      vim-rubocop
     ];
   };
 }

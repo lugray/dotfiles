@@ -41,12 +41,12 @@ let
 
   firenvim = buildVimPluginFrom2Nix {
     pname = "firenvim";
-    version = "2021-10-30";
+    version = "2021-11-07";
     src = fetchFromGitHub {
       owner = "glacambre";
       repo = "firenvim";
-      rev = "553c913db02952f305e71e76aa0a8f6c71eb83ff";
-      sha256 = "0cv95ph3flm01r8nwckvbf77nr6mw1fg6p1rxmg024gkqhmxbp26";
+      rev = "0ff2821cc0a561ac79596f358b26674c87483efa";
+      sha256 = "0ahyzp0217r9hrimn0m1kzvc7rhm15qvmgy07139pdlixy1762ry";
     };
     meta.homepage = "https://github.com/glacambre/firenvim/";
   };
@@ -77,12 +77,12 @@ let
 
   splitjoin-vim = buildVimPluginFrom2Nix {
     pname = "splitjoin-vim";
-    version = "2021-10-03";
+    version = "2021-11-03";
     src = fetchFromGitHub {
       owner = "AndrewRadev";
       repo = "splitjoin.vim";
-      rev = "48af03733f4e7a7d0449fdbb15aa70539faef7ad";
-      sha256 = "0z5vcjfnrs18plcqy311qwrl1l4h9xi4r3fbijc8ald38hw6p7dk";
+      rev = "0f45bfd7d6a8acb7d6ac126001a27190851bf3f5";
+      sha256 = "1a5y8qj8gyrmaxh4si3k30v19yh8chws4h9k41ra1jzslrilm9ai";
       fetchSubmodules = true;
     };
     meta.homepage = "https://github.com/AndrewRadev/splitjoin.vim/";
@@ -98,6 +98,18 @@ let
       sha256 = "191509759yzx6jwzrs7vrxr2ivb8vxpifbxyaidqnskdqkjizhgy";
     };
     meta.homepage = "https://github.com/icatalina/vim-case-change/";
+  };
+
+  vim-rubocop = buildVimPluginFrom2Nix {
+    pname = "vim-rubocop";
+    version = "2015-04-25";
+    src = fetchFromGitHub {
+      owner = "ngmy";
+      repo = "vim-rubocop";
+      rev = "1c57918086d22cc9db829125f6b78226feae86a3";
+      sha256 = "0ijv3v7kfm5hfd26vx6hgz6xprsxvxhmcd72x39q0m50xqb9mcd7";
+    };
+    meta.homepage = "https://github.com/ngmy/vim-rubocop/";
   };
 
   vim-textobj-rubyblock = buildVimPluginFrom2Nix {

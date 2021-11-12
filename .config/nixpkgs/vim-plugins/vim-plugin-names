@@ -5,5 +5,6 @@ godoctor/godoctor.vim
 icatalina/vim-case-change
 jasoncodes/ctrlp-modified.vim
 nelstrom/vim-textobj-rubyblock
+ngmy/vim-rubocop
 vim-scripts/ReplaceWithRegister
 wellle/context.vim
