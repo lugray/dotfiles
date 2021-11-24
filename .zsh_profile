@@ -142,8 +142,15 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}🆕"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}${i_dev_git_pull_request}"
 ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[yellow]%}📦"
 local italic=$'\e[3m'
+function dev_emoji() {
+if [[ "$__dev_source_dir" == "/opt/dev" ]]; then
+  echo '%2{👩‍💻%}'
+else
+  echo '%2{🔧%}'
+fi
+}
 PROMPTL1='╭─%{$fg_bold[blue]${italic}%}%m%{${reset_color}%} %{$fg[cyan]%}%~%{${reset_color}%}$(git_super_status)'
-PROMPTL2='╰─%(?.%2{🐙%}.%{$fg[red]%}[%?]%{$reset_color%} %2{🤬%} ) '
+PROMPTL2='╰─$(dev_emoji)%(?.%2{🐙%}.%{$fg[red]%}[%?]%{$reset_color%} %2{🤬%} ) '
 PROMPT=${PROMPTL1}$'\n'${PROMPTL2}
 
 
