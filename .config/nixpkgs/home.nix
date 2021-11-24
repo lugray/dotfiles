@@ -144,6 +144,7 @@ in {
 
       godoctor-vim
       vim-textobj-rubyblock
+      argtextobj-vim
 
       # UI
       vim-gitgutter

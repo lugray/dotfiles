@@ -229,7 +229,7 @@ function! s:inNormalReplacingCursor(command)
   let l = line(".")
   let c = col(".")
 
-  :execute "normal!" . a:command
+  :execute "normal " . a:command
 
   " Clean up: restore previous cursor position
   call cursor(l, c)
@@ -237,6 +237,10 @@ endfunction
 nnoremap <Leader>== :call <SID>inNormalReplacingCursor("gg=G")<CR>
 nnoremap <Leader>=p :call <SID>inNormalReplacingCursor("=ip")<CR>
 nnoremap <Leader>=r :call <SID>inNormalReplacingCursor("=ar")<CR>
+
+" Select last paste/change
+nnoremap <Leader>v `[v`]
+nnoremap <Leader>V `[V`]
 
 nnoremap <silent> <leader>og V:<c-u>call OpenCurrentFileInGithub()<cr>
 xnoremap <silent> <leader>og :<c-u>call OpenCurrentFileInGithub()<cr>
