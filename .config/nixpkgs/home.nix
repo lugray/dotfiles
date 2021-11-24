@@ -18,6 +18,7 @@ in {
   home.stateVersion = "19.09";
 
   home.packages = with pkgs; [
+    gnused
     ack
     tree
     gawk
