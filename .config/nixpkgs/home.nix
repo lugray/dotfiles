@@ -49,7 +49,7 @@ in {
         gl = "log --oneline --graph --all";
         permission-reset = "!git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply";
         fpt = "force-push-this";
-        m = "checkout master";
+        m = "!git checkout $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)";
         amco = "commit -a --amend --no-edit";
         prune-all-hard = "!git fetch --all --prune && git branch -vv --no-color | grep \"\\[.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D";
         checkoutr = "checkout";
