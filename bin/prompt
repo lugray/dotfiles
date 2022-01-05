@@ -1,7 +1,5 @@
 #!/usr/bin/ruby
 
-require 'open3'
-
 def format(code, text)
   "%{\x1b[#{code}m%}#{text}%{\x1b[0m%}"
 end
@@ -43,6 +41,8 @@ end
 
 print "#{prompt}\0"
 $stdout.flush
+
+require 'open3'
 
 branch, err, stat = Open3.capture3('git', 'symbolic-ref', '--short', 'HEAD')
 exit 0 if err.include?('fatal: not a git repository')
