@@ -128,30 +128,17 @@ bindkey '®' zle-dev-open-app # Alt-R ABC Extended & Canadian English
 ##################
 # zsh git prompt #
 ##################
-source ~/src/github.com/lugray/zsh-git-prompt/zshrc.sh
-ZSH_THEME_GIT_PROMPT_PREFIX=" %{$reset_color%}["
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}]"
-ZSH_THEME_GIT_PROMPT_SEPARATOR="%{$reset_color%}|"
-ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}🎭"
-ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}💥"
-ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[yellow]%}🚧 "
-ZSH_THEME_GIT_PROMPT_BEHIND="%{$reset_color%}↓"
-ZSH_THEME_GIT_PROMPT_AHEAD="%{$reset_color%}↑"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%}🆕"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}${i_dev_git_pull_request}"
-ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[yellow]%}📦"
-local italic=$'\e[3m'
-function dev_emoji() {
-if [[ "$__dev_source_dir" == "/opt/dev" ]]; then
-  echo '%2{👩‍💻%}'
-else
-  echo '%2{🔧%}'
-fi
-}
-PROMPTL1='╭─%{$fg_bold[blue]${italic}%}%m%{${reset_color}%} %{$fg[cyan]%}%~%{${reset_color}%}$(git_super_status)'
-PROMPTL2='╰─$(dev_emoji)%(?.%2{🐙%}.%{$fg[red]%}[%?]%{$reset_color%} %2{🤬%} ) '
-PROMPT=${PROMPTL1}$'\n'${PROMPTL2}
 
+TRAPALRM() {
+  if [[ -n "$WIDGET" ]]; then
+    zle reset-prompt
+  fi
+}
+function __progressive_prompt_exec_incr() {
+  __progressive_prompt_exec_no=$((__progressive_prompt_exec_no+1))
+}
+precmd_functions+=(__progressive_prompt_exec_incr)
+setopt PROMPT_SUBST
+PROMPT='$(progressive_prompt $$ $__progressive_prompt_exec_no "" prompt)'
 
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

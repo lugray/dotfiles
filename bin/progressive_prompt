@@ -1,0 +1,60 @@
+#!/usr/bin/ruby
+
+require 'open3'
+require 'fileutils'
+
+DIR = '/tmp/progressive_prompt'
+WORKING_SENTINEL = "\0\0\0"
+
+args = ARGV.dup
+shell_pid = args.shift.to_i
+exec_number = args.shift.to_i
+placeholder = args.shift
+dir = Dir.pwd
+
+shell_dir = "#{DIR}/#{shell_pid}"
+file = "#{shell_dir}/#{exec_number}"
+
+FileUtils.mkdir_p(File.dirname(file))
+
+if File.exist?(file)
+  contents = File.read(file)
+  puts contents == WORKING_SENTINEL ? placeholder : contents
+else
+  File.write(file, WORKING_SENTINEL) # Sometimes other things call SIGALRM.
+  Process.detach(fork do
+    Process.daemon
+    Open3.popen3(*args, chdir: dir) do |stdin, stdout, stderr, wait_thr|
+      left_over = ''
+      loop do
+        out = left_over + stdout.readpartial(4096)
+        parts = out.split("\0", -1)
+        if parts.length > 1
+          File.write(file, parts[-2])
+          Process.kill('ALRM', shell_pid)
+          left_over = parts[-1]
+        else
+          left_over += parts[-1]
+        end
+      end
+    rescue EOFError
+      File.write(file, left_over)
+      Process.kill('ALRM', shell_pid)
+    end
+    Dir.foreach(shell_dir) do |f|
+      next unless f.to_i.to_s == f
+      next unless f.to_i < exec_number
+      File.unlink("#{shell_dir}/#{f}")
+    end
+    Dir.foreach(DIR) do |pid|
+      next unless pid.to_i.to_s == pid
+      Process.kill(0, pid.to_i)
+      # alive
+    rescue Errno::ESRCH
+      FileUtils.rm_r("#{DIR}/#{pid}")
+    rescue Errno::EPERM
+      # alive
+    end
+  end)
+  puts placeholder
+end

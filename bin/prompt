@@ -1,0 +1,103 @@
+#!/usr/bin/ruby
+
+require 'open3'
+
+def format(code, text)
+  "%{\x1b[#{code}m%}#{text}%{\x1b[0m%}"
+end
+
+def italic(text)
+  format(3, text)
+end
+
+def red(text)
+  format(31, text)
+end
+
+def yellow(text)
+  format(33, text)
+end
+
+def cyan(text)
+  format(36, text)
+end
+
+def bold_green(text)
+  format(92, text)
+end
+
+def bold_blue(text)
+  format(94, text)
+end
+
+def bold_magenta(text)
+  format(95, text)
+end
+
+def prompt(suffix = "")
+  [
+    "╭─#{bold_blue(italic('%m'))} #{cyan('%~')}#{suffix}",
+    "╰─%(?.🐙.#{red('[%?]')} 🤬) ",
+  ].join("\n")
+end
+
+print "#{prompt}\0"
+$stdout.flush
+
+branch, err, stat = Open3.capture3('git', 'symbolic-ref', '--short', 'HEAD')
+exit 0 if err.include?('fatal: not a git repository')
+branch.chomp!
+
+changed_files = `git diff --name-status`.lines
+staged_files = `git diff --staged --name-status`.lines
+changed = changed_files.count { |l| !l.start_with?('U') }
+conflicts = staged_files.count { |l| l.start_with?('U') }
+staged = staged_files.length - conflicts
+untracked = `git status --porcelain`.each_line.count { |l| l.start_with?('??') }
+stashed = `git stash list`.each_line.count { |l| l.start_with?('stash@') }
+
+ahead = behind = 0
+
+
+if branch.empty?
+  branch = ':' + `git rev-parse --short HEAD`.chomp
+else
+  remote_name = `git config branch.#{branch}.remote`.chomp
+  merge_name = `git config branch.#{branch}.merge`.chomp
+  remote_ref = if remote_name == '.' # local
+    merge_name
+  else
+    remote_ref = "refs/remotes/#{remote_name}/#{merge_name[11..]}"
+  end
+  revlist = `git rev-list --left-right #{remote_ref}..HEAD`.lines
+  ahead = revlist.count { |l| l.start_with?('>') }
+  behind = revlist.length - ahead
+end
+status = " [#{bold_magenta(branch)}|"
+if behind > 0
+  status += "↓#{behind}"
+end
+if ahead > 0
+  status += "↑#{ahead}"
+end
+if staged > 0
+  status += "🎭#{red(staged)}"
+end
+if conflicts > 0
+  status += "💥#{red(conflicts)}"
+end
+if changed > 0
+  status += "🚧#{yellow(changed)}"
+end
+if untracked > 0
+  status += "🆕#{cyan(untracked)}"
+end
+if stashed > 0
+  status += "📦#{yellow(stashed)}"
+end
+if staged + conflicts + changed + untracked == 0
+  status += "#{bold_green('')}"
+end
+status += ']'
+
+print prompt(status)
