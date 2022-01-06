@@ -56,7 +56,7 @@ in {
         checkoutr = "checkout";
         br = "branch";
         rtt = "reset-to-tracking";
-        lb = "!git show --format='%C(auto)%D %s' -s $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/heads/)";
+        lb = "!git show --format='%C(auto)%D %s' -s $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/heads/ | grep -v '^\\(master\\|main\\)$')";
       };
       push.default = "simple";
       color = {
