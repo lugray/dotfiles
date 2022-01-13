@@ -69,7 +69,7 @@ else
   else
     remote_ref = "refs/remotes/#{remote_name}/#{merge_name[11..]}"
   end
-  revlist = `git rev-list --left-right #{remote_ref}..HEAD`.lines
+  revlist = `git rev-list --left-right #{remote_ref}...HEAD`.lines
   ahead = revlist.count { |l| l.start_with?('>') }
   behind = revlist.length - ahead
 end
