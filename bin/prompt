@@ -35,7 +35,7 @@ end
 def prompt(suffix = "")
   [
     "╭─#{bold_blue(italic('%m'))} #{cyan('%~')}#{suffix}",
-    "╰─%(?.🐙.#{red('[%?]')} 🤬) ",
+    "╰─%(?.%2{🐙%}.#{red('[%?]')} %2{🤬%}) ",
   ].join("\n")
 end
 
@@ -81,19 +81,19 @@ if ahead > 0
   status += "↑#{ahead}"
 end
 if staged > 0
-  status += "🎭#{red(staged)}"
+  status += "%2{🎭%}#{red(staged)}"
 end
 if conflicts > 0
-  status += "💥#{red(conflicts)}"
+  status += "%2{💥%}#{red(conflicts)}"
 end
 if changed > 0
-  status += "🚧#{yellow(changed)}"
+  status += "%2{🚧%}#{yellow(changed)}"
 end
 if untracked > 0
-  status += "🆕#{cyan(untracked)}"
+  status += "%2{🆕%}#{cyan(untracked)}"
 end
 if stashed > 0
-  status += "📦#{yellow(stashed)}"
+  status += "%2{📦%}#{yellow(stashed)}"
 end
 if staged + conflicts + changed + untracked == 0
   status += "#{bold_green('')}"
