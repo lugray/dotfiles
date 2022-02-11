@@ -5,7 +5,6 @@ let
 in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  # programs.home-manager.path = "/Users/lisaugray/src/github.com/rycee/home-manager";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -24,7 +23,6 @@ in {
     gawk
     wget
     sshpass
-    # (import ./ls-colors.nix)
     (callPackage ./poll { })
   ];
 
