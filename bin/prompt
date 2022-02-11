@@ -45,7 +45,10 @@ $stdout.flush
 require 'open3'
 
 branch, err, stat = Open3.capture3('git', 'symbolic-ref', '--short', 'HEAD')
-exit 0 if err.include?('fatal: not a git repository')
+if err.include?('fatal: not a git repository')
+  print "#{prompt}"
+  exit 0
+end
 branch.chomp!
 
 changed_files = `git diff --name-status`.lines
