@@ -6,36 +6,18 @@
 !/.config
 /.config/*
 !/.config/nixpkgs/
-/.config/nixpkgs/overlays
 !/.config/nvim
 /.config/nvim/init.vim
 /.config/nvim/.netrwhist
 /.config/nvim/bundle
 /.config/nvim/spell
-!/.git
 !/.git-prompt-colors.sh
-!/.gitconfig
 !/.gitignore
 !/.global_gitignore
+!/.nix-channels
 !/.shellfuncs
-!/.spacemacs.d
 !/.zsh_profile
 !/.zshrc
 !/dev.yml
-!/Library/
-/Library/*
-!/Library/Application Support/
-/Library/Application Support/*
-!/Library/Application Support/Firefox/
-/Library/Application Support/Firefox/*
-!/Library/Application Support/Firefox/Profiles/
-/Library/Application Support/Firefox/Profiles/*
-!/Library/Application Support/Firefox/Profiles/dobq4989.default/
-/Library/Application Support/Firefox/Profiles/dobq4989.default/*
-!/Library/Application Support/Firefox/Profiles/dobq4989.default/chrome/
-/Library/Application Support/Firefox/Profiles/dobq4989.default/chrome/*
-!/Library/Application Support/Firefox/Profiles/dobq4989.default/chrome/userContent.css
-
 !/bin
 !/nerdfont
-!/nix

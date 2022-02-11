@@ -1,8 +1,0 @@
-@-moz-document domain(github.com) {
-  .blob-code-inner, pre, code {
-    font-family: "FuraCode Nerd Font Mono" !important;
-  }
-  .hide-file-notes-toggle {
-    /* display: none; */
-  }
-}
