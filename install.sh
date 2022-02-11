@@ -19,3 +19,4 @@ done
 
 nix-channel --update
 nix-shell '<home-manager>' -A install
+bat cache --build
