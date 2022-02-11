@@ -31,8 +31,6 @@ in {
     userName = "Lisa Ugray";
     userEmail = "lisa.ugray@shopify.com";
     extraConfig = {
-      user.signingkey = "A9215DE6C39BC6B8EDD2D8832462CA4FAF81C1AF";
-      gpg.program = "/nix/var/nix/gcroots/dev-profiles/dev-support-dev-profile/bin/gpg-auto-pin";
       commit.gpgSign = true;
       merge = {
         tool = "vimdiff";
@@ -77,7 +75,6 @@ in {
       };
       diff.plist.textconv = "plutil -convert xml1 -o -";
       core = {
-        commitGraph = true;
         pager = "${pkgs.gitAndTools.diff-so-fancy}/bin/diff-so-fancy | less";
         excludesfile = "${
           pkgs.writeText "global_git_ignore" ''
@@ -97,19 +94,10 @@ in {
       fetch.prune = true;
       rebase.autosquash = true;
       diff = {
-        algorithm = "patience";
         noprefix = true;
       };
-      protocol.version = "2";
-      gc.writeCommitGraph = true;
-      credential.helper = [ "" "store --file /opt/dev/var/private/git_credential_store" ];
-      url."https://github.com/Shopify/".insteadOf = [
-        "git@github.com:Shopify/"
-        "git@github.com:shopify/"
-        "ssh://git@github.com/Shopify/"
-        "ssh://git@github.com/shopify/"
-      ];
       branch.sort = "committerdate";
+      include.path = "${config.home.homeDirectory}/.config/dev/gitconfig";
     };
   };
 
