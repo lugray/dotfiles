@@ -18,9 +18,9 @@ elif [ -f ~/src/github.com/burke/minidev/dev.sh ]; then
 fi
 
 # Load chruby if not present
-if ! which chruby > /dev/null && [[ -f /usr/local/share/chruby/chruby.sh ]]; then
-  source /usr/local/share/chruby/chruby.sh
-  source /usr/local/share/chruby/auto.sh
+if ! which chruby > /dev/null; then
+  [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
+  [[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
 fi
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
