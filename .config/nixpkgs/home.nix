@@ -155,6 +155,7 @@ in {
       vim-case-change # ~ for visual select
       splitjoin-vim
       vim-multiple-cursors
+      vim-go
 
       vim-dispatch
       vim-test
