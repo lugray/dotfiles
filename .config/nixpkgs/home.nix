@@ -144,7 +144,7 @@ in {
       ack-vim
 
       # Editing
-      vim-mucomplete
+      copilot-vim
       LanguageClient-neovim
       vim-surround # cs"'
       vim-commentary
