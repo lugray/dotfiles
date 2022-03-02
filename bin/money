@@ -8,9 +8,9 @@ class Fund
     "TDB911" => 30,
   }
 
-  def initialize(file, no_sell)
+  def initialize(file, ignore_less_than: nil)
     @file = file
-    @no_sell = no_sell
+    @ignore_less_than = ignore_less_than
     @table = File.read(file).split("\n").map { |l| l.split(",") }
     raise unless @table[7][7] == "Market Value"
     @cash = (@table.detect { |l| l[0] == "Cash" })[1].to_f
@@ -41,8 +41,8 @@ class Fund
       [stock, (total * frac - have[stock]).round(2)]
     end.to_h
 
-    if @no_sell && buy.values.any?(&:negative?)
-      to_buy(want: want.reject { |k, _| buy[k].negative? })
+    if @ignore_less_than && buy.values.any? { |v| v < @ignore_less_than }
+      to_buy(want: want.reject { |k, _| buy[k] < @ignore_less_than })
     else
       buy
     end
@@ -57,8 +57,15 @@ class Fund
 end
 
 args = ARGV.dup
-no_sell = !!args.delete('--no-sell')
+ignore_less_than = nil
+if !!args.delete('--no-sell')
+  ignore_less_than = 0
+elsif (i = args.index('-i'))
+  raise 'wat' unless args.delete_at(i)
+  raise 'wat' unless val = args.delete_at(i)
+  ignore_less_than = val.to_f
+end
 
 puts(args.map do |file|
-  Fund.new(file, no_sell).to_s
+  Fund.new(file, ignore_less_than: ignore_less_than).to_s
 end.join("\n\n"))
