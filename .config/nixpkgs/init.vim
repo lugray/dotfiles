@@ -21,9 +21,8 @@ set smartcase " don't ignore capitals in searches
 
 nnoremap <Leader>vv :source ~/.config/nvim/init.vim<CR>
 
-set completeopt+=menuone,noinsert,noselect
-set shortmess+=c " Shut off completion messages
-let g:mucomplete#enable_auto_at_startup = 1
+imap <c-j> <Plug>(copilot-next)
+imap <c-k> <Plug>(copilot-previous)
 
 :set shell=/bin/bash
 
