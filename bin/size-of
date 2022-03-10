@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby --disable-gems
+
+class SizeInfo
+  PREFIXES = [' ', 'K', 'M', 'G', 'T']
+
+  def initialize(path)
+    @path = path
+  end
+
+  def show(depth: 1, max_depth:)
+    puts "#{display_size}#{'  ' * depth}#{File.basename(@path)}"
+    return if depth >= max_depth
+
+    children.each do |child|
+      child.show(depth: depth + 1, max_depth: max_depth)
+    end
+  end
+
+  def size
+    @size ||= if File.file?(@path)
+      File.size(@path)
+    elsif File.directory?(@path)
+      children.sum(&:size)
+    else
+      raise "Unknown path: #{@path}"
+    end
+  end
+
+  def children
+    @children ||= if File.directory?(@path)
+      Dir.entries(@path).reject { |child| ['.', '..'].include?(child) }.sort.map { |child| SizeInfo.new(File.join(@path, child)) }
+    else
+      []
+    end
+  end
+
+  def display_size
+    s = size.to_f
+    p = 0
+    while s >= 1024
+      s = s / 1024
+      p += 1
+    end
+    "#{sprintf("%8.8s", sprintf("%0.03f", s))} #{PREFIXES[p]}B"
+  end
+end
+
+
+args = ARGV.dup
+depth = 1
+if (i = args.index('-d') || args.index('--depth'))
+  raise 'wat' unless args.delete_at(i)
+  raise 'wat' unless val = args.delete_at(i)
+  depth = val.to_i
+end
+args.each { |path| SizeInfo.new(path).show(max_depth: depth) }

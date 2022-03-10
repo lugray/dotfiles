@@ -31,7 +31,6 @@ in {
     userName = "Lisa Ugray";
     userEmail = "lisa.ugray@shopify.com";
     extraConfig = {
-      commit.gpgSign = true;
       merge = {
         tool = "vimdiff";
         conflictstyle = "diff3";
