@@ -52,6 +52,7 @@ in {
         br = "branch";
         rtt = "reset-to-tracking";
         lb = "!git show --format='%C(auto)%D %s' -s $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/heads/ | grep -v '^\\(master\\|main\\)$')";
+        pr-body = "log --format='#### %B' --reverse origin/master...";
       };
       push.default = "simple";
       color = {
