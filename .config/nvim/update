@@ -1,6 +1,7 @@
 #!/bin/bash
 # Thieved from https://github.com/burke/dotfiles/blob/master/.config/nvim/update
 set -euo pipefail
+shopt -s extglob
 
 dir="$(dirname "${BASH_SOURCE[0]}")"
 
@@ -12,19 +13,27 @@ while read -r line; do
   if [[ "${line}" == "#"* || "${line}" == "" ]]; then
     continue
   fi
-  line="${line%% *}"
+  org_repo="${line%% *}"
+  command="${line##+([^ ])?( )}"
+  command="${command%%?( )#*}"
 
   (
-    repo="$(basename "${line}")"
+    repo="$(basename "${org_repo}")"
     if [[ -d "${dir}/bundle/${repo}" ]]; then
       echo "%% Pulling ${repo}"
       git -C "${dir}/bundle/${repo}" pull
     else
       echo "%% Cloning ${repo}"
-      git -C "${dir}/bundle" clone "https://github.com/${line}.git"
+      git -C "${dir}/bundle" clone "https://github.com/${org_repo}.git"
     fi
     echo "%% Updating submodules in ${repo}"
     git -C "${dir}/bundle/${repo}" submodule update --init --recursive
+    if [[ -n "${command}" ]]; then
+      (
+        cd "${dir}/bundle/${repo}"
+        ${command}
+      )
+    fi
   ) &
   children+=($!)
 done < "${dir}/plugin_list"

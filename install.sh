@@ -26,3 +26,4 @@ if [[ ${source_dir} != ${HOME} ]]; then # Support repo not in ~ for spin
 fi
 
 bat cache --build
+.config/nvim/update
