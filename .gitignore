@@ -7,6 +7,9 @@
 !/.bashrc
 !/.config
 /.config/*
+!/.config/github-copilot
+/.config/github-copilot/*
+!/.config/github-copilot/terms.json
 !/.config/git
 !/.config/nvim
 /.config/nvim/.netrwhist
