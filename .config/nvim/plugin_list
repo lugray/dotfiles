@@ -4,7 +4,7 @@ autozimu/LanguageClient-neovim bash install.sh
 ctrlpvim/ctrlp.vim
 dracula/vim
 fatih/vim-go
-github/copilot.vim
+lugray/copilot.vim
 glacambre/firenvim
 godoctor/godoctor.vim
 icatalina/vim-case-change # ~ for visual select
