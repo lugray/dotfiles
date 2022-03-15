@@ -37,9 +37,7 @@ alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
 alias d='dev'
 
-alias pbformat='pbpaste | dev eval "STDIN.each_line {|l| puts CLI::UI.fmt(l, enable_color: true).inspect }" | pbcopy'
+alias vim='nvim'
+alias vi='nvim'
 
-# Nix
-alias nb='nix-build'
-alias nsd='nix show-derivation'
-alias ngc='nix-collect-garbage'
+alias pbformat='pbpaste | dev eval "STDIN.each_line {|l| puts CLI::UI.fmt(l, enable_color: true).inspect }" | pbcopy'

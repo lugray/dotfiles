@@ -1,8 +1,9 @@
+execute pathogen#infect()
+
 syntax on
 filetype plugin indent on
 
 " Themeing
-:packadd dracula-vim
 :colorscheme dracula
 hi Normal ctermbg=none guibg=none
 

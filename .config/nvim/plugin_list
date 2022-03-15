@@ -1,31 +1,29 @@
-# Syntax / Language Support ##########################
-fatih/vim-go # go
-godoctor/godoctor.vim
-nelstrom/vim-textobj-rubyblock
-
-# UI
-gkjgh/cobalt
+AndrewRadev/splitjoin.vim
 airblade/vim-gitgutter
-lilydjwg/colorizer # Show #xxxxxx in its colour
-
-# Navigation
+autozimu/LanguageClient-neovim
 ctrlpvim/ctrlp.vim
+dracula/vim
+fatih/vim-go
+github/copilot.vim
+glacambre/firenvim
+godoctor/godoctor.vim
+icatalina/vim-case-change # ~ for visual select
+janko-m/vim-test
 jasoncodes/ctrlp-modified.vim
-mileszs/ack.vim
-
-# Editing
-lifepillar/vim-mucomplete
-tpope/vim-surround # cs"'
-# machakann/vim-sandwich # sr"'
-tpope/vim-commentary
-tpope/vim-repeat # . support for some plugins
 junegunn/vim-easy-align
 kana/vim-textobj-user
-vim-scripts/ReplaceWithRegister
-icatalina/vim-case-change # ~ for visual select
-AndrewRadev/splitjoin.vim
-
+lilydjwg/colorizer # Show #xxxxxx in its colour
+mileszs/ack.vim
+nelstrom/vim-textobj-rubyblock
+ngmy/vim-rubocop
+terryma/vim-multiple-cursors
+tpope/vim-commentary
 tpope/vim-dispatch
-janko-m/vim-test
-tpope/vim-sensible
 tpope/vim-fugitive
+tpope/vim-repeat # . support for some plugins
+tpope/vim-rhubarb
+tpope/vim-sensible
+tpope/vim-surround # cs"'
+vim-ruby/vim-ruby
+vim-scripts/ReplaceWithRegister # gr
+vim-scripts/argtextobj.vim

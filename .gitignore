@@ -5,16 +5,13 @@
 !/.bashrc
 !/.config
 /.config/*
-!/.config/nixpkgs/
+!/.config/git
 !/.config/nvim
-/.config/nvim/init.vim
 /.config/nvim/.netrwhist
 /.config/nvim/bundle
 /.config/nvim/spell
 !/.git-prompt-colors.sh
 !/.gitignore
-!/.global_gitignore
-!/.nix-channels
 !/.shellfuncs
 !/.zsh_profile
 !/.zshrc

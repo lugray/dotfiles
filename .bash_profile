@@ -67,4 +67,3 @@ GIT_PROMPT_THEME=Custom
 
 export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/.pyenv/shims/"
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
