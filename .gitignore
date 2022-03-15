@@ -1,5 +1,7 @@
 /*
 !/.ackrc
+!/brews.yml
+!/packages.yml
 !/.shell_aliases
 !/.bash_profile
 !/.bashrc

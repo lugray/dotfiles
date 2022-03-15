@@ -1,0 +1,14 @@
+- coreutils
+- fswatch
+- fzf
+- fzy
+- git
+- gnu-sed
+- gnu-tar
+- hudochenkov/sshpass/sshpass
+- jq
+- nvim
+- tree
+- watchman
+- wget
+- yq
