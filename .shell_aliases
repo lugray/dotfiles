@@ -4,6 +4,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 if which bat > /dev/null; then
   alias cat='bat --style=plain'
+elif which batcat > /dev/null; then
+  alias cat='batcat --style=plain'
+  alias bat='batcat'
 fi
 
 if [[ "$(python --version 2>&1)" == *"available"* ]] && which python3 > /dev/null; then
