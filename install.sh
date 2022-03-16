@@ -25,5 +25,10 @@ if [[ ${source_dir} != ${HOME} ]]; then # Support repo not in ~ for spin
   done
 fi
 
+if [ -f /etc/spin/secrets/copilot_hosts.json ]; then
+  mkdir -p "${HOME}/.config/github-copilot"
+  cp /etc/spin/secrets/copilot_hosts.json "${HOME}/.config/github-copilot/hosts.json"
+fi
+
 bat cache --build
 ~/.config/nvim/update
