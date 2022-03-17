@@ -11,7 +11,7 @@
 	m = "!git checkout $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)"
 	mrebase = "!git rebase -i $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f3,4 -d/)"
 	permission-reset = "!git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply"
-	pr-body = "log --format='#### %B' --reverse origin/master..."
+	pr-body = "log --format='#### %B' --reverse HEAD --not origin/HEAD"
 	prune-all-hard = "!git fetch --all --prune && git branch -vv --no-color | grep \"\\[.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D"
 	rtt = "reset-to-tracking"
 	st = "status"
