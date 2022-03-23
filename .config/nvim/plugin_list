@@ -7,12 +7,12 @@ fatih/vim-go
 github/copilot.vim
 glacambre/firenvim
 godoctor/godoctor.vim
-icatalina/vim-case-change # ~ for visual select
+icatalina/vim-case-change ## ~ for visual select
 janko-m/vim-test
 jasoncodes/ctrlp-modified.vim
 junegunn/vim-easy-align
 kana/vim-textobj-user
-lilydjwg/colorizer # Show #xxxxxx in its colour
+lilydjwg/colorizer ## Show #xxxxxx in its colour
 mileszs/ack.vim
 nelstrom/vim-textobj-rubyblock
 ngmy/vim-rubocop
@@ -20,10 +20,10 @@ terryma/vim-multiple-cursors
 tpope/vim-commentary
 tpope/vim-dispatch
 tpope/vim-fugitive
-tpope/vim-repeat # . support for some plugins
+tpope/vim-repeat ## . support for some plugins
 tpope/vim-rhubarb
 tpope/vim-sensible
-tpope/vim-surround # cs"'
+tpope/vim-surround ## cs"'
 vim-ruby/vim-ruby
-vim-scripts/ReplaceWithRegister # gr
+vim-scripts/ReplaceWithRegister ## gr
 vim-scripts/argtextobj.vim

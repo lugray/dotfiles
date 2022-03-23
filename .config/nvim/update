@@ -15,7 +15,7 @@ while read -r line; do
   fi
   org_repo="${line%% *}"
   command="${line##+([^ ])?( )}"
-  command="${command%%?( )#*}"
+  command="${command%%?( )##*}"
 
   (
     repo="$(basename "${org_repo}")"
