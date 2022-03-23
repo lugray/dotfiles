@@ -5,7 +5,7 @@ ctrlpvim/ctrlp.vim
 dracula/vim
 fatih/vim-go
 github/copilot.vim
-glacambre/firenvim
+glacambre/firenvim nvim --headless "+call firenvim#install(0) | q"
 godoctor/godoctor.vim
 icatalina/vim-case-change ## ~ for visual select
 janko-m/vim-test

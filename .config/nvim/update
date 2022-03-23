@@ -31,7 +31,7 @@ while read -r line; do
     if [[ -n "${command}" ]]; then
       (
         cd "${dir}/bundle/${repo}"
-        ${command}
+        eval "${command}"
       )
     fi
   ) &
