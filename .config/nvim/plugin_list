@@ -27,3 +27,4 @@ tpope/vim-surround ## cs"'
 vim-ruby/vim-ruby
 vim-scripts/ReplaceWithRegister ## gr
 vim-scripts/argtextobj.vim
+wsdjeg/vim-fetch
