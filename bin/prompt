@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/opt/rubies/latest/bin/ruby --disable-gems
 
 def format(code, text)
   "%{\x1b[#{code}m%}#{text}%{\x1b[0m%}"
@@ -39,17 +39,37 @@ def prompt(suffix = "")
   ].join("\n")
 end
 
-print "#{prompt}\0"
-$stdout.flush
+def print_prompt(suffix = "", final: false)
+  print prompt(suffix)
+  exit 0 if final
+
+  print "\0"
+  $stdout.flush
+end
+
+# def status(
+#   branch: nil,
+#   behind: nil,
+#   ahead: nil,
+#   staged: nil,
+#   conflicts: nil,
+#   changed: nil,
+#   untracked: nil,
+#   stashed: nil,
+# )
+#   status = " ["
+# end
+
+print_prompt
 
 require 'open3'
 
 branch, err, stat = Open3.capture3('git', 'symbolic-ref', '--short', 'HEAD')
 if err.include?('fatal: not a git repository')
-  print "#{prompt}"
-  exit 0
+  print_prompt("", final: true)
 end
 branch.chomp!
+print_prompt(" [#{bold_magenta(branch)} ...]")
 
 changed_files = `git diff --name-status`.lines
 staged_files = `git diff --staged --name-status`.lines
