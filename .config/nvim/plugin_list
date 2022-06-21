@@ -1,6 +1,7 @@
 AndrewRadev/splitjoin.vim
 airblade/vim-gitgutter
 autozimu/LanguageClient-neovim bash install.sh
+christoomey/vim-tmux-navigator
 ctrlpvim/ctrlp.vim
 dracula/vim
 fatih/vim-go

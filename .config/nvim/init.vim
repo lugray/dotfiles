@@ -79,12 +79,6 @@ cmap w!! w !sudo tee > /dev/null %
 
 nnoremap <Leader>a :Ack!<Space>
 
-" Navigate panes with C-motion
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " Resize panes with Alt- hjkl on Mac
 nnoremap ˙ <C-W><
 nnoremap ∆ <C-W>-
