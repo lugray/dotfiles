@@ -42,11 +42,11 @@ fi
 # Keybindings #
 ###############
 function use-block-cursor {
-  print -n -- "\E]50;CursorShape=0\C-G"
+  echo -n '\e[1 q'
 }
 
 function use-line-cursor {
-  print -n -- "\E]50;CursorShape=1\C-G"
+  echo -n '\e[5 q'
 }
 
 function use-mode-cursor {
