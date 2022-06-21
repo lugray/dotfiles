@@ -15,6 +15,7 @@
 /.config/nvim/.netrwhist
 /.config/nvim/bundle
 /.config/nvim/spell
+!/.config/tmux
 !/.git-prompt-colors.sh
 !/.gitignore
 !/.shellfuncs
