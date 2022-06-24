@@ -19,7 +19,7 @@
 !/.git-prompt-colors.sh
 !/.gitignore
 !/.shellfuncs
-!/.zsh_profile
+!/.zshenv
 !/.zshrc
 !/dev.yml
 !/bin

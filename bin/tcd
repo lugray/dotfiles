@@ -1,5 +1,3 @@
 #!/bin/bash
 
-export PATH="$PATH:/opt/homebrew/bin/"
-
 tmux new-window -n "${1##*/}" -c "$1"

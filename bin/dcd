@@ -1,5 +1,4 @@
 #!/bin/bash
-export PATH="$PATH:/opt/homebrew/bin/:$HOME/bin/"
 
 if [ -z "$1" ]; then
   TARGET="$(printf '%s\n' ~/src/github.com/*/* | sed "s~$HOME/src/github.com/~~" | fzf --preview 'echo -n "\e[96;4m"{}"\e[0m"; timeout 0.2 git-line "$HOME/src/github.com/"{} 2> /dev/null || echo ""; echo ""; ls "$HOME/src/github.com/"{}')"
