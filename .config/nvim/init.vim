@@ -79,6 +79,7 @@ cmap w!! w !sudo tee > /dev/null %
 
 nnoremap <Leader>a :Ack!<Space>
 
+autocmd VimResized * :wincmd =
 " Resize panes with Alt- hjkl on Mac
 nnoremap ˙ <C-W><
 nnoremap ∆ <C-W>-
