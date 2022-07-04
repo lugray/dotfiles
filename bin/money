@@ -58,7 +58,7 @@ end
 
 args = ARGV.dup
 ignore_less_than = nil
-if !!args.delete('--no-sell')
+if !!args.delete('--no-sell') || !!args.delete('-n')
   ignore_less_than = 0
 elsif (i = args.index('-i'))
   raise 'wat' unless args.delete_at(i)
