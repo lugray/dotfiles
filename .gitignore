@@ -11,6 +11,7 @@
 /.config/github-copilot/*
 !/.config/github-copilot/terms.json
 !/.config/git
+!/.config/kitty
 !/.config/nvim
 /.config/nvim/.netrwhist
 /.config/nvim/bundle
