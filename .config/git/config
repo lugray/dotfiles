@@ -38,9 +38,6 @@
 	oldHighlight = "red bold 52"
 	oldNormal = "red bold"
 
-[commit]
-	gpgSign = true
-
 [core]
 	excludesfile = "~/.config/git/global_gitignore"
 	pager = "~/src/github.com/so-fancy/diff-so-fancy/diff-so-fancy | less"
