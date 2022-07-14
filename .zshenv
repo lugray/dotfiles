@@ -4,6 +4,7 @@ export PATH=$HOME/.yarn/bin:$HOME/bin:$GOBIN:$PATH
 export EDITOR=nvim
 export KALEIDOSCOPE_DIR=${HOME}/src/github.com/keyboardio/Kaleidoscope
 export LC_ALL="en_US.UTF-8"
+export DEV_NO_GPG_MESSAGE=1
 
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 [[ -x /usr/local/bin/brew ]] && eval $(/usr/local/bin/brew shellenv)
