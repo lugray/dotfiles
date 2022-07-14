@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 if [ -z "$1" ]; then
   TARGET="$(printf '%s\n' ~/src/github.com/*/* | sed "s~$HOME/src/github.com/~~" | fzf --preview 'echo -n "\e[96;4m"{}"\e[0m"; timeout 0.2 git-line "$HOME/src/github.com/"{} 2> /dev/null || echo ""; echo ""; ls "$HOME/src/github.com/"{}')"
@@ -9,8 +9,6 @@ RET=$?
 if [ $RET -ne 0 ]; then
   exit $RET
 fi
-if tmux list-windows -F'#{window_name}' | grep "^${TARGET}$"; then
-  tmux select-window -t "${TARGET}"
-else
-  tmux new-window -n "${TARGET}" -c "${HOME}/src/github.com/${TARGET}"
+if ! kitty @ focus-tab --match title:"^${TARGET}$" > /dev/null 2>&1; then
+  kitty @ launch --cwd="$HOME/src/github.com/${TARGET}" --type=tab --tab-title="${TARGET}" > /dev/null 2>&1
 fi

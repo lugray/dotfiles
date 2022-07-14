@@ -1,7 +1,3 @@
-if [ -z "${TMUX}" ]; then
-  tmux new-session -As0 -n '~'
-fi
-
 if [ -d ~/.shellfuncs ]; then
   for FILE in ~/.shellfuncs/*.sh; do
     source $FILE
