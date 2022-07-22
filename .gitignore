@@ -19,6 +19,7 @@
 !/.config/tmux
 !/.git-prompt-colors.sh
 !/.gitignore
+!/.irbrc
 !/.shellfuncs
 !/.zshenv
 !/.zshrc
