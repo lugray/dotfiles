@@ -24,6 +24,9 @@ nnoremap <Leader>vv :source ~/.config/nvim/init.vim<CR>
 
 imap <c-j> <Plug>(copilot-next)
 imap <c-k> <Plug>(copilot-previous)
+if filereadable('/opt/homebrew/opt/node@16/bin/node')
+  let g:copilot_node_command = '/opt/homebrew/opt/node@16/bin/node'
+endif
 
 :set shell=/bin/bash
 
