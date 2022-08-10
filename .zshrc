@@ -1,3 +1,16 @@
+zstyle ':completion:*' completer _complete _ignored
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._- ]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' use-cache on
+zstyle :compinstall filename '/Users/lisaugray/.zshrc'
+autoload -Uz compinit
+compinit
+HISTFILE=~/.histfile
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt appendhistory autocd
+setopt HIST_IGNORE_SPACE
+HIST_STAMPS="yyyy-mm-dd"
+
 if [ -d ~/.shellfuncs ]; then
   for FILE in ~/.shellfuncs/*.sh; do
     source $FILE
@@ -29,19 +42,6 @@ if ! which chruby > /dev/null; then
   [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
   [[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
 fi
-
-zstyle ':completion:*' completer _complete _ignored
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._- ]=** r:|=**' 'l:|=* r:|=*'
-zstyle ':completion:*' use-cache on
-zstyle :compinstall filename '/Users/lisaugray/.zshrc'
-autoload -Uz compinit
-compinit
-HISTFILE=~/.histfile
-HISTSIZE=1000000
-SAVEHIST=1000000
-setopt appendhistory autocd
-setopt HIST_IGNORE_SPACE
-HIST_STAMPS="yyyy-mm-dd"
 
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 
