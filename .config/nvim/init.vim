@@ -267,3 +267,8 @@ nmap <leader>s <Plug>(lcn-menu)
 
 :let g:ruby_indent_assignment_style = 'variable'
 :let g:ruby_indent_hanging_elements = 0
+
+let g:firenvim_config = { 'localSettings': { } }
+let fc = g:firenvim_config['localSettings']
+let fc['https?://[^/]+\.google\.com/'] = { 'takeover': 'never', 'priority': 1 }
+let fc['https://app\.mode\.com/'] = { 'takeover': 'never', 'priority': 1 }
