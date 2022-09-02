@@ -81,6 +81,7 @@ set clipboard=unnamed
 cmap w!! w !sudo tee > /dev/null %
 
 nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>r :RuboCop .<CR>
 
 autocmd VimResized * :wincmd =
 " Resize panes with Alt- hjkl on Mac
