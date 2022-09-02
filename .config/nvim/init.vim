@@ -200,9 +200,19 @@ vnoremap <Home> :call LineHome()<CR>:echo<CR>
 imap <Home> <C-R>=LineHome()<CR>
 function! LineHome()
   let x = col('.')
-  execute "normal ^"
+  execute "normal! ^"
   if x == col('.')
-    execute "normal 0"
+    execute "normal! 0"
+  endif
+  return ""
+endfunction
+nnoremap 0 :call LineZero()<CR>:echo<CR>
+vnoremap 0 :call LineZero()<CR>:echo<CR>
+function! LineZero()
+  let x = col('.')
+  execute "normal! 0"
+  if x == col('.')
+    execute "normal! ^"
   endif
   return ""
 endfunction
