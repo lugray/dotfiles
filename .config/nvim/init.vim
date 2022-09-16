@@ -271,7 +271,11 @@ endfunction
 nnoremap <leader>cp :let @* = expand('%')<cr>
 nnoremap <leader>cap :let @* = expand('%:p')<cr>
 
-let g:LanguageClient_serverCommands = { 'ruby': ['bundle', 'exec', 'srb', 'tc', '--lsp'] }
+let g:LanguageClient_serverCommands = {
+      \ 'ruby': ['bundle', 'exec', 'srb', 'tc', '--lsp'],
+      \ 'sh': ['bash-language-server', 'start'],
+      \ 'yml': ['yaml-language-server']
+      \ }
 nmap <silent> K <Plug>(lcn-hover)
 nmap <silent> gd <Plug>(lcn-definition)
 nmap <leader>s <Plug>(lcn-menu)
