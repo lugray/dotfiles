@@ -1,16 +1,16 @@
 #!/usr/bin/env zsh
 
-devish=/opt/dev/bin/dev
-if ! [[ -x "${devish}" ]] && [[ -x /opt/minidev/bin/dev ]]; then
-  devish=/opt/minidev/bin/dev
-fi
+dev_clone() {
+  local org_dir
+  org_dir=${HOME}/src/github.com/$(echo $1 | cut -d/ -f1)
+  mkdir -p "${org_dir}"
+  cd "${org_dir}"
+  git clone "https://github.com/$1"
+}
 
-if [[ -x "${devish}" ]]; then
-  $devish clone zsh-users/zsh-autosuggestions
-  $devish clone zsh-users/zsh-syntax-highlighting
-  $devish clone so-fancy/diff-so-fancy
-fi
-
+dev_clone zsh-users/zsh-autosuggestions
+dev_clone zsh-users/zsh-syntax-highlighting
+dev_clone so-fancy/diff-so-fancy
 
 source_dir="${0:a:h}"
 if [[ ${source_dir} != ${HOME} ]]; then # Support repo not in ~ for spin
