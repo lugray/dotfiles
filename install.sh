@@ -2,10 +2,12 @@
 
 dev_clone() {
   local org_dir
-  org_dir=${HOME}/src/github.com/$(echo $1 | cut -d/ -f1)
+  org_dir="${HOME}/src/github.com/$(echo $1 | cut -d/ -f1)"
+  repo_dir="${HOME}/src/github.com/$1"
   mkdir -p "${org_dir}"
-  cd "${org_dir}"
-  git clone "https://github.com/$1"
+  if [ ! -d "${repo_dir}" ]; then
+    git clone "https://github.com/$1" "${repo_dir}"
+  fi
 }
 
 dev_clone zsh-users/zsh-autosuggestions
