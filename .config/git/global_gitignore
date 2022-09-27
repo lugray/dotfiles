@@ -5,4 +5,4 @@ test/debug.rb
 scratch.rb
 .DS_Store
 .byebug_history
-ugray.rb
+ugray.*
