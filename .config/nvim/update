@@ -14,12 +14,15 @@ def run!(*command, **kwargs)
   raise "Command failed: `#{command}` with output:\n#{o}\nand error:\n#{e}" unless s.success?
 end
 
+extra_repos = Dir.children(BUNDLE_DIR)
+
 File.readlines(PLUGIN_FILE).filter_map do |line|
   line = line.split('##').first.strip
   next if line.start_with?('#') || line.empty?
 
   org_repo, command = line.split(' ', 2)
   repo = File.basename(org_repo)
+  extra_repos.delete(repo)
 
   Thread.new do
     repo_dir = File.join(BUNDLE_DIR, repo)
@@ -38,3 +41,10 @@ File.readlines(PLUGIN_FILE).filter_map do |line|
     end
   end
 end.map(&:join)
+
+if extra_repos.any?
+  puts "Removing #{extra_repos.join(', ')}"
+  extra_repos.each do |extra_repo|
+    FileUtils.rm_rf(File.join(BUNDLE_DIR, extra_repo))
+  end
+end
