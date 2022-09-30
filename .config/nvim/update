@@ -1,42 +1,40 @@
-#!/bin/bash
-# Thieved from https://github.com/burke/dotfiles/blob/master/.config/nvim/update
-set -euo pipefail
-shopt -s extglob
+#!/usr/bin/env ruby --disable-gems
 
-dir="$(dirname "${BASH_SOURCE[0]}")"
+require 'fileutils'
+require 'open3'
 
-mkdir -p "${dir}/bundle"
+DIR = File.expand_path(File.dirname(__FILE__))
+BUNDLE_DIR = File.join(DIR, 'bundle')
+PLUGIN_FILE = File.join(DIR, 'plugin_list')
 
-children=()
+FileUtils.mkdir_p(BUNDLE_DIR)
 
-while read -r line; do
-  if [[ "${line}" == "#"* || "${line}" == "" ]]; then
-    continue
-  fi
-  org_repo="${line%% *}"
-  command="${line##+([^ ])?( )}"
-  command="${command%%?( )##*}"
+def run!(*command, **kwargs)
+  o, e, s = Open3.capture3(*command, **kwargs)
+  raise "Command failed: `#{command}` with output:\n#{o}\nand error:\n#{e}" unless s.success?
+end
 
-  (
-    repo="$(basename "${org_repo}")"
-    if [[ -d "${dir}/bundle/${repo}" ]]; then
-      echo "%% Pulling ${repo}"
-      git -C "${dir}/bundle/${repo}" pull
+File.readlines(PLUGIN_FILE).filter_map do |line|
+  line = line.split('##').first.strip
+  next if line.start_with?('#') || line.empty?
+
+  org_repo, command = line.split(' ', 2)
+  repo = File.basename(org_repo)
+
+  Thread.new do
+    repo_dir = File.join(BUNDLE_DIR, repo)
+    if Dir.exist?(repo_dir)
+      puts "Updating #{org_repo}"
+      run!('git', '-C', repo_dir, 'pull')
     else
-      echo "%% Cloning ${repo}"
-      git -C "${dir}/bundle" clone "https://github.com/${org_repo}.git"
-    fi
-    echo "%% Updating submodules in ${repo}"
-    git -C "${dir}/bundle/${repo}" submodule update --init --recursive
-    if [[ -n "${command}" ]]; then
-      (
-        cd "${dir}/bundle/${repo}"
-        eval "${command}"
-      )
-    fi
-  ) &
-  children+=($!)
-done < "${dir}/plugin_list"
-
-# shellcheck disable=SC2086
-wait ${children[*]}
+      puts "Cloning #{org_repo}"
+      run!('git', '-C', BUNDLE_DIR, 'clone', "https://github.com/#{org_repo}.git")
+    end
+    puts "Updating submodules for #{org_repo}"
+    run!('git', '-C', repo_dir, 'submodule', 'update', '--init', '--recursive')
+    if command
+      puts "Running `#{command}` for #{org_repo}"
+      run!(command, chdir: repo_dir)
+    end
+  end
+end.map(&:join)
