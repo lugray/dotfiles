@@ -166,9 +166,8 @@ function! QuickFixToggle()
 endfunction 
 nnoremap <tab> :call QuickFixToggle()<cr>
 
-" Preserve c-i behaviour separate from tab with CSI u in iTerm2 and c-i
-" remapped to Esc sequence i, to then be remapped back here
-noremap <a-i> <c-i>
+" Mapping tab also maps <C-I> ಠ_ಠ. Set it back.
+nnoremap <C-I> <C-I>
 
 :hi VertSplit guibg=bg guifg=#555555
 let &fcs='eob: ,vert:⎸'
