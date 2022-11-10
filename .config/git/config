@@ -42,9 +42,6 @@
 	excludesfile = "~/.config/git/global_gitignore"
 	pager = "~/src/github.com/so-fancy/diff-so-fancy/diff-so-fancy | less"
 
-[diff]
-	noprefix = true
-
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
 
@@ -67,9 +64,7 @@
 
 [rebase]
 	autosquash = true
-
-[track-push]
-	default = "lugray"
+	updateRefs = true
 
 [user]
 	email = "lisa.ugray@shopify.com"
