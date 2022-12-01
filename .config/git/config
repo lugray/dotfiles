@@ -16,6 +16,7 @@
 	rtt = "reset-to-tracking"
 	st = "status"
 	unstage = "reset HEAD --"
+  f = "fresh"
 
 [branch]
 	sort = "committerdate"
