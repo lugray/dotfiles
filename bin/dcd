@@ -1,14 +1,21 @@
-#!/bin/zsh
+#!/usr/bin/ruby
 
-if [ -z "$1" ]; then
-  TARGET="$(printf '%s\n' ~/src/github.com/*/* | sed "s~$HOME/src/github.com/~~" | fzf --preview 'echo -n "\e[96;4m"{}"\e[0m"; timeout 0.2 git-line "$HOME/src/github.com/"{} 2> /dev/null || echo ""; echo ""; ls "$HOME/src/github.com/"{}')"
-else
-  TARGET="$(/opt/dev/bin/dev for-completion cd -n "$1" | sed "s~$HOME/src/github.com/~~")"
-fi
-RET=$?
-if [ $RET -ne 0 ]; then
-  exit $RET
-fi
-if ! kitty @ focus-tab --match title:"^${TARGET}$" > /dev/null 2>&1; then
-  kitty @ launch --cwd="$HOME/src/github.com/${TARGET}" --type=tab --tab-title="${TARGET}" > /dev/null 2>&1
-fi
+require 'open3'
+
+FIELD_SEP = "\u2007"
+
+io = IO.popen(['fzf', '-d', FIELD_SEP, '--nth', '1', '--with-nth', '1', '--preview', 'echo -n "\e[96;4m"{1}"\e[0m"; timeout 0.3 git-line {2} 2> /dev/null || echo ""; echo ""; bat --color=always {2}/README.md 2> /dev/null || cat {2}/README.md 2> /dev/null || ls --color=always {2}'], 'r+')
+Dir.glob("#{ENV['HOME']}/src/*/*/*").each do |dir|
+  io.write("#{File.basename(dir)}#{FIELD_SEP}#{dir}\n")
+end
+io.close_write
+name, dir = io.read.chomp.split(FIELD_SEP)
+Process.wait(io.pid)
+stat = $?
+exit stat.exitstatus unless stat.success?
+
+_, _, stat = Open3.capture3('kitty', '@', 'focus-tab', '--match', "title:^#{name}$")
+
+unless stat.success?
+  Open3.capture3('kitty', '@', 'launch', "--cwd=#{dir}", '--type=tab', "--tab-title=#{name}")
+end
