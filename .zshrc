@@ -35,7 +35,7 @@ elif [ -f ~/src/github.com/burke/minidev/dev.sh ]; then
 fi
 
 # Load dev chruby if it exists
-[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && (type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; })
 
 # Load chruby if not present
 if ! which chruby > /dev/null; then
