@@ -39,8 +39,8 @@ fi
 
 # Load chruby if not present
 if ! which chruby > /dev/null; then
-  [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
-  [[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
+  [[ -f /opt/homebrew/share/chruby/chruby.sh ]] && source /opt/homebrew/share/chruby/chruby.sh
+  [[ -f /opt/homebrew/share/chruby/auto.sh ]] && source /opt/homebrew/share/chruby/auto.sh
 fi
 
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
