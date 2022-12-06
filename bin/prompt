@@ -32,10 +32,68 @@ def bold_magenta(text)
   format(95, text)
 end
 
+def month
+  Time.now.strftime("%m").to_i
+end
+
+def format_machine(machine)
+  case month
+  when 12
+    bold_green(machine)
+  else
+    bold_blue(italic(machine))
+  end
+end
+
+def format_path(path)
+  case month
+  when 12
+    red(path)
+  else
+    cyan(path)
+  end
+end
+
+def format_branch(branch)
+  case month
+  when 12
+    bold_green(branch)
+  else
+    bold_magenta(branch)
+  end
+end
+
+def success_emoji
+  case month
+  when 12
+    ['🎄', '🎅', '🎁', '🤶', '⛄'][ARGV[1].to_i % 5]
+  else
+    '🐙'
+  end
+end
+
+def failure_emoji
+  case month
+  when 12
+    '🪨'
+  else
+    '🤬'
+  end
+end
+
+def format_prefix(prefix)
+  case month
+  when 12
+    red(prefix)
+  else
+    prefix
+  end
+end
+
 def prompt(suffix = "")
   [
-    "╭─#{bold_blue(italic('%m'))} #{cyan('%~')}#{suffix}",
-    "╰─%(?.%2{🐙%}.#{red('[%?]')} %2{🤬%}) ",
+    "#{format_prefix('╭─')}#{format_machine('%m')} #{format_path('%~')}#{suffix}",
+    "#{format_prefix('╰─')}%(?.%2{#{success_emoji}%}.#{red('[%?]')} %2{#{failure_emoji}%}) ",
   ].join("\n")
 end
 
@@ -96,7 +154,7 @@ else
   ahead = revlist.count { |l| l.start_with?('>') }
   behind = revlist.length - ahead
 end
-status = " [#{bold_magenta(branch)}|"
+status = " [#{format_branch(branch)}|"
 if behind > 0
   status += "↓#{behind}"
 end

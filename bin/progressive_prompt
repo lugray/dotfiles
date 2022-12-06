@@ -24,7 +24,7 @@ else
   File.write(file, WORKING_SENTINEL) # Sometimes other things call SIGALRM.
   Process.detach(fork do
     Process.daemon
-    Open3.popen3(*args, chdir: dir) do |stdin, stdout, stderr, wait_thr|
+    Open3.popen3(*args, shell_pid.to_s, exec_number.to_s, chdir: dir) do |stdin, stdout, stderr, wait_thr|
       left_over = ''
       loop do
         out = left_over + stdout.readpartial(4096)
