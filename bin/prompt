@@ -127,7 +127,7 @@ if err.include?('fatal: not a git repository')
   print_prompt("", final: true)
 end
 branch.chomp!
-print_prompt(" [#{bold_magenta(branch)} ...]")
+print_prompt(" [#{format_branch(branch)} ...]")
 
 changed_files = `git diff --name-status`.lines
 staged_files = `git diff --staged --name-status`.lines
