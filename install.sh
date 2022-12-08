@@ -32,5 +32,14 @@ if [ -f /etc/spin/secrets/copilot_hosts.json ]; then
   cp /etc/spin/secrets/copilot_hosts.json "${HOME}/.config/github-copilot/hosts.json"
 fi
 
-bat cache --build
+if type bat 2>&1 > /dev/null; then
+  bat="bat"
+elif type batcat 2>&1 > /dev/null; then
+  bat="batcat"
+fi
+
+if [ -n "${bat}" ]; then
+  "${bat}" cache --build
+fi
+
 ~/.config/nvim/update
