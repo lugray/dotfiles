@@ -1,7 +1,10 @@
-#!/usr/bin/env -S ruby --disable-gems
+#!/usr/bin/env -S ruby
 
+require 'cli/ui'
 require 'fileutils'
 require 'open3'
+
+CLI::UI::StdoutRouter.enable
 
 DIR = File.expand_path(File.dirname(__FILE__))
 BUNDLE_DIR = File.join(DIR, 'bundle')
@@ -11,36 +14,41 @@ FileUtils.mkdir_p(BUNDLE_DIR)
 
 def run!(*command, **kwargs)
   o, e, s = Open3.capture3(*command, **kwargs)
+  if s.exitstatus == 124 # timeout
+    o, e, s = Open3.capture3(*command, **kwargs)
+  end
   raise "Command failed: `#{command}` with output:\n#{o}\nand error:\n#{e}" unless s.success?
 end
 
 extra_repos = Dir.children(BUNDLE_DIR)
+CLI::UI::SpinGroup.new do |spin_group|
+  File.readlines(PLUGIN_FILE).filter_map do |line|
+    line = line.split('##').first.strip
+    next if line.start_with?('#') || line.empty?
 
-File.readlines(PLUGIN_FILE).filter_map do |line|
-  line = line.split('##').first.strip
-  next if line.start_with?('#') || line.empty?
+    org_repo, command = line.split(' ', 2)
+    repo = File.basename(org_repo)
+    extra_repos.delete(repo)
 
-  org_repo, command = line.split(' ', 2)
-  repo = File.basename(org_repo)
-  extra_repos.delete(repo)
-
-  Thread.new do
-    repo_dir = File.join(BUNDLE_DIR, repo)
-    if Dir.exist?(repo_dir)
-      puts "Updating #{org_repo}"
-      run!('git', '-C', repo_dir, 'pull')
-    else
-      puts "Cloning #{org_repo}"
-      run!('git', '-C', BUNDLE_DIR, 'clone', "https://github.com/#{org_repo}.git")
-    end
-    puts "Updating submodules for #{org_repo}"
-    run!('git', '-C', repo_dir, 'submodule', 'update', '--init', '--recursive')
-    if command
-      puts "Running `#{command}` for #{org_repo}"
-      run!(command, chdir: repo_dir)
+    spin_group.add(org_repo) do |spinner|
+      repo_dir = File.join(BUNDLE_DIR, repo)
+      if Dir.exist?(repo_dir)
+        spinner.update_title("#{org_repo} (Updating)")
+        run!('timeout', '5', 'git', '-C', repo_dir, 'pull')
+      else
+        spinner.update_title("#{org_repo} (Cloning)")
+        run!('git', '-C', BUNDLE_DIR, 'clone', "https://github.com/#{org_repo}.git")
+      end
+      spinner.update_title("#{org_repo} (Updating submodules)")
+      run!('git', '-C', repo_dir, 'submodule', 'update', '--init', '--recursive')
+      if command
+        spinner.update_title("#{org_repo} (Running #{command})")
+        run!(command, chdir: repo_dir)
+      end
+      spinner.update_title("#{org_repo}")
     end
   end
-end.map(&:join)
+end
 
 if extra_repos.any?
   puts "Removing #{extra_repos.join(', ')}"
