@@ -81,8 +81,10 @@ set clipboard=unnamed
 cmap w!! w !sudo tee > /dev/null %
 
 nnoremap <Leader>a :Ack!<Space>
-nnoremap <Leader>r :RuboCop .<CR>
-nnoremap <Leader><Leader>r :RuboCop<CR>
+
+let g:vimrubocop_keymap = 0
+nnoremap <Leader>s :RuboCop .<CR>
+nnoremap <Leader><Leader>s :RuboCop<CR>
 
 autocmd VimResized * :wincmd =
 " Resize panes with Alt- hjkl on Mac
@@ -138,6 +140,7 @@ inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 inoremap <CR> <CR><c-g>u
 
+let g:ctrlp_map = '<Leader>p'
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 nnoremap <Leader>g :CtrlPBranchModified<CR>
@@ -145,8 +148,8 @@ nnoremap <Leader>d :CtrlPModified<CR>
 " let g:ctrlp#modified#excludes = "^vendor"
 let g:gitgutter_diff_base = "origin/HEAD"
 let g:gitgutter_diff_args = '-w'
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+nmap <Leader>hj <Plug>(GitGutterNextHunk)
+nmap <Leader>hk <Plug>(GitGutterPrevHunk)
 
 nnoremap <Leader>m :wa <bar> make<CR>
 
@@ -252,8 +255,8 @@ nnoremap <Leader>=r :call <SID>inNormalReplacingCursor("=ar")<CR>
 nnoremap <Leader>v `[v`]
 nnoremap <Leader>V `[V`]
 
-nnoremap <silent> <leader>og V:<c-u>call OpenCurrentFileInGithub()<cr>
-xnoremap <silent> <leader>og :<c-u>call OpenCurrentFileInGithub()<cr>
+nnoremap <silent> <Leader><Leader>g V:<c-u>call OpenCurrentFileInGithub()<cr>
+xnoremap <silent> <Leader><Leader>g :<c-u>call OpenCurrentFileInGithub()<cr>
 function! OpenCurrentFileInGithub()
   let file_dir = expand('%:h')
   let git_root = system('cd ' . file_dir . '; git rev-parse --show-toplevel | tr -d "\n"')
@@ -269,8 +272,8 @@ function! OpenCurrentFileInGithub()
   call system('open ' . url)
 endfunction
 
-nnoremap <leader>cp :let @* = expand('%')<cr>
-nnoremap <leader>cap :let @* = expand('%:p')<cr>
+nnoremap <Leader>cp :let @* = expand('%')<cr>
+nnoremap <Leader>cap :let @* = expand('%:p')<cr>
 
 let g:LanguageClient_serverCommands = {
       \ 'ruby': ['bundle', 'exec', 'srb', 'tc', '--lsp'],
@@ -279,7 +282,7 @@ let g:LanguageClient_serverCommands = {
       \ }
 nmap <silent> K <Plug>(lcn-hover)
 nmap <silent> gd <Plug>(lcn-definition)
-nmap <leader>s <Plug>(lcn-menu)
+nmap <Leader>ls <Plug>(lcn-menu)
 
 :let g:ruby_indent_assignment_style = 'variable'
 :let g:ruby_indent_hanging_elements = 0
@@ -288,3 +291,7 @@ let g:firenvim_config = { 'localSettings': { } }
 let fc = g:firenvim_config['localSettings']
 let fc['https?://[^/]+\.google\.com/'] = { 'takeover': 'never', 'priority': 1 }
 let fc['https://app\.mode\.com/'] = { 'takeover': 'never', 'priority': 1 }
+
+noremap <Leader>o <C-o>
+noremap <Leader>i <C-i>
+noremap <Leader>r <C-r>
