@@ -17,6 +17,8 @@
 	st = "status"
 	unstage = "reset HEAD --"
   f = "fresh"
+  s = "!git switch $(git branch --sort=committerdate | grep -v '^*' | sed 's/^  //' | fzf --preview 'git show {1}')"
+  cp = "cherry-pick"
 
 [branch]
 	sort = "committerdate"
@@ -42,6 +44,9 @@
 [core]
 	excludesfile = "~/.config/git/global_gitignore"
 	pager = "~/src/github.com/so-fancy/diff-so-fancy/diff-so-fancy | less"
+	commitGraph = true
+	fsmonitor = true
+	untrackedcache = true
 
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"
