@@ -152,3 +152,5 @@ PROMPT='$(progressive_prompt $$ $__progressive_prompt_exec_no "" prompt)'
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+
+source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
