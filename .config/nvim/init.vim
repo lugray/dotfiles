@@ -103,10 +103,11 @@ vnoremap <Right> >gv
 vnoremap <Up> :m '<-2<CR>gv=gv
 vnoremap <Down> :m '>+1<CR>gv=gv
 
+call arpeggio#load()
 " kj = <esc>
-inoremap kj <esc>
-cnoremap kj <esc>
-vnoremap kj <esc>
+Arpeggio inoremap kj <esc>
+Arpeggio cnoremap kj <esc>
+Arpeggio vnoremap kj <esc>
 
 " Commenting
 " Apparently <C-_> maps <C-/>

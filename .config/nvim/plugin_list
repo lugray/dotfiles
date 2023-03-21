@@ -31,3 +31,4 @@ vim-scripts/ReplaceWithRegister ## gr
 wsdjeg/vim-fetch
 machakann/vim-textobj-delimited
 wellle/targets.vim
+kana/vim-arpeggio
