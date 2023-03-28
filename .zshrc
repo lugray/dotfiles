@@ -75,7 +75,6 @@ function use-mode-cursor {
 }
 
 bindkey -v
-bindkey kj vi-cmd-mode
 
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init() {
