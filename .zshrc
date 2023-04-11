@@ -153,3 +153,6 @@ source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlightin
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+
+PWD_AT_SHELL_START=$PWD
+alias cdd='cd $PWD_AT_SHELL_START'
