@@ -156,3 +156,6 @@ source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 PWD_AT_SHELL_START=$PWD
 alias cdd='cd $PWD_AT_SHELL_START'
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="${HOMEBREW_PREFIX}/opt/openssl/bin:$PATH"
+export PATH=/opt/fullscript/bin:$PATH

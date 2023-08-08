@@ -1,4 +1,4 @@
-#!/opt/rubies/latest/bin/ruby --disable-gems
+#!/opt/homebrew/opt/ruby/bin/ruby --disable-gems
 
 def format(code, text)
   "%{\x1b[#{code}m%}#{text}%{\x1b[0m%}"
