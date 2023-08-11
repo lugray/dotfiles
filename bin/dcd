@@ -26,7 +26,7 @@ Dir.glob("#{ENV['HOME']}/src/*/*/*").each do |dir|
   end
   io.write("#{dir}#{FIELD_SEP}#{repo}#{FIELD_SEP}#{PADDING}#{additional}\n")
 end
-io.write("#{ENV['HOME']}#{FIELD_SEP}~#{FIELD_SEP}#{PADDING}`~#{ENV['HOME']}\n")
+io.write("#{ENV['HOME']}#{FIELD_SEP}~#{FIELD_SEP}#{PADDING}`~#{ENV['HOME']}home\n")
 io.close_write
 dir, name, _ = io.read.chomp.split(FIELD_SEP)
 Process.wait(io.pid)
