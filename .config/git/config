@@ -47,6 +47,7 @@
 	commitGraph = true
 	fsmonitor = true
 	untrackedcache = true
+	sshcommand = ssh -i /Users/lisa.ugray/.ssh/rx_key
 
 [diff "plist"]
 	textconv = "plutil -convert xml1 -o -"

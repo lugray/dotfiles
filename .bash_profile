@@ -67,5 +67,5 @@ GIT_PROMPT_THEME=Custom
 
 export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/.pyenv/shims/"
-export PATH="${HOMEBREW_PREFIX}/opt/openssl/bin:$PATH"
-export PATH=/opt/fullscript/bin:$PATH
+test -f ~/.rx/shell_config && source ~/.rx/shell_config
+source $HOMEBREW_PREFIX/opt/kube-ps1/share/kube-ps1.sh

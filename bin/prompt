@@ -1,184 +1,105 @@
 #!/opt/homebrew/opt/ruby/bin/ruby --disable-gems
 
+ITALIC = 3
+RED = 31
+YELLOW = 33
+CYAN = 36
+BOLD_GREEN = 92
+BOLD_BLUE = 94
+BOLD_MAGENTA = 95
+
+XMAS = Time.now.strftime("%m").to_i == 12
+
+MACHINE_COLOR = XMAS ? BOLD_GREEN : BOLD_BLUE
+PATH_COLOR    = XMAS ? RED        : CYAN
+BRANCH_COLOR  = XMAS ? BOLD_GREEN : BOLD_MAGENTA
+PREFIX_COLOR  = XMAS ? RED        : nil
+
 def format(code, text)
+  return text unless code
   "%{\x1b[#{code}m%}#{text}%{\x1b[0m%}"
 end
 
-def italic(text)
-  format(3, text)
-end
-
-def red(text)
-  format(31, text)
-end
-
-def yellow(text)
-  format(33, text)
-end
-
-def cyan(text)
-  format(36, text)
-end
-
-def bold_green(text)
-  format(92, text)
-end
-
-def bold_blue(text)
-  format(94, text)
-end
-
-def bold_magenta(text)
-  format(95, text)
-end
-
-def month
-  Time.now.strftime("%m").to_i
+def part(data, symbol, color = nil)
+  return '' if data == 0
+  format(color, "#{symbol}#{data}")
 end
 
 def format_machine(machine)
-  case month
-  when 12
-    bold_green(machine)
-  else
-    bold_blue(italic(machine))
-  end
+  format(MACHINE_COLOR, format(ITALIC, machine))
 end
 
 def format_path(path)
-  case month
-  when 12
-    red(path)
-  else
-    cyan(path)
-  end
-end
-
-def format_branch(branch)
-  case month
-  when 12
-    bold_green(branch)
-  else
-    bold_magenta(branch)
-  end
+  format(PATH_COLOR, path)
 end
 
 def success_emoji
-  case month
-  when 12
-    ['🎄', '🎅', '🎁', '🤶', '⛄'][ARGV[1].to_i % 5]
-  else
-    '🐙'
-  end
+  XMAS ? ['🎄', '🎅', '🎁', '🤶', '⛄'][ARGV[1].to_i % 5] : '🐙'
 end
 
 def failure_emoji
-  case month
-  when 12
-    '🪨'
-  else
-    '🤬'
-  end
+  XMAS ? '🪨' : '🤬'
 end
 
 def format_prefix(prefix)
-  case month
-  when 12
-    red(prefix)
-  else
-    prefix
-  end
-end
-
-def prompt(suffix = "")
-  [
-    "#{format_prefix('╭─')}#{format_machine('%m')} #{format_path('%~')}#{suffix}",
-    "#{format_prefix('╰─')}%(?.%2{#{success_emoji}%}.#{red('[%?]')} %2{#{failure_emoji}%}) ",
-  ].join("\n")
+  format(PREFIX_COLOR, prefix)
 end
 
 def print_prompt(suffix = "", final: false)
-  print prompt(suffix)
+  print "#{format_prefix('╭─')}#{format_machine('%m')} #{format_path('%~')}#{suffix}\n" \
+    "#{format_prefix('╰─')}%(?.%2{#{success_emoji}%}.#{format(RED, '[%?]')} %2{#{failure_emoji}%}) "
   exit 0 if final
 
   print "\0"
   $stdout.flush
 end
 
-# def status(
-#   branch: nil,
-#   behind: nil,
-#   ahead: nil,
-#   staged: nil,
-#   conflicts: nil,
-#   changed: nil,
-#   untracked: nil,
-#   stashed: nil,
-# )
-#   status = " ["
-# end
-
 print_prompt
 
 require 'open3'
 
-branch, err, stat = Open3.capture3('git', 'symbolic-ref', '--short', 'HEAD')
-if err.include?('fatal: not a git repository')
+porcelain, _err, stat = Open3.capture3('git', 'status', '--porcelain=v2', '--show-stash', '--branch')
+unless stat.success?
   print_prompt("", final: true)
 end
-branch.chomp!
-print_prompt(" [#{format_branch(branch)} ...]")
 
-changed_files = `git diff --name-status`.lines
-staged_files = `git diff --staged --name-status`.lines
-changed = changed_files.count { |l| !l.start_with?('U') }
-conflicts = staged_files.count { |l| l.start_with?('U') }
-staged = staged_files.length - conflicts
-untracked = `git status --porcelain`.each_line.count { |l| l.start_with?('??') }
-stashed = `git stash list`.each_line.count { |l| l.start_with?('stash@') }
-
-ahead = behind = 0
-
-
-if branch.empty?
-  branch = ':' + `git rev-parse --short HEAD`.chomp
-else
-  remote_name = `git config branch.#{branch}.remote`.chomp
-  merge_name = `git config branch.#{branch}.merge`.chomp
-  remote_ref = if remote_name == '.' # local
-    merge_name
-  else
-    remote_ref = "refs/remotes/#{remote_name}/#{merge_name[11..]}"
+info = porcelain.each_line.each_with_object(Hash.new(0)) do |line, h|
+  case line
+  when /^# branch\.oid (.*)/
+    h[:oid] = $1
+  when /^# branch\.head (.*)/
+    h[:branch] = $1
+  when /^# branch\.ab \+(\d+) -(\d+)/
+    h[:ahead] = $1.to_i
+    h[:behind] = $2.to_i
+  when /^# stash (\d+)/
+    h[:stashed] = $1.to_i
+  when /^[12] (.)(.)/
+    h[:staged] += 1 if $1 != '.'
+    h[:changed] += 1 if $2 != '.'
+  when /^u/
+    h[:conflicts] += 1
+  when /^\?/
+    h[:untracked] += 1
   end
-  revlist = `git rev-list --left-right #{remote_ref}...HEAD`.lines
-  ahead = revlist.count { |l| l.start_with?('>') }
-  behind = revlist.length - ahead
 end
-status = " [#{format_branch(branch)}|"
-if behind > 0
-  status += "↓#{behind}"
-end
-if ahead > 0
-  status += "↑#{ahead}"
-end
-if staged > 0
-  status += "%2{🎭%}#{red(staged)}"
-end
-if conflicts > 0
-  status += "%2{💥%}#{red(conflicts)}"
-end
-if changed > 0
-  status += "%2{🚧%}#{yellow(changed)}"
-end
-if untracked > 0
-  status += "%2{🆕%}#{cyan(untracked)}"
-end
-if stashed > 0
-  status += "%2{📦%}#{yellow(stashed)}"
-end
-if staged + conflicts + changed + untracked == 0
-  status += "#{bold_green('')}"
-end
-status += ']'
 
-print prompt(status)
+info[:branch] = ":#{info[:oid][0..6]}" if info[:branch] == '(detached)' || info[:branch] == 0
+info[:clean] = '' if info[:staged] + info[:conflicts] + info[:changed] + info[:untracked] == 0
+
+status = [
+  ' [',
+  part(info[:branch],    '',        BRANCH_COLOR),
+  '|',
+  part(info[:behind],    '↓'),
+  part(info[:ahead],     '↑'),
+  part(info[:staged],    '%2{🎭%}', RED),
+  part(info[:conflicts], '%2{💥%}', RED),
+  part(info[:changed],   '%2{🚧%}', YELLOW),
+  part(info[:untracked], '%2{🆕%}', CYAN),
+  part(info[:stashed],   '%2{📦%}', YELLOW),
+  part(info[:clean],     '',       BOLD_GREEN),
+  ']',
+].join('')
+
+print_prompt(status, final: true)

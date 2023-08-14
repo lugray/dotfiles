@@ -23,7 +23,6 @@ alias s='du -hs'
 alias quit='exit'
 alias q='exit'
 
-alias gitk='(gitk --argscmd="git rev-list --no-walk --branches" --since="2 weeks ago" &> /dev/null &)'
 alias g='git'
 
 alias b='back'
@@ -36,11 +35,8 @@ alias b7='back 7'
 alias b8='back 8'
 alias b9='back 9'
 
-alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-
-alias d='dev'
-
 alias vim='nvim'
 alias vi='nvim'
 
-alias pbformat='pbpaste | dev eval "STDIN.each_line {|l| puts CLI::UI.fmt(l, enable_color: true).inspect }" | pbcopy'
+PWD_AT_SHELL_START=$PWD
+alias cdd='cd $PWD_AT_SHELL_START'

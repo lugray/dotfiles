@@ -21,6 +21,7 @@
 !/.gitignore
 !/.irbrc
 !/.shellfuncs
+!/.zprofile
 !/.zshenv
 !/.zshrc
 !/dev.yml

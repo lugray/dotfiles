@@ -8,7 +8,7 @@ FIELD_SEP = "\u2007"
 PADDING = ' ' * 100
 
 PREVIEW_PROGRAM = <<~PREVIEW
-  echo -n "\e[96;4m"{2}"\e[0m";
+  echo -n "\e[96;4m"{2}"\e[0m ";
   timeout 0.3 git-line {1} 2> /dev/null || echo "";
   echo "";
   bat --color=always {1}/README.md 2> /dev/null || cat {1}/README.md 2> /dev/null || ls --color=always {1}

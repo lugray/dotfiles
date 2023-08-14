@@ -1,9 +1,7 @@
-zstyle ':completion:*' completer _complete _ignored
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._- ]=** r:|=**' 'l:|=* r:|=*'
-zstyle ':completion:*' use-cache on
-zstyle :compinstall filename '/Users/lisaugray/.zshrc'
-autoload -Uz compinit
-compinit
+###########
+# History #
+###########
+
 HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=1000000
@@ -11,55 +9,31 @@ setopt appendhistory autocd
 setopt HIST_IGNORE_SPACE
 HIST_STAMPS="yyyy-mm-dd"
 
-if [ -d ~/.shellfuncs ]; then
-  for FILE in ~/.shellfuncs/*.sh; do
-    source $FILE
-  done
-fi
+############################
+# My functions and aliases #
+############################
 
-if [ -f ~/nerdfont/i_all.sh ]; then
-  source ~/nerdfont/i_all.sh
-fi
+for FILE in ~/.shellfuncs/*.sh(N); do source $FILE; done
+[[ -f ~/.shell_aliases ]] && source ~/.shell_aliases
 
-if [ -f ~/.shell_aliases ]; then
-    . ~/.shell_aliases
-fi
+###########
+# Plugins #
+###########
 
-# Load dev if it exists
-if [[ -f "$HOME/src/github.com/Shopify/dev/dev.sh" ]]; then
-  source "$HOME/src/github.com/Shopify/dev/dev.sh"
-elif [[ -f /opt/dev/dev.sh ]]; then
-  source /opt/dev/dev.sh
-elif [ -f ~/src/github.com/burke/minidev/dev.sh ]; then
-  source ~/src/github.com/burke/minidev/dev.sh
-fi
-
-# Load dev chruby if it exists
-[[ -f /opt/dev/sh/chruby/chruby.sh ]] && { type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; } }
-
-# Load chruby if not present
-if ! which chruby > /dev/null; then
-  [[ -f /opt/homebrew/share/chruby/chruby.sh ]] && source /opt/homebrew/share/chruby/chruby.sh
-  [[ -f /opt/homebrew/share/chruby/auto.sh ]] && source /opt/homebrew/share/chruby/auto.sh
-fi
-
+[[ -f ~/nerdfont/i_all.sh ]] && source ~/nerdfont/i_all.sh
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-if which spin > /dev/null; then
-  source <(spin completion)
-fi
+################################
+# Vim mode, with cursor change #
+################################
 
-###############
-# Keybindings #
-###############
 function use-block-cursor {
   echo -n '\e[1 q'
 }
-
 function use-line-cursor {
   echo -n '\e[5 q'
 }
-
 function use-mode-cursor {
   case $KEYMAP in
     vicmd)
@@ -73,9 +47,7 @@ function use-mode-cursor {
   zle reset-prompt
   zle -R
 }
-
 bindkey -v
-
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init() {
     echoti smkx
@@ -89,52 +61,36 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   zle -N zle-line-finish
   zle -N zle-keymap-select use-mode-cursor
 fi
-if [[ "${terminfo[khome]}" != "" ]]; then
-  bindkey "${terminfo[khome]}" beginning-of-line      # [Home] - Go to beginning of line
-fi
-if [[ "${terminfo[kend]}" != "" ]]; then
-  bindkey "${terminfo[kend]}"  end-of-line            # [End] - Go to end of line
-fi
-bindkey '^A' beginning-of-line                        # [Cmd-LeftArrow] - requires iterm mapping to hex code 0x01
-bindkey '^E' end-of-line                              # [Cmd-RightArrow] - requires iterm mapping to hex code 0x05
-bindkey '^[[1;5C' forward-word                        # [Ctrl-RightArrow] - move forward one word
-bindkey '^[[1;5D' backward-word                       # [Ctrl-LeftArrow] - move backward one word
-if [[ "${terminfo[kcbt]}" != "" ]]; then
-  bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
-fi
-bindkey '^?' backward-delete-char                     # [Backspace] - delete backward
-if [[ "${terminfo[kdch1]}" != "" ]]; then
-  bindkey "${terminfo[kdch1]}" delete-char            # [Delete] - delete forward
-else
-  bindkey "^[[3~" delete-char
-  bindkey "^[3;5~" delete-char
-  bindkey "\e[3~" delete-char
-fi
-bindkey "µ" copy-prev-shell-word                    # Alt-m file rename magick
 
+################
+# Key Bindings #
+################
+[[ "${terminfo[khome]}" != "" ]] && bindkey "${terminfo[khome]}" beginning-of-line      # [Home] - Go to beginning of line
+[[ "${terminfo[kend]}" != "" ]]  && bindkey "${terminfo[kend]}"  end-of-line            # [End] - Go to end of line
+[[ "${terminfo[kcbt]}" != "" ]]  && bindkey "${terminfo[kcbt]}"  reverse-menu-complete  # [Shift-Tab] - move through the completion menu backwards
+[[ "${terminfo[kdch1]}" != "" ]] && bindkey "${terminfo[kdch1]}" delete-char            # [Delete] - delete forward
+
+bindkey '^?' backward-delete-char             # [Backspace] - delete backward
+bindkey "µ" copy-prev-shell-word              # Alt-m file rename magic
 bindkey "˚" history-beginning-search-backward # Alt-K
-bindkey "∆" history-beginning-search-forward # Alt-J
+bindkey "∆" history-beginning-search-forward  # Alt-J
 
-zle-dev-open-pr() /opt/dev/bin/dev open pr
-zle -N zle-dev-open-pr
-bindkey 'ø' zle-dev-open-pr # Alt-O ABC Extended
-bindkey 'ʼ' zle-dev-open-pr # Alt-O Canadian English
+##############################
+# Open git remote in browser #
+##############################
 
-zle-dev-open-github() /opt/dev/bin/dev open github
-zle -N zle-dev-open-github
-bindkey '©' zle-dev-open-github # Alt-G ABC Extended & Canadian English
+zle-open-git-remote() {
+  local remote="$(git remote -v 2> /dev/null | grep '(fetch)$' | grep -m1 "\thttps://" | awk '{print $2}')";
+  if [[ -n "$remote" ]]; then
+    open "$remote"
+  fi
+}
+zle -N zle-open-git-remote
+bindkey '©' zle-open-git-remote # Alt-G ABC Extended & Canadian English
 
-zle-dev-open-shipit() /opt/dev/bin/dev open shipit
-zle -N zle-dev-open-shipit
-bindkey 'ß' zle-dev-open-shipit # Alt-S ABC Extended & Canadian English
-
-zle-dev-open-app() /opt/dev/bin/dev open app
-zle -N zle-dev-open-app
-bindkey '®' zle-dev-open-app # Alt-R ABC Extended & Canadian English
-
-##################
-# zsh git prompt #
-##################
+######################
+# Progressive Prompt #
+######################
 
 TRAPALRM() {
   if [[ -n "$WIDGET" ]]; then
@@ -148,14 +104,22 @@ precmd_functions+=(__progressive_prompt_exec_incr)
 setopt PROMPT_SUBST
 PROMPT='$(progressive_prompt $$ $__progressive_prompt_exec_no "" prompt)'
 
-source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+####################################################
+# Load tools rx will load for when I don't have rx #
+####################################################
 
-[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+[[ -v HOMEBREW_PREFIX ]] || { [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv) }
+(( $+functions[rbenv] )) || { command -v rbenv &>/dev/null && eval "$(rbenv init -)" }
 
-source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
+#######################
+# Completion settings #
+#######################
 
-PWD_AT_SHELL_START=$PWD
-alias cdd='cd $PWD_AT_SHELL_START'
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH="${HOMEBREW_PREFIX}/opt/openssl/bin:$PATH"
-export PATH=/opt/fullscript/bin:$PATH
+zstyle ':completion:*' completer _complete _ignored
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._- ]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' use-cache on
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$(brew --prefix)/share/zsh-completions:$FPATH
+fi
+autoload -Uz compinit
+compinit
