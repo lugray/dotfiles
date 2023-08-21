@@ -4,13 +4,13 @@ ITALIC = 3
 RED = 31
 YELLOW = 33
 CYAN = 36
+GREY = 90
 BOLD_GREEN = 92
-BOLD_BLUE = 94
 BOLD_MAGENTA = 95
 
 XMAS = Time.now.strftime("%m").to_i == 12
 
-MACHINE_COLOR = XMAS ? BOLD_GREEN : BOLD_BLUE
+MACHINE_COLOR = XMAS ? BOLD_GREEN : GREY
 PATH_COLOR    = XMAS ? RED        : CYAN
 BRANCH_COLOR  = XMAS ? BOLD_GREEN : BOLD_MAGENTA
 PREFIX_COLOR  = XMAS ? RED        : nil
@@ -25,8 +25,11 @@ def part(data, symbol, color = nil)
   format(color, "#{symbol}#{data}")
 end
 
-def format_machine(machine)
-  format(MACHINE_COLOR, format(ITALIC, machine))
+def machine
+  require 'socket'
+  name = Socket.gethostname
+  name = '%2{🌱%} Fullscript' if name == 'CA-GYQQJMHGPK'
+  format(MACHINE_COLOR, format(ITALIC, name))
 end
 
 def format_path(path)
@@ -46,7 +49,7 @@ def format_prefix(prefix)
 end
 
 def print_prompt(suffix = "", final: false)
-  print "#{format_prefix('╭─')}#{format_machine('%m')} #{format_path('%~')}#{suffix}\n" \
+  print "#{format_prefix('╭─')}#{machine} #{format_path('%~')}#{suffix}\n" \
     "#{format_prefix('╰─')}%(?.%2{#{success_emoji}%}.#{format(RED, '[%?]')} %2{#{failure_emoji}%}) "
   exit 0 if final
 
