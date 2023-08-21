@@ -68,6 +68,10 @@ augroup format_markdown
   autocmd FileType markdown nnoremap <expr> * (getline(getpos("'<")[1]) =~ "^\s*- " ? ":s/^\s*- //" : ":s/^/- /")."<CR>"
 augroup END
 
+augroup format_go
+  autocmd FileType go map gc :GoCallers<CR>
+augroup END
+
 set nowrap
 set tabstop=2
 set shiftwidth=2
