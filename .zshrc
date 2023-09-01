@@ -23,6 +23,7 @@ for FILE in ~/.shellfuncs/*.sh(N); do source $FILE; done
 [[ -f ~/nerdfont/i_all.sh ]] && source ~/nerdfont/i_all.sh
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export RIPGREP_CONFIG_PATH=~/.config/rg/config
 
 ################################
 # Vim mode, with cursor change #

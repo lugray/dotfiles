@@ -1,5 +1,4 @@
 /*
-!/.ackrc
 !/brews.yml
 !/packages.yml
 !/.shell_aliases
@@ -16,6 +15,7 @@
 /.config/nvim/.netrwhist
 /.config/nvim/bundle
 /.config/nvim/spell
+!/.config/rg
 !/.config/tmux
 !/.git-prompt-colors.sh
 !/.gitignore

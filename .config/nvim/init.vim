@@ -84,7 +84,7 @@ set clipboard=unnamed
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
-nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>a :Rg<Space>
 
 let g:vimrubocop_keymap = 0
 nnoremap <Leader>s :RuboCop .<CR>
