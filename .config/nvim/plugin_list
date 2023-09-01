@@ -11,8 +11,10 @@ icatalina/vim-case-change ## ~ for visual select
 janko-m/vim-test
 jasoncodes/ctrlp-modified.vim
 junegunn/vim-easy-align
+kana/vim-arpeggio
 kana/vim-textobj-user
 lilydjwg/colorizer ## Show #xxxxxx in its colour
+machakann/vim-textobj-delimited
 mileszs/ack.vim
 nelstrom/vim-textobj-rubyblock
 ngmy/vim-rubocop
@@ -26,8 +28,5 @@ tpope/vim-sensible
 tpope/vim-surround ## cs"'
 vim-ruby/vim-ruby
 vim-scripts/ReplaceWithRegister ## gr
-# vim-scripts/argtextobj.vim
-wsdjeg/vim-fetch
-machakann/vim-textobj-delimited
 wellle/targets.vim
-kana/vim-arpeggio
+wsdjeg/vim-fetch
