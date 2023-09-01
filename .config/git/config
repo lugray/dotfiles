@@ -49,9 +49,6 @@
 	untrackedcache = true
 	sshcommand = ssh -i /Users/lisa.ugray/.ssh/rx_key
 
-[diff "plist"]
-	textconv = "plutil -convert xml1 -o -"
-
 [fetch]
 	prune = true
 
@@ -74,5 +71,5 @@
 	updateRefs = true
 
 [user]
-	email = "lisa.ugray@shopify.com"
+	email = "lisa.ugray@fullscript.com"
 	name = "Lisa Ugray"
