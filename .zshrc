@@ -13,7 +13,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # My functions and aliases #
 ############################
 
-for FILE in ~/.shellfuncs/*.sh(N); do source $FILE; done
+fpath=(~/.shellfuncs $fpath)
+autoload -Uz ~/.shellfuncs/*(N)
 [[ -f ~/.shell_aliases ]] && source ~/.shell_aliases
 
 ###########

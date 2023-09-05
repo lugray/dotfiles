@@ -1,4 +1,0 @@
-function ack {
-  echo "\e[1;31mFix your muscle memory! Use \e[1;36mrg\e[1;31m.\e[0m"
-  return 1
-}
