@@ -125,3 +125,5 @@ if type brew &>/dev/null; then
 fi
 autoload -Uz compinit
 compinit
+
+eval $(thefuck --alias f)
