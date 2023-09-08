@@ -1,0 +1,5 @@
+if [[ "$1" == "git" ]] && [[ "$#" -eq 2 ]]; then
+  command man "$1-$2"
+else
+  command man "$@"
+fi
