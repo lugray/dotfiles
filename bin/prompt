@@ -32,8 +32,18 @@ def machine
   format(MACHINE_COLOR, format(ITALIC, name))
 end
 
-def format_path(path)
-  format(PATH_COLOR, path)
+def path
+  pwd = Dir.pwd
+  home = ENV['HOME']
+  prefix_replace = {
+    "#{home}/src/git.fullscript.io" => ' ',
+    "#{home}/src/github.com" => ' ',
+    home => '~',
+  }
+  prefix_replace.each do |prefix, replacement|
+    pwd = pwd.sub(prefix, replacement) if pwd.start_with?(prefix)
+  end
+  format(PATH_COLOR, pwd)
 end
 
 def success_emoji
@@ -49,7 +59,7 @@ def format_prefix(prefix)
 end
 
 def print_prompt(suffix = "", final: false)
-  print "#{format_prefix('╭─')}#{machine} #{format_path('%~')}#{suffix}\n" \
+  print "#{format_prefix('╭─')}#{machine} #{path}#{suffix}\n" \
     "#{format_prefix('╰─')}%(?.%2{#{success_emoji}%}.#{format(RED, '[%?]')} %2{#{failure_emoji}%}) "
   exit 0 if final
 
