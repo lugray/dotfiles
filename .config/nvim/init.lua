@@ -37,6 +37,17 @@ function xmap(shortcut, command)
   map('x', shortcut, command)
 end
 
+function augroup(name, event, pattern, commands)
+  local group = vim.api.nvim_create_augroup(name, { clear = true })
+  for _, command in pairs(commands) do
+    vim.api.nvim_create_autocmd(event, {
+      command = command,
+      group = group,
+      pattern = pattern,
+    })
+  end
+end
+
 nmap("<Leader>vv", ":source ~/.config/nvim/init.lua<CR>")
 
 imap ("<c-j>", "<Plug>(copilot-next)")
@@ -57,42 +68,36 @@ nmap("<C-f>", "[s1z=``")
 
 nmap("Q", "@q")
 
-vim.cmd([[
-augroup gitrebase
-  autocmd FileType gitrebase command -range RebasePick <line1>,<line2>s/^\w\+ /pick /
-  autocmd FileType gitrebase command -range RebaseReword <line1>,<line2>s/^\w\+ /reword /
-  autocmd FileType gitrebase command -range RebaseEdit <line1>,<line2>s/^\w\+ /edit /
-  autocmd FileType gitrebase command -range RebaseSquash <line1>,<line2>s/^\w\+ /squash /
-  autocmd FileType gitrebase command -range RebaseFixup <line1>,<line2>s/^\w\+ /fixup /
-  autocmd FileType gitrebase command -range RebaseExec <line1>,<line2>s/^\w\+ /exec /
-  autocmd FileType gitrebase command -range RebaseDrop <line1>,<line2>s/^\w\+ /drop /
-
-  autocmd FileType gitrebase map rp :RebasePick<CR>
-  autocmd FileType gitrebase map rr :RebaseReword<CR>
-  autocmd FileType gitrebase map re :RebaseEdit<CR>
-  autocmd FileType gitrebase map rs :RebaseSquash<CR>
-  autocmd FileType gitrebase map rf :RebaseFixup<CR>
-  autocmd FileType gitrebase map rx :RebaseExec<CR>
-  autocmd FileType gitrebase map rd :RebaseDrop<CR>
-augroup END
-
-augroup format_ruby
-  autocmd Syntax ruby syn region sorbetSig start='sig {' end='}'
-  autocmd Syntax ruby syn region sorbetSigDo start='sig do' end='end'
-  autocmd Syntax ruby hi def link sorbetSig Comment
-  autocmd Syntax ruby hi def link sorbetSigDo Comment
-augroup END
-
-augroup format_markdown
-  autocmd FileType markdown setlocal wrap linebreak nolist
-  autocmd FileType markdown vnoremap <expr> * (join(getline(getpos("'<")[1], getpos("'>")[1]), "\n") =~ "^\s*- " ? ":s/^\s*- //" : ":s/^/- /")."<CR>"
-  autocmd FileType markdown nnoremap <expr> * (getline(getpos("'<")[1]) =~ "^\s*- " ? ":s/^\s*- //" : ":s/^/- /")."<CR>"
-augroup END
-
-augroup format_go
-  autocmd FileType go map gc :GoCallers<CR>
-augroup END
-]])
+augroup("gitrebase", "FileType", "gitrebase", {
+  "command -range RebasePick <line1>,<line2>s/^\\w\\+ /pick /",
+  "command -range RebaseReword <line1>,<line2>s/^\\w\\+ /reword /",
+  "command -range RebaseEdit <line1>,<line2>s/^\\w\\+ /edit /",
+  "command -range RebaseSquash <line1>,<line2>s/^\\w\\+ /squash /",
+  "command -range RebaseFixup <line1>,<line2>s/^\\w\\+ /fixup /",
+  "command -range RebaseExec <line1>,<line2>s/^\\w\\+ /exec /",
+  "command -range RebaseDrop <line1>,<line2>s/^\\w\\+ /drop /",
+  "map rp :RebasePick<CR>",
+  "map rr :RebaseReword<CR>",
+  "map re :RebaseEdit<CR>",
+  "map rs :RebaseSquash<CR>",
+  "map rf :RebaseFixup<CR>",
+  "map rx :RebaseExec<CR>",
+  "map rd :RebaseDrop<CR>",
+})
+augroup("format_ruby", "Syntax", "ruby", {
+  "syn region sorbetSig start='sig {' end='}'",
+  "syn region sorbetSigDo start='sig do' end='end'",
+  "hi def link sorbetSig Comment",
+  "hi def link sorbetSigDo Comment",
+})
+augroup("format_markdown", "FileType", "markdown", {
+  "setlocal wrap linebreak nolist",
+  [[vnoremap <expr> * (join(getline(getpos("'<")[1], getpos("'>")[1]), "\\n") =~ "^\\s*- " ? ":s/^\\s*- //" : ":s/^/- /")."<CR>"]],
+  [[nnoremap <expr> * (getline(getpos("'<")[1]) =~ "^\\s*- " ? ":s/^\\s*- //" : ":s/^/- /")."<CR>"]],
+})
+augroup("format_go", "FileType", "go", {
+  "map gc :GoCallers<CR>",
+})
 
 vim.opt.wrap = false
 vim.opt.tabstop = 2
@@ -150,10 +155,12 @@ vmap("<C-/>", "<Plug>Commentary")
 
 -- Skip the buffer with alt (mac)
 nmap("∂", '"_d')
+nmap("∂∂", '"_dd')
 vmap("∂", '"_d')
 nmap("Î", '"_D')
 vmap("Î", '"_D')
 nmap("ç", '"_c')
+nmap("çç", '"_cc')
 vmap("ç", '"_c')
 nmap("Ç", '"_C')
 vmap("Ç", '"_C')
@@ -161,7 +168,6 @@ nmap("≈", '"_x')
 vmap("≈", '"_x')
 nmap("˛", '"_X')
 vmap("˛", '"_X')
-vmap("π", '"_dP')
 
 -- Undo breakpoints
 imap(",", ",<c-g>u")
@@ -182,24 +188,14 @@ nmap("<Leader>hk", "<Plug>(GitGutterPrevHunk)")
 
 nmap("<Leader>m", ":wa <bar> make<CR>")
 
-vim.cmd([[
-function! QuickFixToggle()
-  let curr = winnr()
-  for i in range(1, winnr('$'))
-    let bnum = winbufnr(i)
-    if getbufvar(bnum, '&buftype') == 'quickfix'
-      if curr != i
-        copen
-        return
-      endif
-      cclose
-      return
-    endif
-  endfor
-  copen
-endfunction 
-]])
-nmap("<tab>", ":call QuickFixToggle()<cr>")
+function QuickFixToggle()
+  if vim.bo.buftype == 'quickfix' then
+    vim.cmd("cclose")
+    return
+  end
+  vim.cmd("copen")
+end
+nmap("<tab>", ":lua QuickFixToggle()<CR>")
 
 -- Mapping tab also maps <C-I> ಠ_ಠ. Set it back.
 nmap("<C-I>", "<C-I>")
@@ -230,82 +226,88 @@ vim.g.splitjoin_trailing_comma = 1
 vim.opt.mouse = "a"
 
 -- jump to first non-whitespace on line, jump to beginning of line if already at first non-whitespace
-nmap("<Home>", ":call LineHome()<CR>:echo<CR>")
-vmap("<Home>", ":call LineHome()<CR>:echo<CR>")
-imap("<Home>", "<C-R>=LineHome()<CR>")
-vim.cmd([[
-function! LineHome()
-  let x = col('.')
-  execute "normal! ^"
-  if x == col('.')
-    execute "normal! 0"
-  endif
-  return ""
-endfunction
-nnoremap 0 :call LineZero()<CR>:echo<CR>
-vnoremap 0 :call LineZero()<CR>:echo<CR>
-function! LineZero()
-  let x = col('.')
-  execute "normal! 0"
-  if x == col('.')
-    execute "normal! ^"
-  endif
-  return ""
-endfunction
+function LineHome()
+  local x = vim.fn.col('.')
+  vim.cmd("normal! ^")
+  if x == vim.fn.col('.') then
+    vim.cmd("normal! 0")
+  end
+end
+function LineZero()
+  local x = vim.fn.col('.')
+  vim.cmd("normal! 0")
+  if x == vim.fn.col('.') then
+    vim.cmd("normal! ^")
+  end
+end
+nmap("<Home>", ":lua LineHome()<CR>")
+vmap("<Home>", ":lua LineHome()<CR>")
+imap("<Home>", "<C-O>:lua LineHome()<CR>")
+nmap("0", ":lua LineZero()<CR>")
+vmap("0", ":lua LineZero()<CR>")
+function contains(table, element)
+  for _, value in pairs(table) do
+    if value == element then
+      return true
+    end
+  end
+  return false
+end
+function StripTrailingWhitespaces(filetypes)
+  local filetype = vim.bo.filetype
+  if not contains(filetypes, filetype) then
+    return
+  end
+  -- Preparation: save last search, and cursor position.
+  local line = vim.fn.line('.')
+  local column = vim.fn.col('.')
+  local last_search = vim.fn.getreg('/')
 
-function! s:stripTrailingWhitespaces()
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
+  vim.cmd(":%s/\\s\\+$//e")
 
-  %s/\s\+$//e
+  -- Clean up: restore previous search history, and cursor position
+  vim.fn.setreg('/', last_search)
+  vim.fn.cursor(line, column)
+end
+augroup("stripTrailingWhitespacesPluginDetect", "BufWritePre", "<buffer>", { ':lua StripTrailingWhitespaces({ "ruby", "python", "javascript", "nix", "lua" })' })
 
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-augroup stripTrailingWhitespacesPluginDetect
-  autocmd FileType ruby,python,javascript,nix autocmd BufWritePre <buffer> :call stripTrailingWhitespaces()
-augroup END
+function InNormalReplacingCursor(command)
+  -- Preparation: save cursor position.
+  local line = vim.fn.line('.')
+  local column = vim.fn.col('.')
 
-function! s:inNormalReplacingCursor(command)
-  " Preparation: save cursor position.
-  let l = line(".")
-  let c = col(".")
+  vim.cmd("normal! " .. command)
 
-  :execute "normal " . a:command
-
-  " Clean up: restore previous cursor position
-  call cursor(l, c)
-endfunction
-]])
-nmap("<Leader>==", ':call inNormalReplacingCursor("gg=G")<CR>')
-nmap("<Leader>=p", ':call inNormalReplacingCursor("=ip")<CR>')
-nmap("<Leader>=r", ':call inNormalReplacingCursor("=ar")<CR>')
+  -- Clean up: restore previous cursor position
+  vim.fn.cursor(line, column)
+end
+nmap("<Leader>==", ':lua InNormalReplacingCursor("gg=G")<CR>')
+nmap("<Leader>=p", ':lua InNormalReplacingCursor("=ip")<CR>')
+nmap("<Leader>=r", ':lua InNormalReplacingCursor("=ar")<CR>')
 
 -- Select last paste/change
 nmap("<Leader>v", "`[v`]")
 nmap("<Leader>V", "`[V`]")
 
-nmap("<silent>", "<Leader><Leader>g V:<c-u>call OpenCurrentFileInGithub()<cr>")
-xmap("<silent>", "<Leader><Leader>g :<c-u>call OpenCurrentFileInGithub()<cr>")
-vim.cmd([[
-function! OpenCurrentFileInGithub()
-  let file_dir = expand('%:h')
-  let git_root = system('cd ' . file_dir . '; git rev-parse --show-toplevel | tr -d "\n"')
-  let file_path = substitute(expand('%:p'), git_root . '/', '', '')
-  let branch = system('git symbolic-ref --short -q HEAD | tr -d "\n"')
-  let git_remote = system('cd ' . file_dir . '; git remote get-url origin')
-  let repo_path = matchlist(git_remote, ':\(.*\)\.')[1]
-  let url = 'https:' . repo_path . '/blob/' . branch . '/' . file_path
-  let first_line = getpos("'<")[1]
-  let url .= '#L' . first_line
-  let last_line = getpos("'>")[1]
-  if last_line != first_line | let url .= '-L' . last_line | endif
-  call system('open ' . url)
-endfunction
-]])
+function OpenCurrentFileInGithub()
+  local abs_path = vim.fn.expand('%:p')
+  local file_dir = vim.fn.substitute(abs_path, '/[^/]*$', '', '')
+  local git_root = vim.fn.system('cd ' .. file_dir .. '; git rev-parse --show-toplevel | tr -d "\\n"')
+  local file_path = vim.fn.substitute(abs_path, git_root .. '/', '', '')
+  local branch = vim.fn.system('git symbolic-ref --short -q HEAD | tr -d "\\n"')
+  local git_remote = vim.fn.system('cd ' .. file_dir .. '; git remote get-url origin | tr -d "\\n"')
+  local url = git_remote .. '/blob/' .. branch .. '/' .. file_path
+  local first_line = vim.fn.getpos("'<")[2]
+  url = url .. '#L' .. first_line
+  local last_line = vim.fn.getpos("'>")[2]
+  if last_line ~= first_line then
+    url = url .. '-L' .. last_line
+  end
+  vim.fn.system('open ' .. url)
+end
+
+nmap("<Leader><Leader>g", "V:<c-u>lua OpenCurrentFileInGithub()<cr>")
+xmap("<Leader><Leader>g", ":<c-u>lua OpenCurrentFileInGithub()<cr>")
 
 nmap("<Leader>cp", ":let @* = expand('%')<cr>")
 nmap("<Leader>cap", ":let @* = expand('%:p')<cr>")
@@ -315,8 +317,8 @@ vim.g.LanguageClient_serverCommands = {
   sh = { 'bash-language-server', 'start' },
   yml = { 'yaml-language-server' }
 }
-nmap("<silent>", "K <Plug>(lcn-hover)")
-nmap("<silent>", "gd <Plug>(lcn-definition)")
+nmap("K", "<Plug>(lcn-hover)")
+nmap("gd", "<Plug>(lcn-definition)")
 nmap("<Leader>ls", "<Plug>(lcn-menu)")
 
 vim.g.ruby_indent_assignment_style = 'variable'
