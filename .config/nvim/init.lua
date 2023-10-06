@@ -1,43 +1,63 @@
+vim.cmd("execute pathogen#infect()")
+
+-- Themeing
+vim.cmd.colorscheme('dracula')
+vim.g.dracula_colorterm = 0
+vim.cmd('hi Normal ctermbg=none guibg=none')
+
+vim.opt.ruler = true
+vim.opt.number = true
+vim.opt.termguicolors = true
+vim.opt.hlsearch = false
+vim.opt.guifont = "Fira Code Nerd Font:h10"
+
+vim.g.mapleader = " "
+vim.opt.undofile = true
+vim.opt.ignorecase  = true
+vim.opt.smartcase = true
+
+require("nvim-tree").setup()
+
+function map(mode, shortcut, command)
+  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+end
+function nmap(shortcut, command)
+  map('n', shortcut, command)
+end
+function imap(shortcut, command)
+  map('i', shortcut, command)
+end
+function cmap(shortcut, command)
+  map('c', shortcut, command)
+end
+function vmap(shortcut, command)
+  map('v', shortcut, command)
+end
+function xmap(shortcut, command)
+  map('x', shortcut, command)
+end
+
+nmap("<Leader>vv", ":source ~/.config/nvim/init.lua<CR>")
+
+imap ("<c-j>", "<Plug>(copilot-next)")
+imap ("<c-k>", "<Plug>(copilot-previous)")
+
 vim.cmd([[
-execute pathogen#infect()
-
-syntax on
-filetype plugin indent on
-
-" Themeing
-:colorscheme dracula
-hi Normal ctermbg=none guibg=none
-
-call matchadd('ColorColumn', '\%121v', -1)
-
-set ruler
-set number
-set termguicolors
-set nohlsearch
-set guifont=Fira\ Code\ Nerd\ Font:h10
-
-:let mapleader = " "
-set undofile " Persistent Undo
-set ignorecase 
-set smartcase " don't ignore capitals in searches
-
-nnoremap <Leader>vv :source ~/.config/nvim/init.vim<CR>
-
-imap <c-j> <Plug>(copilot-next)
-imap <c-k> <Plug>(copilot-previous)
 if filereadable('/opt/homebrew/opt/node@16/bin/node')
   let g:copilot_node_command = '/opt/homebrew/opt/node@16/bin/node'
 endif
+]])
 
-:set shell=/bin/bash
+vim.opt.shell = "/bin/bash"
 
-set spell
-set spelllang=en_ca
-inoremap <C-f> <c-g>u<Esc>[s1z=`]a<c-g>u
-nnoremap <C-f> [s1z=``
+vim.opt.spell = true
+vim.opt.spelllang = "en_ca"
+imap("<C-f>", "<c-g>u<Esc>[s1z=`]a<c-g>u")
+nmap("<C-f>", "[s1z=``")
 
-nnoremap Q @q
+nmap("Q", "@q")
 
+vim.cmd([[
 augroup gitrebase
   autocmd FileType gitrebase command -range RebasePick <line1>,<line2>s/^\w\+ /pick /
   autocmd FileType gitrebase command -range RebaseReword <line1>,<line2>s/^\w\+ /reword /
@@ -72,92 +92,97 @@ augroup END
 augroup format_go
   autocmd FileType go map gc :GoCallers<CR>
 augroup END
+]])
 
-set nowrap
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
+vim.opt.wrap = false
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
 
-" Use share yank/paste with MacOS clipboard
-set clipboard=unnamed
+-- Use share yank/paste with MacOS clipboard
+vim.opt.clipboard = "unnamed"
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
+-- Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap("w!!", "w !sudo tee > /dev/null %")
 
-nnoremap <Leader>a :Rg<Space>
+nmap("<Leader>a", ":Rg<Space>")
 
-let g:vimrubocop_keymap = 0
-nnoremap <Leader>s :RuboCop .<CR>
-nnoremap <Leader><Leader>s :RuboCop<CR>
+vim.g.vimrubocop_keymap = 0
+nmap("<Leader>s", ":RuboCop .<CR>")
+nmap("<Leader><Leader>s", ":RuboCop<CR>")
 
-autocmd VimResized * :wincmd =
-" Resize panes with Alt- hjkl on Mac
-nnoremap ˙ <C-W><
-nnoremap ∆ <C-W>-
-nnoremap ˚ <C-W>+
-nnoremap ¬ <C-W>>
+-- autocmd VimResized * :wincmd =
+-- Resize panes with Alt- hjkl on Mac
+nmap("˙", "<C-W><")
+nmap("∆", "<C-W>-")
+nmap("˚", "<C-W>+")
+nmap("¬", "<C-W>>")
 
-" Arrow keys
-nnoremap <Up> :m .-2<cr>==
-nnoremap <Down> :m .+1<cr>==
-nnoremap <Left> <<
-nnoremap <Right> >>
+-- Arrow keys
+nmap("<Up>", ":m .-2<cr>==")
+nmap("<Down>", ":m .+1<cr>==")
+nmap("<Left>", "<<")
+nmap("<Right>", ">>")
 
-" Visual Arrow keys
-vnoremap <Left> <gv
-vnoremap <Right> >gv
-vnoremap <Up> :m '<-2<CR>gv=gv
-vnoremap <Down> :m '>+1<CR>gv=gv
+-- Visual Arrow keys
+vmap("<Left>", "<gv")
+vmap("<Right>", ">gv")
+vmap("<Up>", ":m '<-2<CR>gv=gv")
+vmap("<Down>", ":m '>+1<CR>gv=gv")
 
+-- kj = <esc>
+vim.cmd([[
 call arpeggio#load()
-" kj = <esc>
 Arpeggio inoremap kj <esc>
 Arpeggio cnoremap kj <esc>
 Arpeggio vnoremap kj <esc>
+Arpeggio xnoremap kj <esc>
+Arpeggio nnoremap kj <esc>
+]])
 
-" Commenting
-" Apparently <C-_> maps <C-/>
-nmap <C-_> <Plug>CommentaryLine
-vmap <C-_> <Plug>Commentary
-nmap <C-/> <Plug>CommentaryLine
-vmap <C-/> <Plug>Commentary
+-- Commenting
+-- Apparently <C-_> maps <C-/>
+nmap("<C-_>", "<Plug>CommentaryLine")
+vmap("<C-_>", "<Plug>Commentary")
+nmap("<C-/>", "<Plug>CommentaryLine")
+vmap("<C-/>", "<Plug>Commentary")
 
-" Skip the buffer with alt (mac)
-nnoremap ∂ "_d
-vnoremap ∂ "_d
-nnoremap Î "_D
-vnoremap Î "_D
-nnoremap ç "_c
-vnoremap ç "_c
-nnoremap Ç "_C
-vnoremap Ç "_C
-nnoremap ≈ "_x
-vnoremap ≈ "_x
-nnoremap ˛ "_X
-vnoremap ˛ "_X
-vnoremap π "_dP
+-- Skip the buffer with alt (mac)
+nmap("∂", '"_d')
+vmap("∂", '"_d')
+nmap("Î", '"_D')
+vmap("Î", '"_D')
+nmap("ç", '"_c')
+vmap("ç", '"_c')
+nmap("Ç", '"_C')
+vmap("Ç", '"_C')
+nmap("≈", '"_x')
+vmap("≈", '"_x')
+nmap("˛", '"_X')
+vmap("˛", '"_X')
+vmap("π", '"_dP')
 
-" Undo breakpoints
-inoremap , ,<c-g>u
-inoremap . .<c-g>u
-inoremap ! !<c-g>u
-inoremap ? ?<c-g>u
-inoremap <CR> <CR><c-g>u
+-- Undo breakpoints
+imap(",", ",<c-g>u")
+imap(".", ".<c-g>u")
+imap("!", "!<c-g>u")
+imap("?", "?<c-g>u")
+imap("<CR>", "<CR><c-g>u")
 
-let g:ctrlp_map = '<Leader>p'
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+vim.g.ctrlp_map = '<Leader>p'
+vim.g.ctrlp_user_command = { '.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard' }
 
-nnoremap <Leader>g :CtrlPBranchModified<CR>
-nnoremap <Leader>d :CtrlPModified<CR>
-" let g:ctrlp#modified#excludes = "^vendor"
-let g:gitgutter_diff_base = "origin/HEAD"
-let g:gitgutter_diff_args = '-w'
-nmap <Leader>hj <Plug>(GitGutterNextHunk)
-nmap <Leader>hk <Plug>(GitGutterPrevHunk)
+nmap("<Leader>g", ":CtrlPBranchModified<CR>")
+nmap("<Leader>d", ":CtrlPModified<CR>")
+vim.g.gitgutter_diff_base = "origin/HEAD"
+vim.g.gitgutter_diff_args = '-w'
+nmap("<Leader>hj", "<Plug>(GitGutterNextHunk)")
+nmap("<Leader>hk", "<Plug>(GitGutterPrevHunk)")
 
-nnoremap <Leader>m :wa <bar> make<CR>
+nmap("<Leader>m", ":wa <bar> make<CR>")
 
+vim.cmd([[
 function! QuickFixToggle()
   let curr = winnr()
   for i in range(1, winnr('$'))
@@ -173,40 +198,42 @@ function! QuickFixToggle()
   endfor
   copen
 endfunction 
-nnoremap <tab> :call QuickFixToggle()<cr>
+]])
+nmap("<tab>", ":call QuickFixToggle()<cr>")
 
-" Mapping tab also maps <C-I> ಠ_ಠ. Set it back.
-nnoremap <C-I> <C-I>
+-- Mapping tab also maps <C-I> ಠ_ಠ. Set it back.
+nmap("<C-I>", "<C-I>")
 
-:hi VertSplit guibg=bg guifg=#555555
-let &fcs='eob: ,vert:⎸'
+-- :hi VertSplit guibg=bg guifg=#555555
+-- let &fcs='eob: ,vert:⎸'
 
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+-- Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap("ga", "<Plug>(EasyAlign)")
 
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+-- Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap("ga", "<Plug>(EasyAlign)")
 
-nnoremap <Leader>l<Space> vip:EasyAlign *\ <CR>
-nnoremap <Leader>l, vip:EasyAlign *,<CR>
-nnoremap <Leader>l= vip:EasyAlign =<CR>
-nnoremap <Leader>l\| vip:EasyAlign *\|<CR>
+nmap("<Leader>l<Space>", "vip:EasyAlign *\\ <CR>")
+nmap("<Leader>l,", "vip:EasyAlign *,<CR>")
+nmap("<Leader>l=", "vip:EasyAlign =<CR>")
+nmap("<Leader>l\\|", "vip:EasyAlign *\\|<CR>")
 
-vnoremap <Leader>l<Space> :EasyAlign *\ <CR>
-vnoremap <Leader>l, :EasyAlign *,<CR>
-vnoremap <Leader>l= :EasyAlign =<CR>
-vnoremap <Leader>l\| :EasyAlign *\|<CR>
+vmap("<Leader>l<Space>", ":EasyAlign *\\ <CR>")
+vmap("<Leader>l,", ":EasyAlign *,<CR>")
+vmap("<Leader>l=", ":EasyAlign =<CR>")
+vmap("<Leader>l\\|", ":EasyAlign *\\|<CR>")
 
-let g:splitjoin_ruby_curly_braces = 0
-let g:splitjoin_ruby_hanging_args = 0
-let g:splitjoin_trailing_comma = 1
+vim.g.splitjoin_ruby_curly_braces = 0
+vim.g.splitjoin_ruby_hanging_args = 0
+vim.g.splitjoin_trailing_comma = 1
 
-set mouse=a
+vim.opt.mouse = "a"
 
-"jump to first non-whitespace on line, jump to beginning of line if already at first non-whitespace
-nnoremap <Home> :call LineHome()<CR>:echo<CR>
-vnoremap <Home> :call LineHome()<CR>:echo<CR>
-imap <Home> <C-R>=LineHome()<CR>
+-- jump to first non-whitespace on line, jump to beginning of line if already at first non-whitespace
+nmap("<Home>", ":call LineHome()<CR>:echo<CR>")
+vmap("<Home>", ":call LineHome()<CR>:echo<CR>")
+imap("<Home>", "<C-R>=LineHome()<CR>")
+vim.cmd([[
 function! LineHome()
   let x = col('.')
   execute "normal! ^"
@@ -239,7 +266,7 @@ function! s:stripTrailingWhitespaces()
   call cursor(l, c)
 endfunction
 augroup stripTrailingWhitespacesPluginDetect
-  autocmd FileType ruby,python,javascript,nix autocmd BufWritePre <buffer> :call <SID>stripTrailingWhitespaces()
+  autocmd FileType ruby,python,javascript,nix autocmd BufWritePre <buffer> :call stripTrailingWhitespaces()
 augroup END
 
 function! s:inNormalReplacingCursor(command)
@@ -252,16 +279,18 @@ function! s:inNormalReplacingCursor(command)
   " Clean up: restore previous cursor position
   call cursor(l, c)
 endfunction
-nnoremap <Leader>== :call <SID>inNormalReplacingCursor("gg=G")<CR>
-nnoremap <Leader>=p :call <SID>inNormalReplacingCursor("=ip")<CR>
-nnoremap <Leader>=r :call <SID>inNormalReplacingCursor("=ar")<CR>
+]])
+nmap("<Leader>==", ':call inNormalReplacingCursor("gg=G")<CR>')
+nmap("<Leader>=p", ':call inNormalReplacingCursor("=ip")<CR>')
+nmap("<Leader>=r", ':call inNormalReplacingCursor("=ar")<CR>')
 
-" Select last paste/change
-nnoremap <Leader>v `[v`]
-nnoremap <Leader>V `[V`]
+-- Select last paste/change
+nmap("<Leader>v", "`[v`]")
+nmap("<Leader>V", "`[V`]")
 
-nnoremap <silent> <Leader><Leader>g V:<c-u>call OpenCurrentFileInGithub()<cr>
-xnoremap <silent> <Leader><Leader>g :<c-u>call OpenCurrentFileInGithub()<cr>
+nmap("<silent>", "<Leader><Leader>g V:<c-u>call OpenCurrentFileInGithub()<cr>")
+xmap("<silent>", "<Leader><Leader>g :<c-u>call OpenCurrentFileInGithub()<cr>")
+vim.cmd([[
 function! OpenCurrentFileInGithub()
   let file_dir = expand('%:h')
   let git_root = system('cd ' . file_dir . '; git rev-parse --show-toplevel | tr -d "\n"')
@@ -276,28 +305,23 @@ function! OpenCurrentFileInGithub()
   if last_line != first_line | let url .= '-L' . last_line | endif
   call system('open ' . url)
 endfunction
-
-nnoremap <Leader>cp :let @* = expand('%')<cr>
-nnoremap <Leader>cap :let @* = expand('%:p')<cr>
-
-let g:LanguageClient_serverCommands = {
-      \ 'ruby': ['bundle', 'exec', 'srb', 'tc', '--lsp'],
-      \ 'sh': ['bash-language-server', 'start'],
-      \ 'yml': ['yaml-language-server']
-      \ }
-nmap <silent> K <Plug>(lcn-hover)
-nmap <silent> gd <Plug>(lcn-definition)
-nmap <Leader>ls <Plug>(lcn-menu)
-
-:let g:ruby_indent_assignment_style = 'variable'
-:let g:ruby_indent_hanging_elements = 0
-
-let g:firenvim_config = { 'localSettings': { } }
-let fc = g:firenvim_config['localSettings']
-let fc['https?://[^/]+\.google\.com/'] = { 'takeover': 'never', 'priority': 1 }
-let fc['https://app\.mode\.com/'] = { 'takeover': 'never', 'priority': 1 }
-
-noremap <Leader>o <C-o>
-noremap <Leader>i <C-i>
-noremap <Leader>r <C-r>
 ]])
+
+nmap("<Leader>cp", ":let @* = expand('%')<cr>")
+nmap("<Leader>cap", ":let @* = expand('%:p')<cr>")
+
+vim.g.LanguageClient_serverCommands = {
+  ruby = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
+  sh = { 'bash-language-server', 'start' },
+  yml = { 'yaml-language-server' }
+}
+nmap("<silent>", "K <Plug>(lcn-hover)")
+nmap("<silent>", "gd <Plug>(lcn-definition)")
+nmap("<Leader>ls", "<Plug>(lcn-menu)")
+
+vim.g.ruby_indent_assignment_style = 'variable'
+vim.g.ruby_indent_hanging_elements = 0
+
+nmap("<Leader>o", "<C-o>")
+nmap("<Leader>i", "<C-i>")
+nmap("<Leader>r", "<C-r>")
