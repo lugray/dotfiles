@@ -1,3 +1,4 @@
+vim.cmd([[
 execute pathogen#infect()
 
 syntax on
@@ -299,3 +300,4 @@ let fc['https://app\.mode\.com/'] = { 'takeover': 'never', 'priority': 1 }
 noremap <Leader>o <C-o>
 noremap <Leader>i <C-i>
 noremap <Leader>r <C-r>
+]])
