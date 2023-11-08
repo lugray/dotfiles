@@ -17,8 +17,8 @@ kana/vim-textobj-user
 lilydjwg/colorizer ## Show #xxxxxx in its colour
 machakann/vim-textobj-delimited
 nelstrom/vim-textobj-rubyblock
-nvim-tree/nvim-tree.lua
 ngmy/vim-rubocop
+nvim-tree/nvim-tree.lua
 ryanoasis/vim-devicons
 terryma/vim-multiple-cursors
 tpope/vim-commentary
@@ -28,6 +28,7 @@ tpope/vim-repeat ## . support for some plugins
 tpope/vim-rhubarb
 tpope/vim-sensible
 tpope/vim-surround ## cs"'
+tpope/vim-unimpaired
 vim-ruby/vim-ruby
 vim-scripts/ReplaceWithRegister ## gr
 wellle/targets.vim
