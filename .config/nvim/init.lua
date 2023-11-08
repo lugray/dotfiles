@@ -327,3 +327,20 @@ vim.g.ruby_indent_hanging_elements = 0
 nmap("<Leader>o", "<C-o>")
 nmap("<Leader>i", "<C-i>")
 nmap("<Leader>r", "<C-r>")
+
+-- Set the visual mode to line mode if the selection is multiline
+-- and back to character mode if the selection is single line.
+-- This is particularly useful when using the mouse to select text.
+function AutoVisualLineMode()
+  local multiline = vim.fn.getpos("v")[2] ~= vim.fn.getpos(".")[2]
+  if vim.fn.mode() == 'v' and multiline then
+    vim.cmd("normal! V")
+  end
+  if vim.fn.mode() == 'V' and not multiline then
+    vim.cmd("normal! v")
+  end
+end
+
+augroup("auto_visual_line_mode", "CursorMoved", "*", {
+  ":lua AutoVisualLineMode()",
+})
