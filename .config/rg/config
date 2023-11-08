@@ -1,3 +1,5 @@
 --smart-case
 --sort=path
+--hidden
 --glob=!vendor
+--glob=!.git
