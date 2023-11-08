@@ -1,0 +1,46 @@
+local tmp ret dest
+
+tmp="$(mktemp -u)"
+exec 9>"${tmp}"
+exec 8<"${tmp}"
+rm -f "${tmp}"
+
+/usr/bin/ruby -e '
+repos_dir = File.expand_path("~/src")
+url = ARGV[0]
+path = if url.start_with?("git@")
+  url[4..-1].sub(":", "/")
+elsif url.start_with?("https://")
+  url[8..-1]
+else
+  raise "Unknown Protocol: #{url}"
+end
+if path.end_with?(".git")
+  path = path[0..-5]
+end
+repo_dir = File.join(repos_dir, path)
+if File.exist?(repo_dir)
+  IO.new(9).puts(repo_dir)
+  exit
+end
+
+require "fileutils"
+FileUtils.mkdir_p(File.dirname(repo_dir))
+system("git", "clone", url, repo_dir)
+status = $?
+if status.success?
+  IO.new(9).puts(repo_dir)
+  exit
+end
+exit status.exitstatus
+' "$@"
+ret=$?
+
+if [[ ${ret} -eq 0 ]]; then
+  read -r dest <&8
+  cd "${dest}"
+fi
+exec 8<&-
+exec 9<&-
+
+return ${ret}
