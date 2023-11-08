@@ -40,12 +40,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-if [ -d ~/.shellfuncs ]; then
-	for FILE in ~/.shellfuncs/*.sh; do
-		source $FILE
-	done
-fi
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.shell_aliases, instead of adding them here directly.
