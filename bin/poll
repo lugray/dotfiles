@@ -16,8 +16,9 @@ fi
 trap "echo -en '\e[?1049l'" EXIT
 echo -en '\e[?1049h'
 until [ "$input" = "q" ]; do
-  output_text="$("$@")"
+  eval 'output_text="$('$@')"'
   echo -en '\e[H\e[J'
+  echo '$ '"$@"
   echo "$output_text"
   read -rs -n1 -t${T} input
 done
