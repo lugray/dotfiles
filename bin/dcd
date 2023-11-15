@@ -1,32 +1,60 @@
-#!/usr/bin/ruby
+#!/usr/bin/ruby --disable-gems
 
 require 'open3'
 
 FIELD_SEP = "\u2007"
-
-# fzf doesn't search undisplayed fields, so we add a bunch of padding to hide the additional search terms
-PADDING = ' ' * 100
+SRC_DIR = "#{ENV['HOME']}/src"
 
 PREVIEW_PROGRAM = <<~PREVIEW
-  echo -n "\e[96;4m"{2}"\e[0m ";
+  echo "\e[96;4m"{2}"\e[0m \\c";
   timeout 0.3 git-line {1} 2> /dev/null || echo "";
+  DIR={1}
+  echo "\e[90m${DIR###{SRC_DIR}/}\e[0m";
   echo "";
-  bat --color=always {1}/README.md 2> /dev/null || cat {1}/README.md 2> /dev/null || ls --color=always {1}
+  bat --color=always {1}/README.md --file-name README.md 2> /dev/null || cat {1}/README.md 2> /dev/null || ls --color=always {1}
 PREVIEW
 
-io = IO.popen(['fzf', '-d', FIELD_SEP, '--nth', '2..', '--with-nth', '2..', '--preview', PREVIEW_PROGRAM, '--no-hscroll', '--ellipsis', ''], 'r+')
-# Fields: dir, name, additional search terms
-Dir.glob("#{ENV['HOME']}/src/*/*/*").each do |dir|
-  repo = File.basename(dir)
-  org = File.basename(File.dirname(dir))
-  additional = if org != 'Shopify'
-    "#{org}/#{repo}"
-  else
-    "#{repo}" # fzf doesn't like a variable number of fields, so we repeat the repo name
+def git_dirs
+  return File.read("#{SRC_DIR}/.git_dirs").split("\n")
+rescue Errno::ENOENT
+  dirs = Dir.glob("#{SRC_DIR}/**/.git").map do |dir|
+    File.dirname(dir)
   end
-  io.write("#{dir}#{FIELD_SEP}#{repo}#{FIELD_SEP}#{PADDING}#{additional}\n")
+  dirs.reject! { |dir| dirs.any? { |d| dir.start_with?(d) && dir != d } } # Skip subdirectories of other directories (git submodules)
+  File.write("#{SRC_DIR}/.git_dirs", dirs.join("\n"))
+  dirs
 end
-io.write("#{ENV['HOME']}#{FIELD_SEP}~#{FIELD_SEP}#{PADDING}`~#{ENV['HOME']}home\n")
+
+def fields
+  @fields ||= (git_dirs.map do |dir|
+    url = dir.delete_prefix(SRC_DIR)
+    repo = File.basename(url)
+    [dir, repo, url]
+  end)
+end
+
+max_len = fields.map { |_, repo, _| repo.length }.max
+require 'io/console'
+preview_width = IO.console.winsize[1] - max_len - 7
+padding = ' ' * max_len
+
+io = IO.popen([
+  'fzf',
+  '-d', FIELD_SEP,
+  '--nth', '2..',
+  '--with-nth', '2..',
+  '--preview', PREVIEW_PROGRAM,
+  '--no-hscroll',
+  '--ellipsis', '',
+  '--preview-window', "right,#{preview_width},~3",
+], 'r+')
+
+# Fields: dir, name, additional search terms
+fields.each do |dir, repo, url|
+  IO.popen(['git-line', dir], 'r+') # Warm up the git fsmonitor cache. We intentionally don't wait for this to finish - it's best effort.
+  io.write("#{dir}#{FIELD_SEP}#{repo}#{FIELD_SEP}#{padding}#{url}\n")
+end
+io.write("#{ENV['HOME']}#{FIELD_SEP}~#{FIELD_SEP}#{padding}`~#{ENV['HOME']}home\n")
 io.close_write
 dir, name, _ = io.read.chomp.split(FIELD_SEP)
 Process.wait(io.pid)
