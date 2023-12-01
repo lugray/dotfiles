@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'chronic'
+
+time = Chronic.parse(ARGV[0])
+if time.nil?
+  STDERR.puts "Could not parse time: #{ARGV[0]}"
+  exit 1
+end
+puts "Waiting until #{time}..."
+
+while Time.now < time
+  sleep(time - Time.now)
+end
