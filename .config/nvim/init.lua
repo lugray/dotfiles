@@ -53,12 +53,6 @@ nmap("<Leader>vv", ":source ~/.config/nvim/init.lua<CR>")
 imap ("<c-j>", "<Plug>(copilot-next)")
 imap ("<c-k>", "<Plug>(copilot-previous)")
 
-vim.cmd([[
-if filereadable('/opt/homebrew/opt/node@16/bin/node')
-  let g:copilot_node_command = '/opt/homebrew/opt/node@16/bin/node'
-endif
-]])
-
 vim.opt.shell = "/bin/bash"
 
 vim.opt.spell = true
