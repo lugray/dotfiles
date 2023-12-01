@@ -338,3 +338,6 @@ end
 augroup("auto_visual_line_mode", "CursorMoved", "*", {
   ":lua AutoVisualLineMode()",
 })
+
+nmap("<Leader>e", ":!%:p<CR>")
+nmap("<Leader>x", ":!%:p --example<CR>")

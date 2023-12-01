@@ -37,6 +37,9 @@ alias b9='back 9'
 
 alias vim='nvim'
 alias vi='nvim'
+alias vt='vim $(ls day*.rb | sort | tail -1)'
+alias rt='ruby $(ls day*.rb | sort | tail -1)'
+alias et='ruby $(ls day*.rb | sort | tail -1) --example'
 
 PWD_AT_SHELL_START=$PWD
 alias cdd='cd $PWD_AT_SHELL_START'
