@@ -1,5 +1,6 @@
-if [[ "$1" == "git" ]] && [[ "$#" -eq 2 ]]; then
-  command man "$1-$2"
+SINGLE=$(IFS="-"; echo "$*")
+if command man -w "$SINGLE" >/dev/null 2>&1; then
+  command man "$SINGLE"
 else
   command man "$@"
 fi
