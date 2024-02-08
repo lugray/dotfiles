@@ -94,6 +94,8 @@ augroup("format_markdown", "FileType", "markdown", {
 })
 augroup("format_go", "FileType", "go", {
   "map gc :GoCallers<CR>",
+  "map gtf :wa<CR>:GoTestFunc<CR>",
+  "map gtp :wa<CR>:GoTest<CR>",
 })
 
 vim.opt.wrap = false
