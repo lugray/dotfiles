@@ -7,11 +7,11 @@ SRC_DIR = "#{ENV['HOME']}/src"
 
 PREVIEW_PROGRAM = <<~PREVIEW
   echo "\e[96;4m"{2}"\e[0m \\c";
-  timeout 0.3 git-line {1} 2> /dev/null || echo "";
+  timeout 0.3 #{File.join(ENV['HOME'], 'bin/git-line')} {1} 2> /dev/null || echo "";
   DIR={1}
   echo "\e[90m${DIR###{SRC_DIR}/}\e[0m";
   echo "";
-  bat --color=always {1}/README.md --file-name README.md 2> /dev/null || cat {1}/README.md 2> /dev/null || ls --color=always {1}
+  /opt/homebrew/bin/bat --color=always {1}/README.md --file-name README.md 2> /dev/null || cat {1}/README.md 2> /dev/null || ls --color=always {1}
 PREVIEW
 
 def git_dirs
@@ -39,7 +39,7 @@ preview_width = IO.console.winsize[1] - max_len - 7
 padding = ' ' * max_len
 
 io = IO.popen([
-  'fzf',
+  '/opt/homebrew/bin/fzf',
   '-d', FIELD_SEP,
   '--nth', '2..',
   '--with-nth', '2..',
@@ -51,7 +51,7 @@ io = IO.popen([
 
 # Fields: dir, name, additional search terms
 fields.each do |dir, repo, url|
-  IO.popen(['git-line', dir], 'r+') # Warm up the git fsmonitor cache. We intentionally don't wait for this to finish - it's best effort.
+  IO.popen([File.join(ENV['HOME'], 'bin/git-line'), dir], 'r+') # Warm up the git fsmonitor cache. We intentionally don't wait for this to finish - it's best effort.
   io.write("#{dir}#{FIELD_SEP}#{repo}#{FIELD_SEP}#{padding}#{url}\n")
 end
 io.write("#{ENV['HOME']}#{FIELD_SEP}~#{FIELD_SEP}#{padding}`~#{ENV['HOME']}home\n")
