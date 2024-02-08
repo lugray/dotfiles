@@ -18,23 +18,26 @@ vim.opt.smartcase = true
 
 require("nvim-tree").setup()
 
-function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+function map(mode, shortcut, command, silent)
+  if silent == nil then
+    silent = true
+  end
+  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = silent })
 end
-function nmap(shortcut, command)
-  map('n', shortcut, command)
+function nmap(shortcut, command, silent)
+  map('n', shortcut, command, silent)
 end
-function imap(shortcut, command)
-  map('i', shortcut, command)
+function imap(shortcut, command, silent)
+  map('i', shortcut, command, silent)
 end
-function cmap(shortcut, command)
-  map('c', shortcut, command)
+function cmap(shortcut, command, silent)
+  map('c', shortcut, command, silent)
 end
-function vmap(shortcut, command)
-  map('v', shortcut, command)
+function vmap(shortcut, command, silent)
+  map('v', shortcut, command, silent)
 end
-function xmap(shortcut, command)
-  map('x', shortcut, command)
+function xmap(shortcut, command, silent)
+  map('x', shortcut, command, silent)
 end
 
 function augroup(name, event, pattern, commands)
@@ -105,7 +108,7 @@ vim.opt.clipboard = "unnamed"
 -- Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap("w!!", "w !sudo tee > /dev/null %")
 
-nmap("<Leader>a", ":Rg<Space>")
+nmap("<Leader>a", ":Rg<Space>", false)
 
 vim.g.vimrubocop_keymap = 0
 nmap("<Leader>s", ":RuboCop .<CR>")
