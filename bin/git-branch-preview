@@ -1,7 +1,14 @@
 #!/opt/homebrew/bin/ruby
 
-require 'cli/ui'
 require 'open3'
+
+begin
+  require 'cli/ui'
+rescue LoadError
+  Open3.capture3('/opt/homebrew/bin/gem', 'install', 'cli-ui')
+  Gem.clear_paths
+  require 'cli/ui'
+end
 
 log, _, _ = Open3.capture3('git', 'log', "--format={{magenta:%s}}\n\n%b", '--reverse', ARGV[0], '--not', 'origin/HEAD')
 
