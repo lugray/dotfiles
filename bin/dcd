@@ -14,7 +14,8 @@ PREVIEW_PROGRAM = <<~PREVIEW
   /opt/homebrew/bin/bat --color=always {1}/README.md --file-name README.md 2> /dev/null || cat {1}/README.md 2> /dev/null || ls --color=always {1}
 PREVIEW
 
-def git_dirs
+def git_dirs(no_cache: false)
+  File.delete("#{SRC_DIR}/.git_dirs") if no_cache
   return File.read("#{SRC_DIR}/.git_dirs").split("\n")
 rescue Errno::ENOENT
   dirs = Dir.glob("#{SRC_DIR}/**/.git").map do |dir|
@@ -31,6 +32,11 @@ def fields
     repo = File.basename(url)
     [dir, repo, url]
   end)
+end
+
+if ARGV.include?('--refresh-dirs')
+  git_dirs(no_cache: true)
+  exit 0
 end
 
 max_len = fields.map { |_, repo, _| repo.length }.max

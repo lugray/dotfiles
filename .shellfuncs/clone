@@ -29,7 +29,7 @@ FileUtils.mkdir_p(File.dirname(repo_dir))
 system("git", "clone", url, repo_dir)
 status = $?
 if status.success?
-  FileUtils.rm_f(File.join(repos_dir, ".git_dirs"))
+  system("dcd", "--refresh-dirs")
   IO.new(9).puts(repo_dir)
   exit
 end
