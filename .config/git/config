@@ -18,7 +18,7 @@
 	st = "status"
 	unstage = "reset HEAD --"
   f = "fresh"
-  s = "!git switch $(git branch --sort=committerdate | grep -v '^*' | sed 's/^  //' | fzf --preview 'git show {1}')"
+  s = "!git switch $(git branch --sort=committerdate | grep -v '^*' | sed 's/^  //' | fzf --preview 'git branch-preview {1}')"
   cp = "cherry-pick"
   open = "!open \"$(git remote get-url origin)\""
 

@@ -1,0 +1,17 @@
+#!/opt/homebrew/bin/ruby
+
+require 'cli/ui'
+require 'open3'
+
+log, _, _ = Open3.capture3('git', 'log', "--format={{magenta:%s}}\n\n%b", '--reverse', ARGV[0], '--not', 'origin/HEAD')
+
+unwrapped_log = log.split(/\n{2,}/).map do |paragraph|
+  paragraph.chomp.split("\n").join(' ')
+end.join("\n\n")
+
+CLI::UI.enable_color = true
+CLI::UI.puts(unwrapped_log)
+puts
+
+diff, _, _ = Open3.capture3('git', 'diff', '--color=always', "origin/HEAD...#{ARGV[0]}", '--', '.', ':!Gemfile.lock', ':!package-lock.json', ':!yarn.lock', ':!vendor', ':!go.sum', ':!go.mod', ':!*.lock')
+puts diff
