@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'cli/ui'
+
+STDIN.read.split(/\n{2,}/).map do |paragraph|
+  paragraph.chomp.split("\n").join(' ')
+end.join("\n\n").tap do |result|
+  if STDOUT.tty?
+    puts CLI::UI.wrap(result)
+  else
+    puts result
+  end
+end
