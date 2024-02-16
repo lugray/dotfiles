@@ -96,7 +96,10 @@ augroup("format_go", "FileType", "go", {
   "map gc :GoCallers<CR>",
   "map gtf :wa<CR>:GoTestFunc<CR>",
   "map gtp :wa<CR>:GoTest<CR>",
+  "map gl :cexpr system('golangci-lint run <bar> grep ^\\\\S')<CR>:copen<CR>",
 })
+
+nmap("<Leader>n", ":cnext<CR>")
 
 vim.opt.wrap = false
 vim.opt.tabstop = 2
