@@ -1,0 +1,23 @@
+#!/opt/homebrew/bin/ruby
+
+begin
+  require 'cli/kit'
+rescue LoadError
+  Open3.capture3('/opt/homebrew/bin/gem', 'install', 'cli-kit')
+  Gem.clear_paths
+  require 'cli/kit'
+end
+
+full_err = ''
+searching = true
+
+CLI::Kit::System.system('git', 'push', '--progress', *ARGV) do |out, err|
+  full_err += err
+  if searching && md = full_err.match(/remote:\s+(https:\/\/[^\s]*)\s*$/)
+    url = md[1]
+    system('open', url)
+    searching = false
+  end
+  $stdout.write(out)
+  $stderr.write(err)
+end
