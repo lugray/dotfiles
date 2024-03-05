@@ -104,7 +104,8 @@ function __progressive_prompt_exec_incr() {
 }
 precmd_functions+=(__progressive_prompt_exec_incr)
 setopt PROMPT_SUBST
-PROMPT='$(progressive_prompt $$ $__progressive_prompt_exec_no "" prompt)'
+PROMPT='$(progressive_prompt $$ $__progressive_prompt_exec_no "╭─
+╰─🐙 " prompt)'
 
 ####################################################
 # Load tools rx will load for when I don't have rx #
