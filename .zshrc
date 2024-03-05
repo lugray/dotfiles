@@ -125,7 +125,16 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$(brew --prefix)/share/zsh-completions:$FPATH
 fi
 autoload -Uz compinit
-compinit
+# The globbing is a little complicated here:
+# - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
+# - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
+() {
+  if [[ $# -gt 0 ]]; then
+    compinit
+  else
+    compinit -C
+  fi
+} ${ZDOTDIR:-$HOME}/.zcompdump(Nmh+24)
 
 # eval $(thefuck --alias f)
 f () {
