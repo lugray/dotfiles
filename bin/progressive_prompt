@@ -7,6 +7,13 @@ DIR = '/tmp/progressive_prompt'
 WORKING_SENTINEL = "\0\0\0"
 
 args = ARGV.dup
+
+if args.include?('--refresh')
+  FileUtils.rm_rf(DIR) if File.directory?(DIR)
+  Open3.capture3('pkill', '-ALRM', '-a', 'zsh')
+  exit 0
+end
+
 shell_pid = args.shift.to_i
 exec_number = args.shift.to_i
 placeholder = args.shift
