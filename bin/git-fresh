@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 git freeze
 git checkout $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)
-git pull
-git fetch --all --prune
+git pull > /dev/null 2>&1
+git fetch --all --prune > /dev/null 2>&1
+echo -n "\033[0;31m" # Red
 git branch -vv --no-color | grep "\[.*: gone\]" | awk "{print \$1}" | xargs git branch -D
-git show --format='%C(auto)%D %s' -s $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/heads/ | grep -v '^\(master\|main\)$')
+echo -n "\033[0m" # Reset
+git show --format='%C(green)%D%C(reset) %s' -s $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/heads/ | grep -v '^\(master\|main\|staging\)$')
