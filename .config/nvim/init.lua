@@ -315,6 +315,7 @@ nmap("<Leader>cp", ":let @* = expand('%')<cr>")
 nmap("<Leader>cap", ":let @* = expand('%:p')<cr>")
 
 vim.g.LanguageClient_serverCommands = {
+  go = { 'gopls' },
   ruby = { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
   sh = { 'bash-language-server', 'start' },
   yml = { 'yaml-language-server' }

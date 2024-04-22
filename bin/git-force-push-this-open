@@ -1,0 +1,31 @@
+#!/bin/bash
+
+REMOTE_REF="`git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)`"
+if [ -z "$REMOTE_REF" ]; then
+  (>&2 echo "You do not have an upstream set.")
+  exit 1
+fi
+
+LOCAL_BRANCH="`git symbolic-ref --short HEAD`"
+if [ "$LOCAL_BRANCH" = "master" ]; then
+  (>&2 echo "For safety, you cannot use this to force push master.")
+  exit 2
+fi
+if [ "$LOCAL_BRANCH" = "main" ]; then
+  (>&2 echo "For safety, you cannot use this to force push main.")
+  exit 2
+fi
+
+REMOTE_BRANCH="`echo $REMOTE_REF | cut -d/ -f2-`"
+if [ "$REMOTE_BRANCH" = "master" ]; then
+  (>&2 echo "For safety, you cannot use this to force push to master.")
+  exit 3
+fi
+if [ "$REMOTE_BRANCH" = "main" ]; then
+  (>&2 echo "For safety, you cannot use this to force push to main.")
+  exit 3
+fi
+
+REMOTE_REPO="`echo $REMOTE_REF | cut -d/ -f1`"
+
+git push-open --force-with-lease --force-if-includes "$REMOTE_REPO" "$REMOTE_BRANCH"
