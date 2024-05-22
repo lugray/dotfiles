@@ -127,16 +127,16 @@ nmap("˚", "<C-W>+")
 nmap("¬", "<C-W>>")
 
 -- Arrow keys
-nmap("<Up>", ":m .-2<cr>==")
-nmap("<Down>", ":m .+1<cr>==")
-nmap("<Left>", "<<")
-nmap("<Right>", ">>")
+nmap("<S-Up>", ":m .-2<cr>==")
+nmap("<S-Down>", ":m .+1<cr>==")
+nmap("<S-Left>", "<<")
+nmap("<S-Right>", ">>")
 
 -- Visual Arrow keys
-vmap("<Left>", "<gv")
-vmap("<Right>", ">gv")
-vmap("<Up>", ":m '<-2<CR>gv=gv")
-vmap("<Down>", ":m '>+1<CR>gv=gv")
+vmap("<S-Left>", "<gv")
+vmap("<S-Right>", ">gv")
+vmap("<S-Up>", ":m '<-2<CR>gv=gv")
+vmap("<S-Down>", ":m '>+1<CR>gv=gv")
 
 -- kj = <esc>
 vim.cmd([[
