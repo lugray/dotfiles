@@ -22,6 +22,7 @@ alias s='du -hs'
 
 alias quit='exit'
 alias q='exit'
+alias :q='exit'
 
 alias g='git'
 
