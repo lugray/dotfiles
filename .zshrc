@@ -155,3 +155,4 @@ f () {
 }
 
 eval "$(shadowenv init zsh)"
+source <(fzf --zsh)
