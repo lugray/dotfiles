@@ -76,3 +76,6 @@
 
 [includeIf "gitdir:~/src/git.fullscript.io/"]
 	path = "~/.rx/git.config"
+
+[diff "zshrc"]
+	xfuncname = "^# .* #$"
