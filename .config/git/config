@@ -18,10 +18,10 @@
 	rtt = "reset-to-tracking"
 	st = "status"
 	unstage = "reset HEAD --"
-  f = "fresh"
-  s = "!git switch $(git branch --sort=committerdate | grep -v '^*' | sed 's/^  //' | fzf --preview 'git branch-preview {1}')"
-  cp = "cherry-pick"
-  open = "!open \"$(git remote get-url origin)\""
+	f = "fresh"
+	s = "!git switch $(git branch --sort=committerdate | grep -v '^*' | sed 's/^  //' | fzf --preview 'git branch-preview {1}')"
+	cp = "cherry-pick"
+	open = "!open \"$(git remote get-url origin)\""
 
 [branch]
 	sort = "committerdate"
@@ -75,4 +75,4 @@
 	name = "Lisa Ugray"
 
 [includeIf "gitdir:~/src/git.fullscript.io/"]
-  path = "~/.rx/git.config"
+	path = "~/.rx/git.config"
