@@ -25,6 +25,8 @@ autoload -Uz ~/.shellfuncs/*(N)
 source ~/src/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export RIPGREP_CONFIG_PATH=~/.config/rg/config
+eval "$(shadowenv init zsh)"
+source <(fzf --zsh)
 
 ################################
 # Vim mode, with cursor change #
@@ -67,6 +69,7 @@ fi
 ################
 # Key Bindings #
 ################
+
 [[ "${terminfo[khome]}" != "" ]] && bindkey "${terminfo[khome]}" beginning-of-line      # [Home] - Go to beginning of line
 [[ "${terminfo[kend]}" != "" ]]  && bindkey "${terminfo[kend]}"  end-of-line            # [End] - Go to end of line
 [[ "${terminfo[kcbt]}" != "" ]]  && bindkey "${terminfo[kcbt]}"  reverse-menu-complete  # [Shift-Tab] - move through the completion menu backwards
@@ -136,7 +139,10 @@ autoload -Uz compinit
   fi
 } ${ZDOTDIR:-$HOME}/.zcompdump(Nmh+24)
 
-# eval $(thefuck --alias f)
+####################################
+# Inline eval $(thefuck --alias f) #
+####################################
+
 f () {
   TF_PYTHONIOENCODING=$PYTHONIOENCODING;
   export TF_SHELL=zsh;
@@ -153,6 +159,3 @@ f () {
   export PYTHONIOENCODING=$TF_PYTHONIOENCODING;
   test -n "$TF_CMD" && print -s $TF_CMD
 }
-
-eval "$(shadowenv init zsh)"
-source <(fzf --zsh)
