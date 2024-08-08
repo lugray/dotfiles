@@ -1,13 +1,3 @@
-[interactive]
-	diffFilter = delta --color-only
-
-[delta]
-	navigate = true    # use n and N to move between diff sections
-	line-numbers = true
-
-[diff]
-	colorMoved = default
-
 [alias]
 	alias = "config --get-regexp ^alias\\\\."
 	amco = "commit -a --amend --no-edit"
@@ -15,29 +5,26 @@
 	ch = "checkout"
 	checkoutr = "checkout"
 	co = "commit"
+	cp = "cherry-pick"
+	f = "fresh"
 	fpt = "force-push-this"
 	fpto = "force-push-this-open"
-	gla = "log --oneline --graph --all"
 	gl = "log --oneline --graph --branches HEAD"
+	gla = "log --oneline --graph --all"
 	lb = "!git show --format='%C(auto)%D %s' -s $(git for-each-ref --sort=committerdate --format='%(refname:short)' refs/heads/ | grep -v '^\\(master\\|main\\)$')"
 	m = "!git checkout $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)"
 	mrebase = "!git rebase -i $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f3,4 -d/)"
+	open = "!open \"$(git remote get-url origin)\""
 	permission-reset = "!git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply"
 	pr-body = "log --format='#### %B' --reverse HEAD --not origin/HEAD"
 	prune-all-hard = "!git fetch --all --prune && git branch -vv --no-color | grep \"\\[.*: gone\\]\" | awk \"{print \\$1}\" | xargs git branch -D"
 	rtt = "reset-to-tracking"
+	s = "!git switch $(git branch --sort=committerdate | grep -v '^*' | sed 's/^  //' | fzf --preview 'git branch-preview {1}')"
 	st = "status"
 	unstage = "reset HEAD --"
-	f = "fresh"
-	s = "!git switch $(git branch --sort=committerdate | grep -v '^*' | sed 's/^  //' | fzf --preview 'git branch-preview {1}')"
-	cp = "cherry-pick"
-	open = "!open \"$(git remote get-url origin)\""
 
 [branch]
 	sort = "committerdate"
-
-[color]
-	ui = "auto"
 
 [color "diff"]
 	commit = "green"
@@ -54,16 +41,35 @@
 	oldHighlight = "red bold 52"
 	oldNormal = "red bold"
 
+[color]
+	ui = "auto"
+
 [core]
-	excludesfile = "~/.config/git/global_gitignore"
-	pager = delta
 	commitGraph = true
+	excludesfile = "~/.config/git/global_gitignore"
 	fsmonitor = true
-	untrackedcache = true
+	pager = delta
 	sshcommand = ssh -i /Users/lisa.ugray/.ssh/rx_key
+	untrackedcache = true
+
+[delta]
+	line-numbers = true
+	navigate = true    # use n and N to move between diff sections
+
+[diff "zshrc"]
+	xfuncname = "^# .* #$"
+
+[diff]
+	colorMoved = default
 
 [fetch]
 	prune = true
+
+[includeIf "gitdir:~/src/git.fullscript.io/"]
+	path = "~/.rx/git.config"
+
+[interactive]
+	diffFilter = delta --color-only
 
 [merge]
 	conflictstyle = "diff3"
@@ -73,8 +79,8 @@
 	ff = "only"
 
 [push]
-	default = "simple"
 	autoSetupRemote = true
+	default = "simple"
 
 [rebase]
 	autosquash = true
@@ -83,9 +89,3 @@
 [user]
 	email = "lisa.ugray@gmail.com"
 	name = "Lisa Ugray"
-
-[includeIf "gitdir:~/src/git.fullscript.io/"]
-	path = "~/.rx/git.config"
-
-[diff "zshrc"]
-	xfuncname = "^# .* #$"
