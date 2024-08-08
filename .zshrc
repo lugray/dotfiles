@@ -1,14 +1,3 @@
-###########
-# History #
-###########
-
-HISTFILE=~/.histfile
-HISTSIZE=1000000
-SAVEHIST=1000000
-setopt appendhistory autocd
-setopt HIST_IGNORE_SPACE
-HIST_STAMPS="yyyy-mm-dd"
-
 ############################
 # My functions and aliases #
 ############################
@@ -28,6 +17,7 @@ export RIPGREP_CONFIG_PATH=~/.config/rg/config
 eval "$(shadowenv init zsh)"
 source <(fzf --zsh)
 source ~/src/github.com/junegunn/fzf-git.sh/fzf-git.sh
+eval "$(atuin init zsh --disable-up-arrow)" # After fzf --zsh to override Ctrl-R
 
 ################################
 # Vim mode, with cursor change #
