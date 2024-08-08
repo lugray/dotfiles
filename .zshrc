@@ -27,6 +27,7 @@ source ~/src/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlightin
 export RIPGREP_CONFIG_PATH=~/.config/rg/config
 eval "$(shadowenv init zsh)"
 source <(fzf --zsh)
+source ~/src/github.com/junegunn/fzf-git.sh/fzf-git.sh
 
 ################################
 # Vim mode, with cursor change #
