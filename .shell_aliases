@@ -41,6 +41,7 @@ alias vi='nvim'
 alias vt='vim $(ls day*.rb | sort | tail -1)'
 alias rt='ruby $(ls day*.rb | sort | tail -1)'
 alias et='ruby $(ls day*.rb | sort | tail -1) --example'
+alias vti='vim $(ls day*.input | sort | tail -1)'
 
 PWD_AT_SHELL_START=$PWD
 alias cdd='cd $PWD_AT_SHELL_START'
