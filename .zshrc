@@ -6,6 +6,13 @@ fpath=(~/.shellfuncs $fpath)
 autoload -Uz ~/.shellfuncs/*(N)
 [[ -f ~/.shell_aliases ]] && source ~/.shell_aliases
 
+####################################################
+# Load tools rx will load for when I don't have rx #
+####################################################
+
+[[ -v HOMEBREW_PREFIX ]] || { [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv) }
+(( $+functions[rbenv] )) || { command -v rbenv &>/dev/null && eval "$(rbenv init -)" }
+
 ###########
 # Plugins #
 ###########
@@ -100,13 +107,6 @@ precmd_functions+=(__progressive_prompt_exec_incr)
 setopt PROMPT_SUBST
 PROMPT='$(progressive_prompt $$ $__progressive_prompt_exec_no "╭─
 ╰─🐙 " prompt)'
-
-####################################################
-# Load tools rx will load for when I don't have rx #
-####################################################
-
-[[ -v HOMEBREW_PREFIX ]] || { [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv) }
-(( $+functions[rbenv] )) || { command -v rbenv &>/dev/null && eval "$(rbenv init -)" }
 
 #######################
 # Completion settings #
