@@ -3,3 +3,4 @@
 --hidden
 --glob=!vendor
 --glob=!.git
+--type-add=gotest:*_test.go

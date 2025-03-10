@@ -1,5 +1,7 @@
 #!/opt/homebrew/bin/ruby
 
+require 'open3'
+
 begin
   require 'cli/kit'
 rescue LoadError
