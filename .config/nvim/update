@@ -34,7 +34,7 @@ CLI::UI::SpinGroup.new do |spin_group|
       repo_dir = File.join(BUNDLE_DIR, repo)
       if Dir.exist?(repo_dir)
         spinner.update_title("#{org_repo} (Updating)")
-        run!('timeout', '5', 'git', '-C', repo_dir, 'pull')
+        run!('timeout', '10', 'git', '-C', repo_dir, 'pull')
       else
         spinner.update_title("#{org_repo} (Cloning)")
         run!('git', '-C', BUNDLE_DIR, 'clone', "https://github.com/#{org_repo}.git")

@@ -9,7 +9,7 @@ vim.opt.ruler = true
 vim.opt.number = true
 vim.opt.termguicolors = true
 vim.opt.hlsearch = false
-vim.opt.guifont = "Fira Code Nerd Font:h10"
+vim.opt.guifont = "JetBrainsMono Nerd Font:h14"
 
 vim.g.mapleader = " "
 vim.opt.undofile = true
@@ -51,7 +51,9 @@ function augroup(name, event, pattern, commands)
   end
 end
 
+-- Reload/Ressource init.lua
 nmap("<Leader>vv", ":source ~/.config/nvim/init.lua<CR>")
+nmap("<Leader>ve", ":e ~/.config/nvim/init.lua<CR>")
 
 imap ("<c-j>", "<Plug>(copilot-next)")
 imap ("<c-k>", "<Plug>(copilot-previous)")
@@ -179,6 +181,7 @@ imap("?", "?<c-g>u")
 imap("<CR>", "<CR><c-g>u")
 
 vim.g.ctrlp_map = '<Leader>p'
+nmap("<Leader>b", ":CtrlPBuffer<CR>")
 vim.g.ctrlp_user_command = { '.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard' }
 
 nmap("<Leader>g", ":CtrlPBranchModified<CR>")
