@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+print "\e[90m" + STDIN.read + "\e[0m"
