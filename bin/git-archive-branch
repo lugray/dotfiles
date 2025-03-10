@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  LOCAL_BRANCH="`git symbolic-ref --short HEAD`"
+  ARCHIVE_CURRENT_BRANCH=1
+elif [ "$1" = "--list" ]; then
+  git for-each-ref refs/archive --format="%(refname:short)"
+  exit 0
+elif [ "$1" = "--help" || "$1" = "-h" ]; then
+  (>&2 echo "Usage: git archive-branch [BRANCH]")
+  (>&2 echo "  BRANCH: The branch to archive. If not specified, the current branch is archived.")
+  (>&2 echo "  --list: List all archived branches.")
+  (>&2 echo "  --help: Show this help message.")
+  exit 1
+else
+  LOCAL_BRANCH="$1"
+fi
+
+if [ "$LOCAL_BRANCH" = "master" ]; then
+  (>&2 echo "For safety, you cannot use this to archive master.")
+  exit 2
+fi
+if [ "$LOCAL_BRANCH" = "main" ]; then
+  (>&2 echo "For safety, you cannot use this to archive main.")
+  exit 2
+fi
+
+git update-ref refs/archive/$LOCAL_BRANCH $LOCAL_BRANCH
+if [ "$ARCHIVE_CURRENT_BRANCH" = 1 ]; then
+  git checkout $(git symbolic-ref -q refs/remotes/origin/HEAD | cut -f4 -d/)
+fi
+git branch -D $LOCAL_BRANCH
