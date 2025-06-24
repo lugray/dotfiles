@@ -1,2 +1,6 @@
 git add -A
-git commit --fixup ":/$*"
+if [ $# -eq 0 ]; then
+  git commit --fixup $(git log --oneline | head -n50 | fzf | cut -f 1 -d " ")
+else
+  git commit --fixup ":/$*"
+fi
