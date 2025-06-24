@@ -61,6 +61,12 @@ class ProgressivePrompt
         exit if newer_exec_exists?
         run_prompt(first_run: false)
       end
+    rescue StandardError => e
+      File.write(
+        "/tmp/progressive_prompt_error.log",
+        "#{Time.now} - Error in progressive_prompt daemon: #{e.message}\n#{e.backtrace.join("\n")}",
+        mode: 'a',
+      )
     end)
   end
 
