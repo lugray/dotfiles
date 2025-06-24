@@ -1,3 +1,4 @@
+vim.keymap.del('n', 'gri')
 vim.cmd("execute pathogen#infect()")
 
 -- Themeing
