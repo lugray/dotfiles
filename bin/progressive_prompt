@@ -23,7 +23,13 @@ class ProgressivePrompt
     end
   end
 
+  def has_contents?(contents)
+    return false unless File.exist?(@file)
+    File.read(@file) == contents
+  end
+
   def update_prompt(contents, no_alarm: false)
+    return if has_contents?(contents)
     FileUtils.mkdir_p(File.dirname(@file))
     File.write(@file, contents)
     Process.kill('ALRM', @shell_pid.to_i) unless no_alarm
