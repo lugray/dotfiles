@@ -14,3 +14,5 @@ fi
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
 export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}$HOME/.kube/config
+
+test -f $HOME/.zshenv.local && source $HOME/.zshenv.local
