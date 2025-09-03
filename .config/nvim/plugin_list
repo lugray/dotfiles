@@ -1,20 +1,20 @@
 AndrewRadev/splitjoin.vim
 airblade/vim-gitgutter
-autozimu/LanguageClient-neovim bash install.sh
+autozimu/LanguageClient-neovim  bash install.sh
 christoomey/vim-tmux-navigator
 ctrlpvim/ctrlp.vim
 dracula/vim
 fatih/vim-go
 github/copilot.vim
 godoctor/godoctor.vim
-icatalina/vim-case-change ## ~ for visual select
+icatalina/vim-case-change       ## ~ for visual select
 janko-m/vim-test
 jasoncodes/ctrlp-modified.vim
 jremmen/vim-ripgrep
 junegunn/vim-easy-align
 kana/vim-arpeggio
 kana/vim-textobj-user
-lilydjwg/colorizer ## Show #xxxxxx in its colour
+lilydjwg/colorizer              ## Show #xxxxxx in its colour
 machakann/vim-textobj-delimited
 nelstrom/vim-textobj-rubyblock
 ngmy/vim-rubocop
@@ -24,10 +24,10 @@ terryma/vim-multiple-cursors
 tpope/vim-commentary
 tpope/vim-dispatch
 tpope/vim-fugitive
-tpope/vim-repeat ## . support for some plugins
+tpope/vim-repeat                ## . support for some plugins
 tpope/vim-rhubarb
 tpope/vim-sensible
-tpope/vim-surround ## cs"'
+tpope/vim-surround              ## cs"'
 tpope/vim-unimpaired
 vim-ruby/vim-ruby
 vim-scripts/ReplaceWithRegister ## gr
