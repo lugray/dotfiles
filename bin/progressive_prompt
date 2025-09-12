@@ -29,19 +29,14 @@ class ProgressivePrompt
     Process.kill('ALRM', @shell_pid.to_i) unless no_alarm
   end
 
-  def each_prompt
-    return enum_for(__method__) unless block_given?
-    Open3.popen3(*@args, @shell_pid, @exec_number, chdir: @dir) do |stdin, stdout, stderr, wait_thr|
-      stdout.each_line("\0", chomp: true) { |prompt| yield prompt }
-    end
-  end
-
   def run_prompt(first_run:)
-    if first_run
-      update_prompt(@placeholder, no_alarm: true)
-      each_prompt { |prompt| update_prompt(prompt) }
-    else
-      update_prompt(each_prompt.to_a.last)
+    update_prompt(@placeholder, no_alarm: true) if first_run
+    Open3.popen3(*@args, @shell_pid, @exec_number, chdir: @dir) do |stdin, stdout, stderr, wait_thr|
+      if first_run
+        stdout.each_line("\0", chomp: true) { |line| update_prompt(line) }
+      else
+        update_prompt(stdout.each_line("\0", chomp: true).to_a.last)
+      end
     end
   end
 
