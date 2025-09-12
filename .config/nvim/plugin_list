@@ -7,6 +7,7 @@ dracula/vim
 fatih/vim-go
 github/copilot.vim
 godoctor/godoctor.vim
+greggh/claude-code.nvim
 icatalina/vim-case-change       ## ~ for visual select
 janko-m/vim-test
 jasoncodes/ctrlp-modified.vim

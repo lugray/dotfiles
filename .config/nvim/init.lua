@@ -18,6 +18,7 @@ vim.opt.ignorecase  = true
 vim.opt.smartcase = true
 
 require("nvim-tree").setup()
+require('claude-code').setup()
 
 function map(mode, shortcut, command, silent)
   if silent == nil then
