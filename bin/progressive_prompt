@@ -3,92 +3,65 @@
 require 'open3'
 require 'fileutils'
 
-class ProgressivePrompt
-  DIR = '/tmp/progressive_prompt'
-  REFRESH_INTERVAL = 1
+DIR = '/tmp/progressive_prompt'
+WORKING_SENTINEL = "\0\0\0"
 
-  def initialize(args)
-    @shell_pid, @exec_number, @placeholder, *@args = args
-    @dir = Dir.pwd
-    @shell_dir = "#{DIR}/#{@shell_pid}"
-    @file = "#{@shell_dir}/#{@exec_number}"
-  end
+args = ARGV.dup
 
-  def call
-    if File.exist?(@file)
-      puts File.read(@file)
-    else
-      launch_daemon
-      puts @placeholder
-    end
-  end
-
-  def update_prompt(contents, no_alarm: false)
-    FileUtils.mkdir_p(File.dirname(@file))
-    File.write(@file, contents)
-    Process.kill('ALRM', @shell_pid.to_i) unless no_alarm
-  end
-
-  def run_prompt(first_run:)
-    update_prompt(@placeholder, no_alarm: true) if first_run
-    Open3.popen3(*@args, @shell_pid, @exec_number, chdir: @dir) do |stdin, stdout, stderr, wait_thr|
-      if first_run
-        stdout.each_line("\0", chomp: true) { |line| update_prompt(line) }
-      else
-        update_prompt(stdout.each_line("\0", chomp: true).to_a.last)
-      end
-    end
-  end
-
-  def launch_daemon
-    Process.detach(fork do
-      Process.daemon
-      run_prompt(first_run: true)
-      # cleanup!
-      loop do
-        sleep REFRESH_INTERVAL
-        exit if newer_exec_exists?
-        run_prompt(first_run: false)
-      end
-    end)
-  end
-
-  def newer_exec_exists?
-    Dir.foreach(@shell_dir) do |f|
-      next unless f.to_i.to_s == f
-      return true if f.to_i > @exec_number.to_i
-    end
-    false
-  end
-
-  def cleanup!
-    cleanup_old_exec
-    cleanup_terminated_shells
-  end
-
-  def cleanup_old_exec
-    Dir.foreach(@shell_dir) do |f|
-      next unless f.to_i.to_s == f
-      next unless f.to_i < exec_number.to_i
-      File.unlink("#{@shell_dir}/#{f}")
-    end
-  end
-
-  def cleanup_terminated_shells
-    Dir.foreach(DIR) do |pid|
-      FileUtils.rm_r("#{DIR}/#{pid}") unless alive?(pid)
-    end
-  end
-
-  def alive?(pid)
-    return false unless pid.to_i.to_s == pid
-    Process.kill(0, pid.to_i)
-    true
-  rescue Errno::ESRCH
-    false
-  rescue Errno::EPERM
-    true
-  end
+if args.include?('--refresh')
+  FileUtils.rm_rf(DIR) if File.directory?(DIR)
+  Open3.capture3('pkill', '-ALRM', '-a', 'zsh')
+  exit 0
 end
 
-ProgressivePrompt.new(ARGV).call
+shell_pid = args.shift.to_i
+exec_number = args.shift.to_i
+placeholder = args.shift
+dir = Dir.pwd
+
+shell_dir = "#{DIR}/#{shell_pid}"
+file = "#{shell_dir}/#{exec_number}"
+
+FileUtils.mkdir_p(File.dirname(file))
+
+if File.exist?(file)
+  contents = File.read(file)
+  puts contents == WORKING_SENTINEL ? placeholder : contents
+else
+  File.write(file, WORKING_SENTINEL) # Sometimes other things call SIGALRM.
+  Process.detach(fork do
+    Process.daemon
+    Open3.popen3(*args, shell_pid.to_s, exec_number.to_s, chdir: dir) do |stdin, stdout, stderr, wait_thr|
+      left_over = ''
+      loop do
+        out = left_over + stdout.readpartial(4096)
+        parts = out.split("\0", -1)
+        if parts.length > 1
+          File.write(file, parts[-2])
+          Process.kill('ALRM', shell_pid)
+          left_over = parts[-1]
+        else
+          left_over += parts[-1]
+        end
+      end
+    rescue EOFError
+      File.write(file, left_over)
+      Process.kill('ALRM', shell_pid)
+    end
+    Dir.foreach(shell_dir) do |f|
+      next unless f.to_i.to_s == f
+      next unless f.to_i < exec_number
+      File.unlink("#{shell_dir}/#{f}")
+    end
+    Dir.foreach(DIR) do |pid|
+      next unless pid.to_i.to_s == pid
+      Process.kill(0, pid.to_i)
+      # alive
+    rescue Errno::ESRCH
+      FileUtils.rm_r("#{DIR}/#{pid}")
+    rescue Errno::EPERM
+      # alive
+    end
+  end)
+  puts placeholder
+end
