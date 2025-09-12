@@ -55,7 +55,7 @@ class ProgressivePrompt
     Process.detach(fork do
       Process.daemon
       run_prompt(first_run: true)
-      cleanup!
+      # cleanup!
       loop do
         sleep REFRESH_INTERVAL
         exit if newer_exec_exists?
@@ -80,14 +80,13 @@ class ProgressivePrompt
   def cleanup_old_exec
     Dir.foreach(@shell_dir) do |f|
       next unless f.to_i.to_s == f
-      next unless f.to_i < @exec_number.to_i
+      next unless f.to_i < exec_number.to_i
       File.unlink("#{@shell_dir}/#{f}")
     end
   end
 
   def cleanup_terminated_shells
     Dir.foreach(DIR) do |pid|
-      next unless pid.to_i.to_s == pid
       FileUtils.rm_r("#{DIR}/#{pid}") unless alive?(pid)
     end
   end
