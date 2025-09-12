@@ -13,12 +13,14 @@ janko-m/vim-test
 jasoncodes/ctrlp-modified.vim
 jremmen/vim-ripgrep
 junegunn/vim-easy-align
+junegunn/vim-peekaboo
 kana/vim-arpeggio
 kana/vim-textobj-user
 lilydjwg/colorizer              ## Show #xxxxxx in its colour
 machakann/vim-textobj-delimited
 nelstrom/vim-textobj-rubyblock
 ngmy/vim-rubocop
+nvim-lua/plenary.nvim
 nvim-tree/nvim-tree.lua
 ryanoasis/vim-devicons
 terryma/vim-multiple-cursors
