@@ -7,13 +7,19 @@ CYAN = 36
 GREY = 90
 BOLD_GREEN = 92
 BOLD_MAGENTA = 95
+ORANGE = '38;5;208'
 
-XMAS = Time.now.strftime("%m").to_i == 12
-
-MACHINE_COLOR = XMAS ? BOLD_GREEN : GREY
-PATH_COLOR    = XMAS ? RED        : CYAN
-BRANCH_COLOR  = XMAS ? BOLD_GREEN : BOLD_MAGENTA
-PREFIX_COLOR  = XMAS ? RED        : nil
+def theme
+  @theme ||= begin
+    if Time.now.strftime("%m").to_i == 12
+      { machine: BOLD_GREEN, path: RED, branch: BOLD_GREEN, prefix: RED, success_emoji: ['🎄', '🎅', '🎁', '🤶', '⛄'][ARGV[1].to_i % 5], failure_emoji: '🪨' }
+    elsif Time.now.strftime("%m").to_i == 10 && Time.now.strftime("%d").to_i >= 25
+      { machine: ORANGE, path: YELLOW, branch: ORANGE, prefix: ORANGE, success_emoji: '🎃', failure_emoji: '👻' }
+    else
+      { machine: GREY, path: CYAN, branch: BOLD_MAGENTA, prefix: nil, success_emoji: '🐙', failure_emoji: '🤬' }
+    end
+  end
+end
 
 def format(code, text)
   return text unless code
@@ -29,7 +35,7 @@ def machine
   require 'socket'
   name = Socket.gethostname
   name = '%2{🌱%} Fullscript' if name == 'CA-GYQQJMHGPK'
-  format(MACHINE_COLOR, format(ITALIC, name))
+  format(theme[:machine], format(ITALIC, name))
 end
 
 def path
@@ -43,24 +49,16 @@ def path
   prefix_replace.each do |prefix, replacement|
     pwd = pwd.sub(prefix, replacement) if pwd.start_with?(prefix)
   end
-  format(PATH_COLOR, pwd)
-end
-
-def success_emoji
-  XMAS ? ['🎄', '🎅', '🎁', '🤶', '⛄'][ARGV[1].to_i % 5] : '🐙'
-end
-
-def failure_emoji
-  XMAS ? '🪨' : '🤬'
+  format(theme[:path], pwd)
 end
 
 def format_prefix(prefix)
-  format(PREFIX_COLOR, prefix)
+  format(theme[:prefix], prefix)
 end
 
 def print_prompt(suffix = "", final: false)
   print "#{format_prefix('╭─')}#{machine} #{path}#{suffix}\n" \
-    "#{format_prefix('╰─')}%(?.%2{#{success_emoji}%}.#{format(RED, '[%?]')} %2{#{failure_emoji}%}) "
+    "#{format_prefix('╰─')}%(?.%2{#{theme[:success_emoji]}%}.#{format(RED, '[%?]')} %2{#{theme[:failure_emoji]}%}) "
   exit 0 if final
 
   print "\0"
@@ -102,7 +100,7 @@ info[:clean] = '' if info[:staged] + info[:conflicts] + info[:changed] + info[:u
 
 status = [
   ' [',
-  part(info[:branch],    '',        BRANCH_COLOR),
+  part(info[:branch],    '',        theme[:branch]),
   '|',
   part(info[:behind],    '↓'),
   part(info[:ahead],     '↑'),
