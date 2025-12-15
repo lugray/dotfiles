@@ -5,3 +5,4 @@
 --glob=!.git
 --type-add=gotest:*_test.go
 --type-add=spec:*_spec.rb
+--no-ignore-vcs
