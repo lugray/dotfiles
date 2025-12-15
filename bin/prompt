@@ -9,14 +9,39 @@ BOLD_GREEN = 92
 BOLD_MAGENTA = 95
 ORANGE = '38;5;208'
 
+def cycle(*array)
+  array[ARGV[1].to_i % array.size]
+end
+
 def theme
   @theme ||= begin
     if Time.now.strftime("%m").to_i == 12
-      { machine: BOLD_GREEN, path: RED, branch: BOLD_GREEN, prefix: RED, success_emoji: ['🎄', '🎅', '🎁', '🤶', '⛄'][ARGV[1].to_i % 5], failure_emoji: '🪨' }
+      {
+        machine: BOLD_GREEN,
+        path: RED,
+        branch: BOLD_GREEN,
+        prefix: RED,
+        success_emoji: cycle('🎄', '🎅', '🎁', '🤶', '⛄', '🦌', '❄️', '☃️'),
+        failure_emoji: '🪨',
+      }
     elsif Time.now.strftime("%m").to_i == 10 && Time.now.strftime("%d").to_i >= 25
-      { machine: ORANGE, path: YELLOW, branch: ORANGE, prefix: ORANGE, success_emoji: '🎃', failure_emoji: '👻' }
+      {
+        machine: ORANGE,
+        path: YELLOW,
+        branch: ORANGE,
+        prefix: ORANGE,
+        success_emoji: cycle('🎃', '👻', '🕷️', '🧙‍♀️', '🧛‍♂️', '🧟‍♂️', '🦇', '🍬', '🕸️'),
+        failure_emoji: cycle('💀', '🪦', '☠️'),
+      }
     else
-      { machine: GREY, path: CYAN, branch: BOLD_MAGENTA, prefix: nil, success_emoji: '🐙', failure_emoji: '🤬' }
+      {
+        machine: GREY,
+        path: CYAN,
+        branch: BOLD_MAGENTA,
+        prefix: nil,
+        success_emoji: '🐙',
+        failure_emoji: '🤬',
+      }
     end
   end
 end
@@ -69,48 +94,78 @@ print_prompt
 
 require 'open3'
 
-porcelain, _err, stat = Open3.capture3('git', 'status', '--porcelain=v2', '--show-stash', '--branch')
-unless stat.success?
-  print_prompt("", final: true)
+def git_part
+  porcelain, _err, stat = Open3.capture3('git', 'status', '--porcelain=v2', '--show-stash', '--branch')
+  return "" unless stat.success?
+
+  info = porcelain.each_line.each_with_object(Hash.new(0)) do |line, h|
+    case line
+    when /^# branch\.oid (.*)/
+      h[:oid] = $1
+    when /^# branch\.head (.*)/
+      h[:branch] = $1
+    when /^# branch\.ab \+(\d+) -(\d+)/
+      h[:ahead] = $1.to_i
+      h[:behind] = $2.to_i
+    when /^# stash (\d+)/
+      h[:stashed] = $1.to_i
+    when /^[12] (.)(.)/
+      h[:staged] += 1 if $1 != '.'
+      h[:changed] += 1 if $2 != '.'
+    when /^u/
+      h[:conflicts] += 1
+    when /^\?/
+      h[:untracked] += 1
+    end
+  end
+
+  info[:branch] = ":#{info[:oid][0..6]}" if info[:branch] == '(detached)' || info[:branch] == 0
+  info[:clean] = '' if info[:staged] + info[:conflicts] + info[:changed] + info[:untracked] == 0
+
+  status = [
+    ' [',
+    part(info[:branch],    '',        theme[:branch]),
+    '|',
+    part(info[:behind],    '↓'),
+    part(info[:ahead],     '↑'),
+    part(info[:staged],    '%2{🎭%}', RED),
+    part(info[:conflicts], '%2{💥%}', RED),
+    part(info[:changed],   '%2{🚧%}', YELLOW),
+    part(info[:untracked], '%2{🆕%}', CYAN),
+    part(info[:stashed],   '%2{📦%}', YELLOW),
+    part(info[:clean],     '',       BOLD_GREEN),
+    ']',
+  ].join('')
+
+  status
 end
 
-info = porcelain.each_line.each_with_object(Hash.new(0)) do |line, h|
-  case line
-  when /^# branch\.oid (.*)/
-    h[:oid] = $1
-  when /^# branch\.head (.*)/
-    h[:branch] = $1
-  when /^# branch\.ab \+(\d+) -(\d+)/
-    h[:ahead] = $1.to_i
-    h[:behind] = $2.to_i
-  when /^# stash (\d+)/
-    h[:stashed] = $1.to_i
-  when /^[12] (.)(.)/
-    h[:staged] += 1 if $1 != '.'
-    h[:changed] += 1 if $2 != '.'
-  when /^u/
-    h[:conflicts] += 1
-  when /^\?/
-    h[:untracked] += 1
+def sso_part
+  return "" unless ENV['UGRAY_SHOW_SSO_STATUS'] == '1'
+  out, _err, stat = Open3.capture3('/opt/fullscript/bin/rx', 'sso', 'status', '-i', '1', '-o', '2')
+  if stat.success?
+    if out.chomp == '1'
+      sso_part = format(GREY, ' [SSO ok]')
+    elsif out.chomp == '2'
+      sso_part = format(RED, ' [SSO expired]')
+    else
+      sso_part = "--#{out.chomp}--"
+    end
+  else
+    sso_part = format(RED, " [SSO?]")
   end
 end
 
-info[:branch] = ":#{info[:oid][0..6]}" if info[:branch] == '(detached)' || info[:branch] == 0
-info[:clean] = '' if info[:staged] + info[:conflicts] + info[:changed] + info[:untracked] == 0
+def print_with_prefixes(*methods)
+  wait_queue = Thread::Queue.new
+  results = {}
+  methods.each do |method|
+    Thread.new { results[method] = send(method) ; wait_queue.push(true) }
+  end
+  methods.size.times do |i|
+    wait_queue.pop
+    print_prompt(results.values_at(*methods).join, final: i == methods.size - 1)
+  end
+end
 
-status = [
-  ' [',
-  part(info[:branch],    '',        theme[:branch]),
-  '|',
-  part(info[:behind],    '↓'),
-  part(info[:ahead],     '↑'),
-  part(info[:staged],    '%2{🎭%}', RED),
-  part(info[:conflicts], '%2{💥%}', RED),
-  part(info[:changed],   '%2{🚧%}', YELLOW),
-  part(info[:untracked], '%2{🆕%}', CYAN),
-  part(info[:stashed],   '%2{📦%}', YELLOW),
-  part(info[:clean],     '',       BOLD_GREEN),
-  ']',
-].join('')
-
-print_prompt(status, final: true)
+print_with_prefixes(:git_part, :sso_part)
