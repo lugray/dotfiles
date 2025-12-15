@@ -61,6 +61,5 @@ GIT_PROMPT_THEME=Custom
 
 export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:$HOME/.pyenv/shims/"
-test -f ~/.rx/shell_config && source ~/.rx/shell_config
 
 test -f /Users/lisa.ugray/.rx/shell_config && source /Users/lisa.ugray/.rx/shell_config
