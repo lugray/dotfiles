@@ -60,7 +60,7 @@ class RepoPicker
     dirs = Dir.glob("#{SRC_DIR}/**/.git").map do |dir|
       File.dirname(dir)
     end
-    dirs.reject! { |dir| dirs.any? { |d| dir.start_with?(d) && dir != d } } # Skip subdirectories of other directories (git submodules)
+    dirs.reject! { |dir| dirs.any? { |d| dir.start_with?(d + '/') } } # Skip subdirectories of other directories (git submodules)
     File.write("#{SRC_DIR}/.git_dirs", dirs.join("\n"))
     dirs
   end
