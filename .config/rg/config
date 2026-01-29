@@ -6,3 +6,5 @@
 --type-add=gotest:*_test.go
 --type-add=spec:*_spec.rb
 --no-ignore-vcs
+--max-columns=300
+--max-columns-preview
