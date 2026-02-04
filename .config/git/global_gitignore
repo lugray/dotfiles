@@ -6,3 +6,5 @@ scratch.rb
 .DS_Store
 .byebug_history
 *ugray*
+.claude/settings.local.json
+CLAUDE.local.md
