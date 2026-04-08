@@ -359,5 +359,13 @@ augroup("auto_visual_line_mode", "CursorMoved", "*", {
   ":lua AutoVisualLineMode()",
 })
 
+-- Auto-reload files changed outside of vim, even without refocusing
+local auto_reload_timer = vim.loop.new_timer()
+auto_reload_timer:start(200, 200, vim.schedule_wrap(function()
+  if vim.fn.getcmdwintype() == '' then
+    vim.cmd('checktime')
+  end
+end))
+
 nmap("<Leader>e", ":!%:p<CR>")
 nmap("<Leader>x", ":!%:p --example<CR>")
