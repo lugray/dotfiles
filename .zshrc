@@ -150,3 +150,5 @@ f () {
   export PYTHONIOENCODING=$TF_PYTHONIOENCODING;
   test -n "$TF_CMD" && print -s $TF_CMD
 }
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
