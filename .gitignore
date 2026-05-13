@@ -9,6 +9,10 @@
 .config/nvim/bundle/
 .config/gtk-2.0/
 .config/github-copilot
+.config/claude-control
+.config/flashspace
+.config/tfenv
+.config/thefuck
 !/.git-prompt-colors.sh
 !/.gitignore
 !/.irbrc
@@ -20,3 +24,4 @@
 !/bin
 !/install.sh
 !/nerdfont
+
