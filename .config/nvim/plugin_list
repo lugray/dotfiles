@@ -19,6 +19,7 @@ kana/vim-textobj-user
 lilydjwg/colorizer              ## Show #xxxxxx in its colour
 machakann/vim-textobj-delimited
 nelstrom/vim-textobj-rubyblock
+neovim/nvim-lspconfig
 ngmy/vim-rubocop
 nvim-lua/plenary.nvim
 nvim-tree/nvim-tree.lua
@@ -35,4 +36,6 @@ tpope/vim-unimpaired
 vim-ruby/vim-ruby
 vim-scripts/ReplaceWithRegister ## gr
 wellle/targets.vim
+williamboman/mason.nvim
+williamboman/mason-lspconfig.nvim
 wsdjeg/vim-fetch
