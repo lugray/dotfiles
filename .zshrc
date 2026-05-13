@@ -91,22 +91,8 @@ zle-open-git-remote() {
 zle -N zle-open-git-remote
 bindkey '©' zle-open-git-remote # Alt-G ABC Extended & Canadian English
 
-######################
-# Progressive Prompt #
-######################
-
-TRAPALRM() {
-  if [[ -n "$WIDGET" ]]; then
-    zle reset-prompt
-  fi
-}
-function __progressive_prompt_exec_incr() {
-  __progressive_prompt_exec_no=$((__progressive_prompt_exec_no+1))
-}
-precmd_functions+=(__progressive_prompt_exec_incr)
 setopt PROMPT_SUBST
-PROMPT='$(progressive_prompt $$ $__progressive_prompt_exec_no "╭─
-╰─🐙 " prompt)'
+PROMPT='$(single_prompt)'
 
 #######################
 # Completion settings #
