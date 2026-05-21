@@ -35,12 +35,6 @@
 	old = "red"
 	whitespace = "red reverse"
 
-[color "diff-highlight"]
-	newHighlight = "green bold 22"
-	newNormal = "green bold"
-	oldHighlight = "red bold 52"
-	oldNormal = "red bold"
-
 [color]
 	ui = "auto"
 
@@ -55,12 +49,17 @@
 [delta]
 	line-numbers = true
 	navigate = true    # use n and N to move between diff sections
+  map-styles = "bold purple => syntax #a00070, bold cyan => syntax #00a070"
+  plus-emph-style = "syntax #00a000"
+  plus-style = "syntax #005000"
+  minus-emph-style  = "syntax #a00000"
+  minus-style = "syntax #500000"
 
 [diff "zshrc"]
 	xfuncname = "^# .* #$"
 
 [diff]
-	colorMoved = default
+	colorMoved = blocks
 
 [fetch]
 	prune = true
