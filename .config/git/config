@@ -52,8 +52,10 @@
   map-styles = "bold purple => syntax #a00070, bold cyan => syntax #00a070"
   plus-emph-style = "syntax #00a000"
   plus-style = "syntax #005000"
-  minus-emph-style  = "syntax #a00000"
-  minus-style = "syntax #500000"
+  minus-emph-style  = "syntax #c00000"
+  minus-style = "syntax #700000"
+  line-numbers-minus-style = "#c00000"
+  line-numbers-plus-style = "#00a000"
 
 [diff "zshrc"]
 	xfuncname = "^# .* #$"

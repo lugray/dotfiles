@@ -1,3 +1,5 @@
+font_family JetBrainsMono Nerd Font Light
+bold_font JetBrainsMono Nerd Font ExtraBold
 font_size 15
 
 macos_quit_when_last_window_closed yes
@@ -45,10 +47,3 @@ mouse_map middle release ungrabbed discard_event
 # Dracula
 include current-theme.conf
 # END_KITTY_THEME
-
-# BEGIN_KITTY_FONTS
-font_family      family='JetBrainsMono Nerd Font Mono' style=ExtraLight
-bold_font        family='JetBrainsMono Nerd Font Mono' style=Bold
-italic_font      family='JetBrainsMono Nerd Font Mono' style='ExtraLight Italic'
-bold_italic_font family='JetBrainsMono Nerd Font Mono' style='Bold Italic'
-# END_KITTY_FONTS
