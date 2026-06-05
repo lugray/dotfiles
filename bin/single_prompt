@@ -69,8 +69,8 @@ def path
   pwd = Dir.pwd
   home = ENV['HOME']
   prefix_replace = {
-    "#{home}/src/git.fullscript.io" => ' ',
-    "#{home}/src/github.com" => ' ',
+    "#{home}/src/git.fullscript.io" => '',
+    "#{home}/src/github.com" => '',
     home => '~',
   }
   prefix_replace.each do |prefix, replacement|
