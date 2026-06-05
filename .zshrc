@@ -138,3 +138,6 @@ f () {
 }
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+# bun completions
+[ -s "/Users/lisa.ugray/.bunv/versions/1.3.9/_bun" ] && source "/Users/lisa.ugray/.bunv/versions/1.3.9/_bun"
