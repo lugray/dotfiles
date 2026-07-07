@@ -1,0 +1,39 @@
+#!/usr/bin/ruby --disable-gems
+
+require 'open3'
+require 'fileutils'
+
+repos_dir = File.expand_path('~/src')
+url = ARGV[0]
+path = if url.start_with?('git@')
+  url[4..-1].sub(':', '/')
+elsif url.start_with?('https://')
+  url[8..-1]
+else
+  raise "Unknown Protocol: #{url}"
+end
+path = path[0..-5] if path.end_with?('.git')
+repo_dir = File.join(repos_dir, path)
+
+def open_tab(dir)
+  name = File.basename(dir)
+  _, _, stat = Open3.capture3('kitty', '@', 'focus-tab', '--match', "title:^#{name}$")
+  unless stat.success?
+    Open3.capture3('kitty', '@', 'launch', "--cwd=#{dir}", '--type=tab', "--tab-title=#{name}")
+  end
+end
+
+if File.exist?(repo_dir)
+  open_tab(repo_dir)
+  exit
+end
+
+FileUtils.mkdir_p(File.dirname(repo_dir))
+system('git', 'clone', url, repo_dir)
+status = $?
+if status.success?
+  system('dcd', '--refresh-dirs')
+  open_tab(repo_dir)
+  exit
+end
+exit status.exitstatus
